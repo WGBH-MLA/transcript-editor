@@ -1,25 +1,16 @@
 # Open Transcript Editor
 
-**Notice: This codebase is relatively stable but still being actively developed. Please reach out to [brianfoo@nypl.org](mailto:brianfoo@nypl.org]) or [create a ticket](https://github.com/NYPL/transcript-editor/issues/new) if you are interested in using or contributing to this codebase.**
+**Notice: The original source of this codebase is relatively stable but doesn't seem to be in active development. This forked version has been customized for the needs of the WGBH Media Library and Archives and the README will document our specific processes for getting the editor up and running.**
 
-This is an open-source, self-hosted, web-based tool for correcting transcripts that were automatically generated using speech-to-text software via auto-transcription services such as [Pop Up Archive](https://popuparchive.com/). It is being developed by [NYPL Labs](http://www.nypl.org/collections/labs) in partnership with [The Moth](http://themoth.org/) and [Pop Up Archive](https://popuparchive.com/) with generous support from the [Knight Foundation](http://www.knightfoundation.org/grants/201551666/).
+**Notice: Pop Up Archive (PUA) shut down operations and ended support on 11/28/17. This README has removed all references to PUA as that functionality will no longer function. If needed please visit the [original repo](https://github.com/NYPL/transcript-editor).**
 
-### You are in the right place if...
-
-- You have a collection of audio that you would like to produce quality transcripts for
-- You **do not** have a budget for human transcription services (~$60-$100 per hour of audio)
-- You either (1) have a budget for auto-transcription services (~$15 per hour of audio) such as [Pop Up Archive](https://popuparchive.com/), or (2) you are able to produce time-coded transcripts on your own using speech-to-text software
-- Automatically generated transcripts do not meet your standard of quality and needs to be corrected by humans
-- You and your team do not have the capacity to correct the transcripts yourselves
-- You or a member of your team has basic web development experience, specifically with creating a [Ruby on Rails](http://rubyonrails.org/) web application
-- **Bonus:** You have an audience of users who would be interested in helping fix transcripts (this app is uniquely designed to enable multiple users working on transcripts at the same time)
+This is an open-source, self-hosted, web-based tool for correcting transcripts that were automatically generated using speech-to-text software. It was developed by [NYPL Labs](http://www.nypl.org/collections/labs) in partnership with [The Moth](http://themoth.org/) and [Pop Up Archive](https://popuparchive.com/) with generous support from the [Knight Foundation](http://www.knightfoundation.org/grants/201551666/).
 
 ## TOC
 
-1. [Setting up your own project](#setting-up-your-own-project)
-2. [Generating your transcripts](#generating-your-transcripts)
-3. [Importing existing transcripts](#importing-existing-transcripts)
-4. [Customizing your project](#customizing-your-project)
+1. [Setting up the editor](#setting-up-the-editor)
+2. [Importing your transcripts](#importing-your-transcripts)
+3. [Customizing your project](#customizing-your-project)
 5. [Transcript Consensus](#transcript-consensus)
 6. [Deploying your project](#deploying-your-project-to-production)
 7. [Managing your project](#managing-your-project)
@@ -28,7 +19,7 @@ This is an open-source, self-hosted, web-based tool for correcting transcripts t
 10. [License](#license)
 11. [Attribution](#attribution)
 
-## Setting up your own project
+## Setting up the editor
 
 ### Requirements
 
@@ -42,7 +33,7 @@ Once everything is installed, clone this repository
 
 ```
 cd /my/projects/folder
-git clone https://github.com/NYPL/transcript-editor.git
+git clone https://github.com/WGBH/transcript-editor.git
 cd transcript-editor
 ```
 
@@ -82,22 +73,33 @@ The primary place for project configuration the file `project.json`. For now, we
 3. Run `rake project:load['my-project']` to load your project folder (replace *my-project* with your project name)
 4. Run `rails s` to start your server. Go to [http://localhost:3000/](http://localhost:3000/) to view your project
 
-Your project should load, but since there's no transcripts, all you'll see is a header and blank screen! The next step is to seed the app with some transcripts
+Your project should load, but since there's no transcripts, all you'll see is a header and blank screen! The next step is to seed the app with some data.
 
-## Generating your transcripts
+## Importing your transcripts
 
-This section will assume that you do not have transcripts yet, just audio files that need transcripts. If you already have transcripts from some vendor or your own software, jump to this section: [Importing existing transcripts](#importing-existing-transcripts). We will be using Pop Up Archive to automatically produce the transcripts that will need to be corrected. Other vendors and services may be documented in the future based on demand.
+This section will assume you are using the [American Archive of Public Broadcasting](https://github.com/WGBH/AAPB2) as the data source for importing transcripts.
 
-### Requirements
+### Creating your Collections
 
-- A [Pop Up Archive](https://www.popuparchive.com/) account
-- Your audio files must be uploaded to the web so it is accessible via a public URL (e.g. http://website.com/my-audio.mp3)
-  - Here are [some examples](https://en.wikipedia.org/wiki/Comparison_of_file_hosting_services) of file hosting services
-  - The following file formats are supported: *'aac', 'aif', 'aiff', 'alac', 'flac', 'm4a', 'm4p', 'mp2', 'mp3', 'mp4', 'ogg', 'raw', 'spx', 'wav', 'wma'*
+The Collections for the transcript editor need to be created prior to uploading any transcripts or additional data.
 
-### Update your credentials
+In your project folder, you should find an empty .csv file: [project/my-project/data/collections_seeds.csv](project/sample-project/data/collections_seeds.csv).
 
-If you are using Pop Up Archive, you must update your account credentials in the `config/application.yml` file. There are two values (**PUA_CLIENT_ID** and **PUA_CLIENT_SECRET**) which refer to your Pop Up Archive Client ID and Client Secret respectively. You can find these values by logging into you Pop Up Archive account and visiting [https://www.popuparchive.com/oauth/applications](https://www.popuparchive.com/oauth/applications)
+Create a manifest file where the uid matches the
+
+```
+<pbcoreAnnotation annotationType="organization">
+```
+
+from the AAPB PBCore. Title is WGBH's only other required field. Load them into the app with this command:
+
+```
+rake collections:load['my-project','collections_seeds.csv']
+```
+
+Replace `my-project` with your project id and `collections_seeds.csv` with your file's name.
+
+You can always re-run this script with new data and manifest files.
 
 ### Creating a manifest file
 
@@ -118,67 +120,65 @@ In your project folder, you should find an empty .csv file: [project/my-project/
 | vendor_identifier | if already uploaded the audio to Pop Up Archive, put the item id here | Only if you already uploaded audio to Pop Up Archive | *41326* |
 | notes | any extra notes that will only be used internally (not public) | No | *this audio contains explicit material* |
 
-Populate at least the required fields of this file. You can load them into the app with this command:
+Lucky for you, we've got a process to handle all this. The first thing you'll need is a text file of AAPB GUIDs.
+
+Then you can create the manifest file using this command:
+
+```
+rake aapb:create_seeds['ids_file_path','my-project']
+```
+
+Replace `ids_file_path` with the path to your text file of AAPB GUIDs and `my-project` with your project id. This process creates a csv file in the project's data directory named today's date. The data scraped from .pbcore view of the AAPB web application.
+
+After the file is created, you can load them into the app with this command:
 
 ```
 rake transcripts:load['my-project','transcripts_seeds.csv']
 ```
 
-Replace `my-project` with your project id and `transcripts_seeds.csv` if you are using a different file. You can run this command any number of times after editing the manifest file or with new manifest files. The script will check if the transcript already exists using the `uid` column value.
+Replace `my-project` with your project id and `transcripts_seeds.csv` with your newly created file's name. You can run this command any number of times after editing the manifest file or with new manifest files. The script will check if the transcript already exists using the `uid` column value.
 
-### Making Collections/Groups
+### Downloading transcripts
 
-Sometimes you may want to group your audio in different ways for the user. If you are using Pop Up Archive, this step is required since Pop Up requires all your audio files to belong to a *collection*. You can create collections similar to how you create transcripts--with a manifest file.
+Most of our transcripts are phrase level JSON stored in a bucket on S3, so we've created an AAPB transcript downloader. Again you'll need a text file of AAPB GUIDS to run the rake take.
 
-In your project folder, you should find an empty .csv file: [project/my-project/data/collections_seeds.csv](project/sample-project/data/collections_seeds.csv). It contains almost the same columns as the transcript manifest file. If you are using Pop Up Archive, you must fill out the last two columns (*vendor*, *vendor_identifier*) as *pop_up_archive* and the Pop Up Archive collection id respectively. The collection id can be found by clicking on a collection in your Pop Up Archive dashboard and look at the URL (e.g. https://www.popuparchive.com/collections/1234), in which case the collection id is *1234*
-
-Once you fill out the manifest file, you can load them into the app with this command:
+Download the transcripts using this command:
 
 ```
-rake collections:load['my-project','collections_seeds.csv']
+rake aapb:download_transcripts['ids_file_path','my-project']
 ```
 
-Similarly with transcripts, you can always re-run this script with new data and manifest files.
+Replace `ids_file_path` with the path to your text file and 'my-project' with your project id. This process will: create an `aapb` directory in the project's transcripts' directory if one does not already exist, use the GUID to look for a transcript on S3 and download it to the 'aapb' directory.
 
-### Uploading your files to Pop Up Archive
+### Converting transcripts
 
-If you are using Pop Up Archive and have not yet created [Pop Up Archive collection(s)](https://www.popuparchive.com/collections), you can run this command to create Pop Up collections from your manifest file:
+The original transcript-editor was written to support the [WebVTT](https://w3c.github.io/webvtt/) format, a W3C standard for displaying timed text in connection with the HTML5 `<track>` element. This format is extended from the popular [SRT](https://en.wikipedia.org/wiki/SubRip) format.
 
-```
-rake pua:create_collections['my-project']
-```
+Since the AAPB transcripts are phrase level JSON we wrote a transcript converter so that they'd play function within the current infrastructure.
 
-This will also update your database with the proper Pop Up Archive collection id in a column called `vendor_identifier`.  It will be also useful for deployment later to update your manifest file with these identifiers. You can do that by running this command:
+Run this task to convert AAPB's phrase level JSON transcripts to WebVTT for the transcript-editor:
 
 ```
-rake collections:update_file['my-project','collections_seeds.csv']
+rake transcripts:convert['transcript_files_path', 'directory' , 'to_format']
 ```
 
-If you have not yet uploaded your audio to Pop Up Archive, run this command:
+Replace `transcript_files_path` with the path to a directory containing all the transcripts that you'd like to convert, `directory` with the path of the directory to which you'd like the converted transcripts saved, and `to_format` with the file format to which you'd like the transcripts converted. In our process this would simply be `vtt`.
+
+The converter classes were purposefully written to be fairly easily extended, but right now it only has a reader for AAPB JSON and a converter for WebVTT. But new readers and writers can be plugged in the same process. Any new reader should return a hash in the following format:
 
 ```
-rake pua:upload['my-project']
+{ "file_name" => "file_name",
+  "parts" => [
+    { text: "transcript phrase",
+      start_time: "start time of phrase in hundreths of a second", end_time: "end time of phrase in hundreths of a second"
+    }...
+  ]
+}
 ```
 
-This will look for any audio items (that were previously defined in your transcript manifest files) that have *pop_up_archive* as *vendor* but do not have a *vendor_identifier* (i.e. has not been uploaded to Pop Up Archive), and for each of those items, create a Pop Up Archive item and uploads submit your audio file for processing. It will populate the *vendor_identifier* in the app's database with the Pop Up Archive item id upon submission, so you may run this script any number of times if you add additional audio items. Like with collections, you should update your manifest file with these identifiers:
+And any new converters should be written to process this same format.
 
-```
-rake transcripts:update_file['my-project','transcripts_seeds.csv']
-```
-
-### Download processed transcripts from Pop Up Archive
-
-Transcripts can generally take up to 24 hours to process. When you think they may be ready, you can run this script to downloaded finished transcripts to the app:
-
-```
-rake pua:download['my-project']
-```
-
-This will look for any audio items that have been submitted to Pop Up Archive, but not yet have a transcript downloaded.  If an item's transcript is ready, it will download and save it to the app's database, and will become visible in the app. You can run this script any number of times until all transcripts have been downloaded.
-
-## Importing existing transcripts
-
-If you already have a vendor that generates transcripts or you have created your own method for generating transcripts, you can import these transcripts into this app for editing. We currently support the [WebVTT](https://w3c.github.io/webvtt/) format, a W3C standard for displaying timed text in connection with the HTML5 `<track>` element. This format is extended from the popular [SRT](https://en.wikipedia.org/wiki/SubRip) format. Most vendors will provide a `.vtt` file for your transcripts. However, `.srt` files can also be easily converted to `.vtt`.
+### Importing transcripts
 
 1. Place all your `.vtt` files in folder `/project/my-project/transcripts/webvtt/`
 2. Create a manifest file
@@ -238,46 +238,9 @@ This app currently supports logging in through Google or Facebook accounts (via 
 11. Run `rake project:load['my-project']` to refresh this config in the interface
 12. Finally, restart your server and visit `http://localhost:3000`.  Now you should see the option to sign in via Google.
 
-#### Instructions for Facebook Account activation
-
-1. Log in to your Facebook account and visit [this link](https://developers.facebook.com/quickstarts/?platform=web)
-2. Follow the steps to create a new app and go to the app's Dashboard. You must at least fill out **Display Name** and **Contact Email**.
-3. In your project's dashboard click *Add Product* on the left panel. Then click *Facebook Login*.
-4. Under *Client OAuth Settings*:
-   - make sure *Client OAuth Login* and *Web OAuth Login* is on
-   - enter `http://localhost:3000/omniauth/facebook/callback` in *Valid OAuth redirect URIs*. Also include your production or testing urls here too (e.g. `http://myapp.com/omniauth/facebook/callback`)
-   - Save your changes
-5. On the left panel, select *Test Apps*. Click *Create a Test App* and go to its dashboard after you create it.
-6. Note these two values: *App ID* and *App Secret*
-7. Open up your `config/application.yml`
-8. For each development and production, copy the values listed for *App ID* and *App Secret* into the appropriate key-value entry, e.g.
-
-   ```
-   development:
-     FACEBOOK_APP_ID: "1234567890123456"
-     FACEBOOK_APP_SECRET: abcdefghijklmnopqrstuvwxyz123456
-   production:
-     FACEBOOK_APP_ID: "7890123456123456"
-     FACEBOOK_APP_SECRET: nopqrstuvwxyz123456abcdefghijklm
-  ```
-
-10. Facebook login is now enabled in the Rails app. Now we need to enable it in the UI. Open up `project/my-project/project.json`.  Under `auth_providers` enter:
-
-   ```
-   "authProviders": [
-     {
-       "name": "facebook",
-       "label": "Facebook",
-       "path": "/auth/facebook"
-     }
-   ],
-   ```
-
-11. Run `rake project:load['my-project']` to refresh this config in the interface
-12. Finally, restart your server and visit `http://localhost:3000`.  Now you should see the option to sign in via Facebook.
-13. Once ready, go back to your Facebook App page and click **App Review**. Make your app live by toggling on Live mode.
-
 ### Adding speakers
+
+**Notice: Speaker functionality is not being used in our instance, but retaining documentation for potential future use.**
 
 Sometimes your audio will contain multiple speakers. If you already know who are speaking, you can seed your transcripts with the speakers. Your users could then choose which speaker is speaking on any given line.
 
@@ -529,6 +492,22 @@ rake transcripts:recalculate
 ```
 
 ## Deploying your project to production
+
+### WGBH
+
+The full release script is currently saved in the WGBH MLA wiki in the MLA Staff Pages section. The document is called "NYPL Transcript Editor Deployment."
+
+Broad overview steps are:
+
+1. Provision a server on AWS.
+2. Run the [MLA Playbook for transcript-editor](https://github.com/WGBH/mla-playbooks)
+3. Install and set up Postgres 9.6.
+4. Run the [transcript-editor_deploy] Capistrano deployment](https://github.com/WGBH/transcript-editor_deploy)
+5. Intall and run Gulp.
+
+### Heroku
+
+**Notice: We are not deploying our code with Heroku, but keeping this section for potential future use.**
 
 This example will use [Heroku](https://www.heroku.com/) to deploy the app to production, though the process would be similar for other hosting solutions. The commands assume you have [Heroku Toolbelt](https://toolbelt.heroku.com/) installed.
 
