@@ -1,0 +1,53 @@
+{
+  "name": "Peabody Transcript Editor",
+  "description": "A web app for transcripts that were automatically generated from speech-to-text software",
+  "logo": "/peabody/assets/img/peabody-icon.png",
+  "apiUrl": "",
+  "useVendorAudio": true,
+  "transcriptsPerPage": 500,
+  "maxLineTimeOverlapMs": -1,
+  "allowTranscriptDownload": false,
+  "gaCode": "UA-60323667-4",
+  "adminEmails": [
+    "firstadmin555@gmail.com",
+    "secondadmin666@gmail.com"
+  ],
+  "authProviders": [{ "name": "google", "label": "Google", "path": "/auth/google_oauth2" }],
+  "consensus": {
+    "maxLineEdits": 2,
+    "minLinesForConsensus": 2,
+    "minLinesForConsensusNoEdits": 2,
+    "minPercentConsensus": 0.5,
+    "lineDisplayMethod": "original",
+    "superUserHiearchy": 50
+  },
+  "menus": {
+    "header": [
+      {"label": "Browse", "url": "/"}
+    ],
+    "footer": [
+      {"label": "Terms and Conditions", "url": "/page/toc"},
+      {"label": "MIT License", "url": "/page/mit_license"}
+    ]
+  },
+  "modals": {
+    "tutorial_edit": {
+      "title": "Transcript Editor Tutorial",
+      "displayMethod": "once",
+      "doneLabel": "Finished",
+      "pages": [
+        {"label": "Editing", "file": "ed_tutorial_1.md"},
+        {"label": "Conventions", "file": "ed_tutorial_2.md"},
+        {"label": "Commands", "file": "ed_tutorial_3.md"},
+        {"label": "Have fun!", "file": "ed_tutorial_6.md"}
+      ]
+    }
+  },
+  "controls": [
+    {"id": "toggle-play", "action": "lineToggle", "label": "Play/Pause", "keyCode": 32, "key": "[shift] + [space]", "keyLabel": "Shift + Space Bar", "keyDescription": "Hold shift and press space bar to play, pause, or re-play a line", "shift": true},
+    {"id": "next-line", "action": "lineNext", "label": "Next Line", "keyCode": [13,40], "key": "[&#8595;] OR [enter]", "keyLabel": "Down Arrow or Enter Key", "keyDescription": "Press the down arrow key or enter to go to next line"},
+    {"id": "previous-line", "action": "linePrevious", "label": "Prev Line", "keyCode": 38, "key": "&#8593;", "keyLabel": "Up Arrow", "keyDescription": "Press the up arrow key to go to previous line"},
+    {"id": "previous-word", "action": "wordPrevious", "label": "Prev Word", "keyCode": 37, "key": "[shift] + [&#8592;]", "keyLabel": "Shift + Left Arrow", "keyDescription": "Hold shift and press the left arrow key to move to previous word", "shift": true},
+    {"id": "next-word", "action": "wordNext", "label": "Next Word", "keyCode": 39, "key": "[shift] + [&#8594;]", "keyLabel": "Shift + Right Arrow", "keyDescription": "Hold shift and press the right arrow key to move to next word", "shift": true}
+  ]
+}

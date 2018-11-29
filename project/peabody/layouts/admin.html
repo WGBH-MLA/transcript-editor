@@ -1,0 +1,48 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title><%= project["name"] %></title>
+  <meta name="description" content="<%= project["description"] %>">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/assets/css/admin.css">
+  <link rel="stylesheet" href="/<%= project_key %>/assets/css/styles.css">
+  <link rel="shortcut icon" href="/<%= project_key %>/assets/img/favicon.ico">
+</head>
+<body>
+
+  <div id="app" class="container">
+
+    <div id="header" class="header">
+      <nav id="primary-navigation" class="navigation primary inverse" role="navigation">
+        <div>
+          <div id="header-title" class="title-container"></div>
+          <div id="header-crumbs" class="crumbs-container"></div>
+          <div id="account-container" class="account-container"></div>
+          <div id="primary-menu-container" class="menu-container"></div>
+        </div>
+      </nav>
+      <nav id="secondary-navigation" class="navigation secondary"></nav>
+      <div id="primary-alert" class="alert" role="alert" aria-atomic="true"></div>
+    </div>
+
+    <div id="main" class="body"></div>
+
+    <div id="footer" class="footer">
+      <nav id="footer-navigation" class="navigation inverse">
+        <div id="footer-menu-container" class="menu-container"></div>
+      </nav>
+    </div>
+
+  </div>
+
+  <script src="/<%= project_key %>/project.js"></script>
+  <script src="/assets/js/templates.js"></script>
+  <script src="/assets/js/admin.js"></script>
+  <script src="/<%= project_key %>/assets/js/custom.js"></script>
+
+</body>
+</html>
