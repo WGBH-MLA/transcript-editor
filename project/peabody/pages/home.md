@@ -1,8 +1,11 @@
 <div class="banner">
-<div class="container" role="banner">
-<h1><img class="logo-lg" src="/peabody/assets/img/peabody-bar.png" alt="Peabody Award Nominees" title="Peabody Transcript Editor" /></h1>
-<h2>Transcribe Peabody Award-Nominated Media</h2>
-</div>
+
+  <div style="height: 1em; min-height: 1em;"></div>
+
+  <div class="container" role="banner">
+    <h1><img class="logo-lg" src="/peabody/assets/img/peabody-bar.png" alt="Peabody Award Nominees" title="Peabody Transcript Editor" /></h1>
+    <h2>Transcribe Peabody Award-Nominated Media</h2>
+  </div>
 </div>
 <div class="container" role="contentinfo">
 <p>Peabody Project volunteers rise up, and transcribe, transcribe, TRANSCRIBE!</p>
