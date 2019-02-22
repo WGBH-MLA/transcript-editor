@@ -9,8 +9,8 @@
   "allowTranscriptDownload": false,
   "gaCode": "UA-60323667-4",
   "adminEmails": [
-    "firstadmin555@gmail.com",
-    "secondadmin666@gmail.com"
+    "firstadmin555@peabody-fake.com",
+    "secondadmin666@peabody-fake.com"
   ],
   "authProviders": [{ "name": "google", "label": "Google", "path": "/auth/google_oauth2" }],
   "consensus": {

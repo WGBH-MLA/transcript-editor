@@ -11,8 +11,11 @@ namespace :aapb do
     raise "Not a valid ids_file_path #{args[:ids_file_path]}" unless File.exist?(args[:ids_file_path])
     raise "Not a valid project_key" unless Dir.exist?(Rails.root.join('project', args[:project_key]))
 
-    ids = build_ids_array(args[:ids_file_path])
-    AAPB::TranscriptSeedsJob.new(ids,args[:project_key]).run!
+    ids_file_path = args[:ids_file_path]
+    project_key = args[:project_key]
+
+    ids = build_ids_array(ids_file_path)
+    AAPB::TranscriptSeedsJob.new(ids,project_key).run!
   end
 
   # Usage rake aapb:download_transcripts['ids_file_path','sample-project']
@@ -25,7 +28,6 @@ namespace :aapb do
     ids = build_ids_array(args[:ids_file_path])
     AAPB::DownloadTranscriptsJob.new(ids,args[:project_key]).run!
   end
-
 
   desc "Ingests transcripts from a file of AAPB GUIDs"
   task :ingest_guids, [:ids_file_path, :project_key] => :environment do |task, args|

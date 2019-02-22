@@ -1,4 +1,15 @@
-<div class="item-image" style="background-image: url(<%= image_url %>)"></div>
+<div class="item-image" style="background-image: url(<%= image_url %>)">
+  <% if (percent_completed == 100) { %>
+    <div class="completed-small-box">
+
+      <div class="completed-check-container">
+        <div class="completed-check check-small"></div>
+        <div class="completed-check-tag-text">Completed</div>
+      </div>
+    </div>
+    
+  <% } %>
+</div>
 <% if (collection_title) { %>
   <div class="item-subtitle"><%= collection_title %></div>
 <% } %>
@@ -34,5 +45,6 @@
   <% if ((percent_edited-percent_reviewing-percent_completed) > 0) { %>
     <div class="item-status-text edited"><%= percent_edited - percent_reviewing - percent_completed %>% have edits</div>
   <% } %>
+
 </div>
 <% } %>

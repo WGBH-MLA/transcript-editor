@@ -732,8 +732,6 @@ app.routers.DefaultRouter = Backbone.Router.extend({
     "transcripts/:id?*queryString": "transcriptEdit",
     "page/:id":                     "pageShow",
     "dashboard":                    "dashboard",
-    "search":                       "search",
-    "search?*queryString":          "search"
   },
 
   before: function( route, params ) {
@@ -766,14 +764,6 @@ app.routers.DefaultRouter = Backbone.Router.extend({
     var main = new app.views.Page(_.extend({}, data, {el: '#main', page_key: id}));
     var footer = new app.views.Footer(data);
     main.$el.removeClass('loading').attr('role', 'main');
-  },
-
-  search: function(queryString) {
-    var data = this._getData(data);
-    if (queryString) data.queryParams = deparam(queryString);
-    var header = new app.views.Header(data);
-    var main = new app.views.Search(data);
-    var footer = new app.views.Footer(data);
   },
 
   transcriptEdit: function(id, queryString) {
@@ -917,8 +907,11 @@ app.collections.Transcripts = Backbone.Collection.extend({
     var _this = this;
 
     _.each(params, function(value, key){
-      if (value=="ALL" || !value.length) _this.params = _.omit(_this.params, key);
-      else _this.params[key] = value;
+      if (value=="ALL" || !value.length) {
+        _this.params = _.omit(_this.params, key);
+      } else {
+        _this.params[key] = value;
+      }
     });
   },
 
@@ -2182,14 +2175,19 @@ app.views.TranscriptFacets = app.views.Base.extend({
     $(window).trigger('sticky-on', ['#header']);
   },
 
-  filter: function(name, value){
-    PubSub.publish('transcripts.filter', {name: name, value: value});
+  filter: function(name, value, query){
+    PubSub.publish('transcripts.filter', {name: name, value: value, q: query});
   },
 
   filterFromEl: function(e){
     var $el = $(e.currentTarget);
+    var query = this.getQuery();
+    // send query through msg because listener doesnt have this.searchKeyword
+    this.filter($el.attr('data-filter'), $el.attr('data-value'), query);
+  },
 
-    this.filter($el.attr('data-filter'), $el.attr('data-value'));
+  getQuery: function(){
+    return $('#search-form input#search-input').val();
   },
 
   initFacets: function(){
@@ -2205,7 +2203,7 @@ app.views.TranscriptFacets = app.views.Base.extend({
       if (params.sort_by) active_sort = params.sort_by;
       if (params.order) active_order = params.order;
       if (params.collection_id) active_collection_id = params.collection_id;
-      if (params.keyword) active_keyword = params.keyword;
+      if (params.q) active_keyword = params.q;
     }
 
     // add an "all collections" options
@@ -2259,10 +2257,10 @@ app.views.TranscriptFacets = app.views.Base.extend({
         keyword = $form.find('input[name="keyword"]').val();
 
     keyword = keyword.trim().toLowerCase();
-
     this.search(keyword);
   },
 
+  // refresh search if empty (nice function name!)
   searchFromInput: function(e){
     var $input = $(e.currentTarget),
         keyword = $input.val();
@@ -2274,16 +2272,16 @@ app.views.TranscriptFacets = app.views.Base.extend({
       this.search(keyword);
   },
 
-  sortTranscripts: function(name, order){
-    PubSub.publish('transcripts.sort', {name: name, order: order});
+  sortTranscripts: function(name, order, query){
+    PubSub.publish('transcripts.sort', {name: name, order: order, q: query});
   },
 
   sortFromEl: function(e){
     var $el = $(e.currentTarget);
-
-    this.sortTranscripts($el.attr('data-sort'), $el.attr('data-order'));
+    var query = this.getQuery();
+    // send query through msg because listener doesnt have this.searchKeyword
+    this.sortTranscripts($el.attr('data-sort'), $el.attr('data-order'), query);
   }
-
 });
 
 app.views.TranscriptLineFlag = app.views.Base.extend({
@@ -3274,12 +3272,21 @@ app.views.TranscriptsIndex = app.views.Base.extend({
   },
 
   initialize: function(data){
-    this.data = data;
+    var defaults = {
+      queryParams: {}
+    };
+    this.data = _.extend({}, defaults, data);
+
     this.render();
 
     this.$transcripts = this.$('#transcript-results');
     this.$facets = this.$('#transcript-facets');
-    this.transcripts = [];
+
+    // init collection so we can search and facet
+    this.transcripts = this.transcripts || new app.collections.Transcripts({
+      endpoint: '/search.json',
+      params: this.data.queryParams
+    });
 
     if (this.data.queryParams) this.loadParams(this.data.queryParams);
     this.loadTranscripts();
@@ -3287,107 +3294,32 @@ app.views.TranscriptsIndex = app.views.Base.extend({
     this.loadListeners();
   },
 
-  addList: function(transcripts){
-    this.transcripts = this.transcripts.concat(transcripts.toJSON());
-
-    if (this.isFaceted()) {
-      this.facet();
-
-    } else {
-      this.addListToUI(transcripts.toJSON(), transcripts.hasMorePages(), true, (transcripts.getPage() > 1));
-    }
-  },
-
-  addListToUI: function(transcripts, has_more, append, scroll_to){
-    var list = this.template_list({has_more: has_more});
-    var $list = $(list);
-    var $target = $list.first();
-
-    if (append) {
-      this.$transcripts.append($list);
-    } else {
-      this.$transcripts.empty();
-      if (transcripts.length){
-        this.$transcripts.html($list);
-      } else {
-        this.$transcripts.html('<p>No transcripts found!</p>');
-      }
-    }
-    this.$transcripts.removeClass('loading');
-
-    _.each(transcripts, function(transcript){
-      var transcriptView = new app.views.TranscriptItem({transcript: transcript});
-      $target.append(transcriptView.$el);
-    });
-
-    if (scroll_to) {
-      $(window).trigger('scroll-to', [$list, 110]);
-    }
-  },
-
   facet: function(){
-    // we have all the data, so just facet on the client
-    if (this.collection.hasAllPages()) {
-      this.facetOnClient();
-
-    // we don't have all the data, we must request from server
-    } else {
-      this.facetOnServer();
-    }
+    var keyword = this.searchKeyword || "";
+    PubSub.publish('transcripts.search', keyword);
+    return true;
   },
 
-  facetOnClient: function(){
-    var _this = this,
-        filters = this.filters || {},
-        keyword = this.searchKeyword || '',
-        transcripts = _.map(this.transcripts, _.clone);
-
-    // do the filters
-    _.each(filters, function(value, key){
-      transcripts = _.filter(transcripts, function(transcript){ return !_.has(transcript, key) || transcript[key]==value; });
-    });
-
-    // do the searching
-    if (keyword.length){
-
-      // Use Fuse for fuzzy searching
-      var f = new Fuse(transcripts, { keys: ["title", "description"], threshold: 0.2 });
-      var result = f.search(keyword);
-
-      // Search description if fuzzy doesn't work
-      if (!result.length) {
-        transcripts = _.filter(transcripts, function(transcript){
-          return transcript.description.toLowerCase().indexOf(keyword) >= 0;
-        });
-      } else {
-        transcripts = result;
-      }
-
-    }
-
-    // do the sorting
-    if (this.sortName){
-      transcripts = _.sortBy(transcripts, function(transcript){ return transcript[_this.sortName]; });
-      if (this.sortOrder.toLowerCase()=="desc")
-        transcripts = transcripts.reverse();
-    }
-
-    this.renderTranscripts(transcripts);
+  searchServer: function(keyword) {
+    var sort_name = this.sortName || 'title'
+    var sort_order = this.sortOrder || 'asc'
+    var combined_params = _.extend(this.filters, {'q': keyword, sort_by: sort_name, order: sort_order});
+    this.setParams(combined_params);
   },
 
-  facetOnServer: function(){
-    // TODO: request from server if not all pages are present
-
-    this.facetOnClient();
+  setParams: function(params){
+    this.$transcripts.empty().addClass('loading');
+    params.page = 1;
+    this.transcripts.setParams(params);
+    this.updateUrlParams();
+    this.loadTranscripts();
   },
 
   filterBy: function(name, value){
     this.filters = this.filters || {};
     this.filters[name] = value;
-    // omit all filters with value "ALL"
-    this.filters = _.omit(this.filters, function(value, key){ return value=='ALL'; });
-    this.facet();
     this.updateUrlParams();
+    this.facet();
   },
 
   isFaceted: function(){
@@ -3409,19 +3341,25 @@ app.views.TranscriptsIndex = app.views.Base.extend({
     });
   },
 
+  setQuery: function(query){
+    this.searchKeyword = query;
+  },
+
   loadListeners: function(){
     var _this = this;
 
     PubSub.subscribe('transcripts.filter', function(ev, filter) {
-      _this.filterBy(filter.name, filter.value);
+      _this.setQuery(filter.q);
+      _this.filterBy(filter.name, filter.value, filter.q);
     });
 
     PubSub.subscribe('transcripts.sort', function(ev, sort_option) {
-      _this.sortBy(sort_option.name, sort_option.order);
+      _this.setQuery(sort_option.q);
+      _this.sortBy(sort_option.name, sort_option.order, sort_option.q);
     });
 
     PubSub.subscribe('transcripts.search', function(ev, keyword) {
-      _this.search(keyword);
+      _this.searchServer(keyword);
     });
   },
 
@@ -3452,14 +3390,20 @@ app.views.TranscriptsIndex = app.views.Base.extend({
     // console.log(this.filters, this.sortName, this.sortOrder, this.searchKeyword)
   },
 
+  // from search.js
   loadTranscripts: function(){
     var _this = this;
+    var params = this.data.queryParams;
 
     this.$transcripts.addClass('loading');
+    this.transcripts = this.transcripts || new app.collections.Transcripts({
+      endpoint: '/search.json',
+      params: params
+    });
 
-    this.collection.fetch({
+    this.transcripts.fetch({
       success: function(collection, response, options){
-        _this.addList(collection);
+        _this.renderTranscripts(collection);
       },
       error: function(collection, response, options){
         $(window).trigger('alert', ['Whoops! We seem to have trouble loading our transcripts. Please try again by refreshing your browser or come back later!']);
@@ -3470,13 +3414,15 @@ app.views.TranscriptsIndex = app.views.Base.extend({
   nextPage: function(e){
     e.preventDefault();
     $(e.currentTarget).remove();
-    this.collection.nextPage();
+    this.transcripts.nextPage();
     this.loadTranscripts();
   },
 
   render: function(){
     this.$el.attr('role', 'main');
     this.$el.html(this.template(this.data));
+    this.$transcripts = this.$('#transcript-results');
+    this.$facets = this.$('#transcript-facets');
     return this;
   },
 
@@ -3485,20 +3431,43 @@ app.views.TranscriptsIndex = app.views.Base.extend({
     this.$facets.html(this.facetsView.render().$el);
   },
 
+  // from search.js
   renderTranscripts: function(transcripts){
-    this.addListToUI(transcripts, false, false, true);
-  },
+    var _this = this;
 
-  search: function(keyword){
-    this.searchKeyword = keyword;
-    this.facet();
+    var transcriptsData = transcripts.toJSON();
+
+    var list = this.template_list({has_more: transcripts.hasMorePages()});
+    var $list = $(list);
+    var $target = $list.first();
+    var query = transcripts.getParam('q') || '';
+
+    if (transcripts.getPage() > 1) {
+      this.$transcripts.append($list);
+
+    } else {
+      this.$transcripts.empty();
+      if (transcriptsData.length){
+        this.$transcripts.html($list);
+      } else {
+        this.$transcripts.html('<p>No transcripts found!</p>');
+      }
+    }
+    this.$transcripts.removeClass('loading');
+
+    _.each(transcripts.models, function(transcript_model){
+      var transcript = transcript_model.attributes;
+
+      var transcriptView = new app.views.TranscriptItem({transcript: transcript});
+      $target.append(transcriptView.$el);
+    });
   },
 
   sortBy: function(name, order){
     this.sortName = name;
     this.sortOrder = order;
-    this.facet();
     this.updateUrlParams();
+    this.facet();
   },
 
   updateUrlParams: function(){
@@ -3508,6 +3477,7 @@ app.views.TranscriptsIndex = app.views.Base.extend({
       data.sort_by = this.sortName;
       data.order = this.sortOrder;
     }
+
     // check for filters
     if (this.filters) {
       _.each(this.filters, function(value, key){
@@ -3524,6 +3494,5 @@ app.views.TranscriptsIndex = app.views.Base.extend({
       window.history.pushState(data, document.title, url);
     }
   }
-
 });
 

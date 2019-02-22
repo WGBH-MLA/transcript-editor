@@ -30,3 +30,50 @@
   margin-bottom: 0;
   letter-spacing: 1px;
 }
+.completed-small-box {
+  padding: 4%;
+  padding-bottom: 4%;
+  display: block;
+  text-align: center;
+}
+.completed-check-container {
+  background-color: #c3f6af;
+  color: #427527;
+  padding-left: 0.4em;
+  border-radius: 4px;
+  font-size: 0.8em;
+  font-weight: bold;
+  padding-bottom: 0.4em;
+  display: inline-block;
+}
+.completed-check-tag-text {
+  margin-top: -1.4em;
+  margin-left: 2em;
+  margin-right: 1.6em;
+}
+.completed-check {
+  background-image: url('/assets/check.png');
+  background-size: contain;
+}
+.check-small {
+  height: 20px;
+  width: 20px;
+  margin-top: 6px;
+  text-align: left;
+}
+.check-big {
+  height: 40px;
+  width: 40px;
+  float: left;
+}
+.completed-check-text {
+  color: #427527;
+  font-size: 1.2em;
+}
+.corrected-box {
+  margin-top: 4%;
+  background-color: #c3f6af;
+  padding: 2%;
+  padding-bottom: 4%;
+  border-radius: 8px;
+}

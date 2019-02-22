@@ -23,6 +23,7 @@ module TranscriptConverter
       def parse_json
         if valid_json?(File.read(file))
           json = JSON.parse(File.read(file))
+
           raise "#{File.basename(file.path)}: JSON is not in the expected format." unless json.has_key?('parts')
           return { "file_name" => "#{File.basename(file.path, '.json')}", "parts" => json["parts"] }
         else

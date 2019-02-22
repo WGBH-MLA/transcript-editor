@@ -52,6 +52,8 @@ gulp.task('templates', function() {
     .pipe(gulp.dest(config.templates.dest));
 });
 
+gulp.task('build', ['sass', 'js', 'templates']);
+
 // Watchers
 
 gulp.task('watch', function () {

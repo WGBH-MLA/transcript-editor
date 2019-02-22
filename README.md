@@ -15,9 +15,10 @@ This is an open-source, self-hosted, web-based tool for correcting transcripts t
 6. [Deploying your project](#deploying-your-project-to-production)
 7. [Managing your project](#managing-your-project)
 8. [Retrieving your finished transcripts](#retrieving-your-finished-transcripts)
-9. [Contributing](#developers)
-10. [License](#license)
-11. [Attribution](#attribution)
+9. [Export UIDs by project](#export-uids-by-project)
+10. [Contributing](#developers)
+11. [License](#license)
+12. [Attribution](#attribution)
 
 ## Setting up the editor
 
@@ -79,6 +80,16 @@ Your project should load, but since there's no transcripts, all you'll see is a 
 ## Importing your transcripts
 
 This section will assume you are using the [American Archive of Public Broadcasting](https://github.com/WGBH/AAPB2) as the data source for importing transcripts.
+
+All of the rake tasks in "Creating a manifest file", "Downloading transcripts", "Converting transcripts", and "Importing transcripts" have been wrapped in to a single process for WGBH AAPB transcripts.
+
+**If you are importing AAPB transcripts in to a project, you can run one rake task:**
+
+```
+bundle exec rake aapb:ingest_guids['/path/to/file.txt','my-project']
+```
+
+This task will create a manifest file for AAPB records, download, convert, and import the transcripts.
 
 ### Creating your Collections
 
@@ -188,6 +199,14 @@ And any new converters should be written to process this same format.
    - In the `vendor_identifier` column, enter the name of the `.vtt` file, e.g. `transcript_1234.vtt`
    - If you have not already, run the `rake transcripts:load['my-project','the_manifest_file.csv']` task on your manifest file to create entries for your transcripts
 3. Finally, run `rake webvtt:read['my-project']` which will import all the `.vtt` files that have not already been processed
+
+## Deleting transcripts
+
+To make it easier to mass delete AAPB transcripts that have been erroneously uploaded, we created a rake task to remove a list of AAPB GUIDS in a text file.
+
+```
+bundle exec rake aapb:delete_guids['/path/to/file.txt']
+```
 
 ## Customizing your project
 
@@ -590,6 +609,10 @@ You can add admins by editing your `project.json` file like so:
 ```
 
 Make sure these email addresses correspond to the email addresses that the user signs in with (i.e. Google or Facebook.) When the user signs in using this email address, they will be able to access their dashboard by clicking the drop-down menu on the top right side of the app.
+
+## Export UIDs by project
+
+Sometimes you just need all the transcript UIDs for a project, so we built a rake task for that: `rake transcripts:export_uids['my-project']`.
 
 ## Retrieving your finished transcripts
 

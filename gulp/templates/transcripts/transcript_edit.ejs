@@ -12,7 +12,21 @@
     <div class="image" style="background-image: url(<%= transcript.image_url %>)"></div>
   <% } %>
   <div class="metadata">
-    <h1><%= transcript.title %></h1>
+    <% if (transcript.percent_completed == 100) { %>
+      <div class="corrected-box">
+        <h1 class="completed-check-text">
+          <div class="completed-check check-big"></div>
+          Great news! This transcript has already been completely corrected!
+          <div class="">
+            <a href="/?collection_id=<%= transcript.collection.id %>">Help us correct another transcript here</a>
+          </div>
+        </h1>
+      </div>
+    <% } %>
+
+    <h1>
+      <%= transcript.title %>
+    </h1>
 
     <% if (transcript.description) { %>
       <p><%= transcript.description %></p>

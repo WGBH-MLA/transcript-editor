@@ -280,39 +280,16 @@ class Transcript < ActiveRecord::Base
     sort_by = options[:sort_by]
     sort_by = "percent_completed" if sort_by.present? && sort_by=="completeness"
     sort_by = "title" if !Transcript.sortableFields().include? sort_by
-
     transcripts = nil
-
-    # Do a deep search
-    if options[:deep].present? && options[:q].present? && !options[:q].blank?
-      # Build initial query w/ pagination
-      transcripts = TranscriptLine
-        .select('transcripts.*, COALESCE(collections.title, \'\') AS collection_title, transcript_lines.guess_text, transcript_lines.original_text, transcript_lines.start_time')
-        .joins('INNER JOIN transcripts ON transcripts.id = transcript_lines.transcript_id')
+    transcripts = Transcript.select('transcripts.*, COALESCE(collections.title, \'\') as collection_title')
         .joins('LEFT OUTER JOIN collections ON collections.id = transcripts.collection_id')
-
-      # Do the query
-      transcripts = transcripts.search_by_all_text(options[:q])
-
-    # else just normal search (title, description)
-    else
-      # Build initial query w/ pagination
-      transcripts = Transcript
-        .select('transcripts.*, COALESCE(collections.title, \'\') as collection_title, \'\' AS guess_text, \'\' AS original_text, 0 AS start_time')
-        .joins('LEFT OUTER JOIN collections ON collections.id = transcripts.collection_id')
-
-      # Check for query
-      transcripts = transcripts.search_default(options[:q]) if options[:q].present? && !options[:q].blank?
-    end
-
-    # Paginate
-    transcripts = transcripts.where("transcripts.project_uid = :project_uid AND transcripts.is_published = :is_published", {project_uid: ENV['PROJECT_ID'], is_published: 1}).paginate(:page => options[:page], :per_page => per_page)
+        .where("transcripts.lines > 0 AND transcripts.project_uid = :project_uid AND transcripts.is_published = :is_published", {project_uid: ENV['PROJECT_ID'], is_published: 1})
 
     # Check for collection filter
     transcripts = transcripts.where("transcripts.collection_id = :collection_id", {collection_id: options[:collection_id].to_i}) if options[:collection_id].present?
-
+    transcripts = transcripts.where("transcripts.title ILIKE '%#{options[:q]}%' OR transcripts.description ILIKE '%#{options[:q]}%'") if options[:q] && options[:q].present?
     # Check for sort
-    transcripts = transcripts.order("transcripts.#{sort_by} #{sort_order}")
+    transcripts.paginate(:page => options[:page], :per_page => per_page).order("transcripts.#{sort_by} #{sort_order}")
   end
 
   def updateFromHash(contents)

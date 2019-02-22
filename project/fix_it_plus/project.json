@@ -23,7 +23,7 @@
     "minLinesForConsensus": 2,
     "minLinesForConsensusNoEdits": 2,
     "minPercentConsensus": 0.5,
-    "lineDisplayMethod": "original",
+    "lineDisplayMethod": "guess",
     "superUserHiearchy": 50
   },
   "menus": {

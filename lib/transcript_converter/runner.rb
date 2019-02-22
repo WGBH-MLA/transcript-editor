@@ -24,6 +24,7 @@ module TranscriptConverter
 
     def readers
       @readers ||= transcript_files.map do |file|
+        next unless File.exist?(file.path)
         TranscriptConverter::Reader.factory(File.extname(File.basename(file.path)), file)
       end
     end

@@ -13,7 +13,7 @@ module TranscriptConverter
       end
 
       def run!
-        puts "Converting file: #{content['file_name']}.json"
+        puts "Converting file: #{content['file_name']}.json" 
         create_file
       end
 
