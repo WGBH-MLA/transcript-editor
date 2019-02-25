@@ -46,6 +46,8 @@ gem 'rails_12factor'
 # For debugging
 gem 'pry'
 
+gem 'passenger'
+
 # Use unicorn on linux only
 platforms :ruby do # linux
   gem 'unicorn'

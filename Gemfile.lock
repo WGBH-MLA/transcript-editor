@@ -108,6 +108,9 @@ GEM
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
     orm_adapter (0.5.0)
+    passenger (6.0.2)
+      rack
+      rake (>= 0.8.1)
     pg (0.18.4)
     pg_search (1.0.5)
       activerecord (>= 3.1)
@@ -198,6 +201,7 @@ DEPENDENCIES
   newrelic_rpm
   omniauth-facebook
   omniauth-google-oauth2
+  passenger
   pg
   pg_search
   popuparchive
@@ -212,4 +216,4 @@ DEPENDENCIES
   will_paginate
 
 BUNDLED WITH
-   1.13.6
+   1.16.4
