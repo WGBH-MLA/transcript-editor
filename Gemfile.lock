@@ -111,7 +111,7 @@ GEM
     passenger (6.0.2)
       rack
       rake (>= 0.8.1)
-    pg (0.18.4)
+    pg (1.1.4)
     pg_search (1.0.5)
       activerecord (>= 3.1)
       activesupport (>= 3.1)
@@ -202,7 +202,7 @@ DEPENDENCIES
   omniauth-facebook
   omniauth-google-oauth2
   passenger
-  pg
+  pg (= 1.1.4)
   pg_search
   popuparchive
   pry
