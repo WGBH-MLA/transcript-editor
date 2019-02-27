@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.5'
 
 # Use PostgreSQL as the database for Active Record
-gem 'pg' #, '1.1.4'
+gem 'pg', '0.18.4' #, '1.1.4'
 gem 'pg_search'
 gem 'will_paginate'
 
