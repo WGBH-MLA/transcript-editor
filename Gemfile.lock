@@ -202,7 +202,7 @@ DEPENDENCIES
   omniauth-facebook
   omniauth-google-oauth2
   passenger
-  pg (= 1.1.4)
+  pg
   pg_search
   popuparchive
   pry
