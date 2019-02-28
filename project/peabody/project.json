@@ -23,7 +23,8 @@
   },
   "menus": {
     "header": [
-      {"label": "Browse", "url": "/"}
+      {"label": "Browse", "url": "/"},
+      {"label": "About", "url": "/page/about"}
     ],
     "footer": [
       {"label": "Terms and Conditions", "url": "/page/toc"},
