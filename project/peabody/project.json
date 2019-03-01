@@ -14,10 +14,10 @@
   ],
   "authProviders": [{ "name": "google", "label": "Google", "path": "/auth/google_oauth2" }],
   "consensus": {
-    "maxLineEdits": 2,
-    "minLinesForConsensus": 2,
-    "minLinesForConsensusNoEdits": 2,
-    "minPercentConsensus": 0.5,
+    "maxLineEdits": 1,
+    "minLinesForConsensus": 1,
+    "minLinesForConsensusNoEdits": 1,
+    "minPercentConsensus": 1,
     "lineDisplayMethod": "original",
     "superUserHiearchy": 50
   },
