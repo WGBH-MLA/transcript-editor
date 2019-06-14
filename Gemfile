@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.5'
+gem 'rails', '4.2.10'
 
 # Use PostgreSQL as the database for Active Record
 gem 'pg'
@@ -26,7 +26,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'figaro'
 
 # User management / auth
-gem 'devise_token_auth'
+gem 'devise_token_auth', '0.1.36'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 
