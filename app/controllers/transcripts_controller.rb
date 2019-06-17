@@ -1,7 +1,7 @@
 class TranscriptsController < ApplicationController
   include ActionController::MimeResponds
 
-  before_action :set_transcript, only: [:show, :update, :destroy]
+  before_action :set_transcript, only: [:show, :update, :destroy, :aapb]
 
   # GET /transcripts.json
   def index
@@ -49,6 +49,14 @@ class TranscriptsController < ApplicationController
           @user_flags = Flag.getByTranscriptSession(@transcript.id, session.id)
         end
       }
+    end
+  end
+
+  # Adds endpoint for AAPB formatted transcript
+  def aapb
+    respond_to do |format|
+      format.html { redirect_to action: 'aapb', id: @transcript.uid, format: 'json' }
+      format.json
     end
   end
 
