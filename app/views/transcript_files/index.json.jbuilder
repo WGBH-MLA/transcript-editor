@@ -6,6 +6,7 @@ json.entries @transcripts do |transcript|
     json.json transcript_file_url(transcript, format: :json)
     json.vtt transcript_file_url(transcript, format: :vtt)
     json.text transcript_file_url(transcript, format: :text)
+    json.aapb aapb_transcript_url(transcript, format: :json)
   end
 end
 
