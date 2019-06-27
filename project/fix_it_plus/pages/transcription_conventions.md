@@ -36,5 +36,10 @@
       <td>For speech that is difficult or impossible to understand, use question marks before and after</td>
       <td>“And she told me that ?I should just leave?”, “Her name was ?inaudible?”</td>
     </tr>
+     <tr>
+      <td>Multiple Speakers</td>
+      <td>Indicate each speaker in brackets before the words they say; if people are speaking over each other, transcribe one person's words and then the next person's words</td>
+      <td>"[Host]: Yes, I wanted to ask you about that [Guest]: couldn't believe that's how she felt.", "leads us to our next question. [Different speaker]: Well, I actually wanted to add"</td>
+    </tr>
   </tbody>
 </table>
