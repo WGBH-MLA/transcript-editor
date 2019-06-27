@@ -13,7 +13,7 @@ class AAPBRecordTest < ActiveSupport::TestCase
   end
 
   test "#pbcore_url" do
-    assert aapb_record.pbcore_url == 'http://americanarchive.org/catalog/cpb-aacip_301-00000079.pbcore'
+    assert aapb_record.pbcore_url == 'https://americanarchive.org/catalog/cpb-aacip_301-00000079.pbcore'
   end
 
   test "#pbcore_doc" do
@@ -33,15 +33,15 @@ class AAPBRecordTest < ActiveSupport::TestCase
   end
 
   test "#aapb_url" do
-    assert aapb_record.aapb_url == "http://americanarchive.org/catalog/cpb-aacip_301-00000079"
+    assert aapb_record.aapb_url == "https://americanarchive.org/catalog/cpb-aacip_301-00000079"
   end
 
   test "#audio_url" do
-    assert aapb_record.audio_url == "http://americanarchive.org/media/cpb-aacip_301-00000079?part=1"
+    assert aapb_record.audio_url == "https://americanarchive.org/media/cpb-aacip_301-00000079?part=1"
   end
 
   test "#image_url" do
-    assert aapb_record.image_url == "http://americanarchive.org/thumbs/audio-digitized.jpg"
+    assert aapb_record.image_url == "https://americanarchive.org/thumbs/audio-digitized.jpg"
   end
 
   test "#transcript_url" do

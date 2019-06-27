@@ -14,7 +14,7 @@ class AAPBRecord
   end
 
   def aapb_url
-    @aapb_url ||= "http://americanarchive.org/catalog/#{uid}"
+    @aapb_url ||= "https://americanarchive.org/catalog/#{uid}"
   end
 
   def audio_url
@@ -22,7 +22,7 @@ class AAPBRecord
   end
 
   def pbcore_url
-    @pbcore_url ||= "http://americanarchive.org/catalog/#{uid}.pbcore"
+    @pbcore_url ||= "https://americanarchive.org/catalog/#{uid}.pbcore"
   end
 
   def pbcore
@@ -47,9 +47,9 @@ class AAPBRecord
       when MOVING_IMAGE
         "#{S3_BASE}/thumbnail/#{uid}.jpg"
       when SOUND
-        'http://americanarchive.org/thumbs/audio-digitized.jpg'
+        'https://americanarchive.org/thumbs/audio-digitized.jpg'
       else
-        'http://americanarchive.org/thumbs/other.jpg'
+        'https://americanarchive.org/thumbs/other.jpg'
       end
   end
 
@@ -119,7 +119,7 @@ class AAPBRecord
   end
 
   def media_srcs
-    @media_srcs ||= (1..ci_ids.count).map { |part| "http://americanarchive.org/media/#{uid}?part=#{part}" }
+    @media_srcs ||= (1..ci_ids.count).map { |part| "https://americanarchive.org/media/#{uid}?part=#{part}" }
   end
 
   def media_type

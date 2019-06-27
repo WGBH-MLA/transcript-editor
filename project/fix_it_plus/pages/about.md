@@ -10,7 +10,7 @@ Help us preserve history for future generations. Your corrections will be made a
 
 # About the AAPB
 
-The American Archive of Public Broadcasting (AAPB) is a collaboration between the Library of Congress and the WGBH Educational Foundation to coordinate a national effort to preserve at-risk public media before its content is lost to posterity and provide a central web portal for access to the unique programming that public stations have aired over the past 60 years. To date, over 40,000 hours of television and radio programming contributed by more than 100 public media organizations and archives across the United States have been digitized for long-term preservation and access. The entire collection is available on location at WGBH and the Library of Congress, and more than 18,000 programs are available online at [americanarchive.org](http://americanarchive.org/).
+The American Archive of Public Broadcasting (AAPB) is a collaboration between the Library of Congress and the WGBH Educational Foundation to coordinate a national effort to preserve at-risk public media before its content is lost to posterity and provide a central web portal for access to the unique programming that public stations have aired over the past 60 years. To date, over 40,000 hours of television and radio programming contributed by more than 100 public media organizations and archives across the United States have been digitized for long-term preservation and access. The entire collection is available on location at WGBH and the Library of Congress, and more than 18,000 programs are available online at [americanarchive.org](https://americanarchive.org/).
 
 # About IMLS
 

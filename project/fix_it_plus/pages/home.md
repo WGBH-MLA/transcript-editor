@@ -5,7 +5,7 @@
 </div>
 </div>
 <div class="container" role="contentinfo">
-<p>Help the [American Archive of Public Broadcasting](http://americanarchive.org/) fix computer-generated transcripts from thousands of historic public broadcasting programs from across the country.</p>
+<p>Help the [American Archive of Public Broadcasting](https://americanarchive.org/) fix computer-generated transcripts from thousands of historic public broadcasting programs from across the country.</p>
 
 <video src="https://s3.amazonaws.com/transcript-editor/assets/twl_sample.mp4" preload="auto" class="toggle-sound sample-video" autoplay loop muted poster="https://s3.amazonaws.com/transcript-editor/assets/twl_sample.png"></video>
 <p class="caption">An example of how the transcript editor works (click for sound)</p>

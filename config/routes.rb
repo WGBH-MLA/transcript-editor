@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   match 'transcript_lines/:id/resolve' => 'transcript_lines#resolve', :via => [:post]
   match 'search' => 'transcripts#search', :via => [:get]
 
+  # Adds route for AAPB JSON transcript
+  match 'transcripts/aapb/:id' => 'transcripts#aapb', :via => [:get], :as => :aapb_transcript
+
   # admin
   namespace :admin do
     resources :users, only: [:index, :update]
