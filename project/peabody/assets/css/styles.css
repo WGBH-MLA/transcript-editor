@@ -1,0 +1,60 @@
+.title-container {
+  min-width: 150px;
+}
+.logo {
+  padding: 0 10px;
+  float: left;
+}
+.logo-lg {
+  padding: 20px 0 0 0;
+}
+.home\.md.page {
+  max-width: none;
+  margin: -68px -10px 0;
+}
+.home\.md.page .banner {
+  background: url(/peabody/assets/img/peabody-sprite.jpg) repeat-x 0 0;
+  padding: 0 0 60px 0;
+  margin-bottom: 20px;
+}
+.home\.md.page .container {
+  max-width: 800px;
+  margin: 5px auto;
+  position: relative;
+}
+.home\.md.page h1 {
+  margin-bottom: 0;
+}
+.home\.md.page h2 {
+  margin-top: 20px;
+  margin-bottom: 0;
+  letter-spacing: 1px;
+}
+.completed-check-container {
+  padding-left: 6px;
+  padding-top: 6px;
+}
+.completed-check {
+  background-image: url('/assets/check.png');
+  background-size: contain;
+}
+.check-small {
+  height: 20px;
+  width: 20px;
+}
+.check-big {
+  height: 40px;
+  width: 40px;
+  float: left;
+}
+.completed-check-text {
+  color: #427527;
+  font-size: 1.2em;
+}
+.corrected-box {
+  margin-top: 4%;
+  background-color: #c3f6af;
+  padding: 2%;
+  padding-bottom: 4%;
+  border-radius: 8px;
+}

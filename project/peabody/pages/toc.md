@@ -1,0 +1,5 @@
+# Terms and Conditions
+
+THE FOLLOWING TERMS AND CONDITIONS GOVERN YOUR USE OF THE SITE. PLEASE READ THESE TERMS OF USE CAREFULLY BEFORE USING THIS SITE.
+
+Replace with peabody project-appropriate language!
