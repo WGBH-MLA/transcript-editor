@@ -71,7 +71,7 @@ The primary place for project configuration the file `project.json`. For now, we
 
 1. Run `bundle` - this will install all the necessary gems for this app
 2. Run `rake db:setup` to setup the database based on `config/database.yml`
-3. Run `rake db:seed RAILS_ENV=test` to populate the test database for Minitest suite.
+3. Run `rake db:seed` to populate the database with needed fictures and to populate the test database for Minitest suite.
 4. Run `rake project:load['my-project']` to load your project folder (replace *my-project* with your project name)
 5. Run `rails s` to start your server. Go to [http://localhost:3000/](http://localhost:3000/) to view your project
 
