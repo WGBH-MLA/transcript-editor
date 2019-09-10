@@ -352,11 +352,14 @@ class Transcript < ActiveRecord::Base
     webvtt.cues.each_with_index do |cue, i|
       # Remove speakers from lines
       text = cue.text.gsub(/^<v [^>]*>[ ]*/, "")
+
+      # Use next start time to avoid cutting off words in audio
+      end_time = cue == webvtt.cues[-1] ? cue.end_in_sec : webvtt.cues[i + 1].start_in_sec - 0.01
       # Add to lines
       transcript_lines << {
         :transcript_id => id,
         :start_time => (cue.start_in_sec * 1000).to_i,
-        :end_time => (cue.end_in_sec * 1000).to_i,
+        :end_time => (end_time * 1000).to_i,
         :original_text => text,
         :sequence => i
       }
