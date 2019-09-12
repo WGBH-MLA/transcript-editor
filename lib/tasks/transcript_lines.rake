@@ -1,3 +1,5 @@
+require_relative '../end_times_recalculator'
+
 namespace :transcript_lines do
 
   # Usage:
@@ -66,6 +68,15 @@ namespace :transcript_lines do
       puts "Max transcript overlap: #{transcript_max.uid} #{transcript_max.title} (#{overlap_max})"
     end
 
+  end
+
+  # Usage rake transcript_lines:recalculate_end_times['transcript_ids_file_path']
+  desc "Sets TranscriptLine end_times to be the start_times of the subsequent TranscriptLine"
+  task :recalculate_end_times, [:path] => :environment do |task, args|
+    puts "Recalculating end_times..."
+    raise "Not a valid file: #{args[:path]}" unless File.exist?(args[:path])
+
+    EndTimesRecalculator.new(args[:path]).run!
   end
 
 end

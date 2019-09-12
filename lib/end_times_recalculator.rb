@@ -8,7 +8,7 @@ class EndTimesRecalculator
     @transcripts = guids.map{ |id| Transcript.find_by(uid: id) }
   end
 
-  def run
+  def run!
     recalculate
   end
 
@@ -21,7 +21,7 @@ class EndTimesRecalculator
       transcript_lines.each_with_index do |line, i|
         # use the next transcript_line's start_time for end_time unless it's the last transcript_line
         unless line == transcript_lines[-1]
-          new_end_time = (transcript_lines[i + 1].start_time / 1000).to_i
+          new_end_time = (transcript_lines[i + 1].start_time / 1000.00)
           line.end_time = (new_end_time * 1000).to_i
           lines << line
         end
