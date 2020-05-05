@@ -1,7 +1,10 @@
 require 'restclient'
-require 'pry'
+require 'date'
+require 'json'
 
-TX_HOST = 'localhost:3000'
+TX_HOST = '127.0.0.1:80'
+
+# run with `sudo ruby scripts/workflow.rb`
 
 puts 'Oh wow!'
 puts "Lemme get this straight - you want to release some transcripts?"
@@ -35,6 +38,8 @@ end
 
 puts "Well, that was fun. Now we've got all the files we need."
 
-puts `./shellScriptToDuplicateAndPushNewFilesToS3.sh #{__dir__}/transcript-json/#{filename}`
+Dir.glob(__dir__ + "/transcript-json/*.json").each do |filename|
+  puts `./shellScriptToDuplicateAndPushNewFilesToS3.sh #{filename}`
+end
 
 puts 'Ah... That is the stuff.'
