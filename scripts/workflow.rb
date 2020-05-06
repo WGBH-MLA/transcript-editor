@@ -34,12 +34,20 @@ release_needin_ids.each do |guid|
     f << transcript_json
     puts quips.sample + " wrote #{guid} data to #{filename}."
   end
+
 end
 
 puts "Well, that was fun. Now we've got all the files we need."
 
 Dir.glob(__dir__ + "/transcript-json/*.json").each do |filename|
   puts `./shellScriptToDuplicateAndPushNewFilesToS3.sh #{filename}`
+  puts "Deleting file: #{filename}"
+  File.delete(filename)
+end
+
+release_needin_ids.each do |id|
+  puts "Updating the released flag on: #{id}"
+  RestClient.patch(TX_HOST + '/transcripts/' + id, { 'released' => true } )
 end
 
 puts 'Ah... That is the stuff.'
