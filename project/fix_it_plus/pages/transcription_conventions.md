@@ -7,39 +7,34 @@
   </thead>
   <tbody>
     <tr>
-      <td>Contractions</td>
-      <td>Transcribe as you hear them</td>
-      <td>“Shoulda”, “Didn’t”</td>
-    </tr>
-    <tr>
-      <td>Numbers</td>
-      <td>Transcribe as numerals</td>
-      <td>“11 West 40th Street”<br />“She was 40 years old.”</td>
+      <td>General Guidelines</td>
+      <td>Transcripts aare searched for specific and complete keywords. Focus on transcribing the substance of the conversation rather than speech inflections such as 'um' or partial words.</td>
+      <td></td>
     </tr>
     <tr>
       <td>Filled Pauses &amp; Hesitations</td>
-      <td>Transcribe as you hear them</td>
+      <td>Omit adding</td>
       <td>“ah”, “eh”, “um”</td>
     </tr>
     <tr>
       <td>Noise</td>
       <td>Transcribe in brackets; use descriptive language</td>
-      <td>“And then we [door slam]”, “So cold! [Brrrrr]”</td>
-    </tr>
-    <tr>
-      <td>Partial words</td>
-      <td>If someone stops speaking in the middle of a word, transcribe as much of the word as they say; follow it with a dash</td>
-      <td>“Tes- Testing”, “Absolu- Absolutely”</td>
+      <td>[Intro music], “And then we [door slam]”, “So cold! [Brrrrr]”</td>
     </tr>
     <tr>
       <td>Hard-to-understand</td>
-      <td>For speech that is difficult or impossible to understand, use question marks before and after</td>
-      <td>“And she told me that ?I should just leave?”, “Her name was ?inaudible?”</td>
+      <td>For speech that is difficult or impossible to understand, use brackets before and after</td>
+      <td>“And she told me that [inaudible] should just leave?”</td>
     </tr>
-     <tr>
-      <td>Multiple Speakers</td>
-      <td>Indicate each speaker in brackets before the words they say; if people are speaking over each other, transcribe one person's words and then the next person's words</td>
-      <td>"[Host]: Yes, I wanted to ask you about that [Guest]: couldn't believe that's how she felt.", "leads us to our next question. [Different speaker]: Well, I actually wanted to add"</td>
+    <tr>
+      <td>Names</td>
+      <td>For names that are difficult to transcribe, use quotation marks before and after</td>
+      <td>“Christina ?Mimis?”</td>
+    </tr>
+    <tr>
+      <td>Partial words</td>
+      <td>If someone stops speaking in the middle of a word, transcribe the completed word</td>
+      <td>“Tes- Testing”, “Absolu- Absolutely”</td>
     </tr>
   </tbody>
 </table>
