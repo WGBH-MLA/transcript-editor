@@ -1,4 +1,5 @@
 require_relative '../end_times_recalculator'
+require_relative '../zero_start_timer'
 
 namespace :transcript_lines do
 
@@ -77,6 +78,16 @@ namespace :transcript_lines do
     raise "Not a valid file: #{args[:path]}" unless File.exist?(args[:path])
 
     EndTimesRecalculator.new(args[:path]).run!
+  end
+
+
+  # Usage rake transcript_lines:zero_start_times['transcript_ids_file_path']
+  desc "Sets the first TranscriptLine start_time to 0"
+  task :zero_start_times, [:path] => :environment do |task, args|
+    puts "Zero-ing start_times..."
+    raise "Not a valid file: #{args[:path]}" unless File.exist?(args[:path])
+
+    ZeroStartTimer.new(args[:path]).run!
   end
 
 end
