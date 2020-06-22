@@ -18,8 +18,10 @@ class ZeroStartTimer
     lines = []
     transcripts.each do |transcript|
       transcript_line = transcript.transcript_lines.sort_by(&:sequence).first
-      transcript_line.start_time = 0
-      lines << transcript_line
+      unless transcript_line.nil?
+        transcript_line.start_time = 0
+        lines << transcript_line
+      end
     end
 
     TranscriptLine.transaction do
