@@ -71,11 +71,12 @@ class AAPBRecord
   private
 
   def process_id(id)
-    raise "Unexpected GUID format" unless id =~ /^cpb-aacip(\/|_)\d{2,3}-\w{8,10}/
+    raise "Unexpected GUID format" unless id =~ /^cpb-aacip[\/_-]\d{2,3}-\w{8,10}/
+
     case id
     when /^cpb-aacip\/{1}/
       return id.sub(/\//, '_')
-    when /^cpb-aacip_{1}/
+    when /^cpb-aacip(_|-){1}/
       return id
     else
       raise "Unable to parse AAPB ID"
