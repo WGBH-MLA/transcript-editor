@@ -17,10 +17,11 @@ class TranscriptReleaser
 
     @right_now = DateTime.now
     @release_needin_ids = if @mode == "COMPLETED"
+                            puts "Alright, we're going to get all them completed transcript IDs..."
                             get_from_release_count_json
                           elsif @mode == "ALL"
                             puts "Alright, we're going to get all them transcript IDs..."
-                            Transcript.all.map(&:uid)
+                            get_from_all_uids_json
                           end
   end
 
@@ -42,9 +43,9 @@ class TranscriptReleaser
     JSON.parse(response.body)['data']
   end
 
-  def get_from_release_all_json
+  def get_from_all_uids_json
     puts "Alright, first we're going to have to ask #{TX_HOST} for all the Transcript IDs..."
-    response = RestClient.get(TX_HOST + '/all_ids.json')
+    response = RestClient.get(TX_HOST + '/all_uids.json')
     raise 'Didnt get a response for release_count...' unless response.body
     JSON.parse(response.body)['data']
   end
@@ -82,9 +83,9 @@ class TranscriptReleaser
       File.delete(filename)
     end
 
-    set_released_flag_for_completed_transcripts if @mode == 'ALL'
+    set_released_flag_for_completed_transcripts if @mode == 'COMPLETED'
     puts 'Ah... That is the stuff.'
   end
 end
 
-# TranscriptReleaser.new(ARGV)
+TranscriptReleaser.new(ARGV).release
