@@ -92,6 +92,10 @@ class TranscriptsController < ApplicationController
     return render json: {data: Transcript.where(released: false, percent_completed: 100).all.map {|t| t.uid }}, status: 200
   end
 
+  def all_uids
+    return render json: {data: Transcript.all.map {|t| t.uid }}, status: 200
+  end
+
   private
 
     def set_transcript

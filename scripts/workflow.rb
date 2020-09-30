@@ -42,6 +42,13 @@ class TranscriptReleaser
     JSON.parse(response.body)['data']
   end
 
+  def get_from_release_all_json
+    puts "Alright, first we're going to have to ask #{TX_HOST} for all the Transcript IDs..."
+    response = RestClient.get(TX_HOST + '/all_ids.json')
+    raise 'Didnt get a response for release_count...' unless response.body
+    JSON.parse(response.body)['data']
+  end
+
   def set_released_flag_for_completed_transcripts
     @release_needin_ids.each do |id|
       puts "Updating the released flag on: #{id}"
