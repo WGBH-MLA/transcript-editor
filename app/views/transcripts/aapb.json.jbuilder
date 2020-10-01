@@ -1,5 +1,6 @@
 json.language "en-US"
 json.id @transcript.uid
+json.percent_completed @transcript.percent_completed
 
 lines = @transcript.transcript_lines.each do |line|
   line.start_time /= 1000
