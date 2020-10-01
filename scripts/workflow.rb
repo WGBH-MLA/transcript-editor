@@ -1,60 +1,20 @@
 require 'restclient'
 require 'date'
 require 'json'
+require 'optparse'
 
 TX_HOST = '127.0.0.1:80'
 
-# run with `sudo ruby scripts/workflow.rb`
+# run with `bundle exec ruby workflow.rb [--option]`
 
 class TranscriptReleaser
 
-  REGISTERED_MODES = [ "ALL", "COMPLETED" ]
-  QUIPS = ['Wow, neat. We ', 'Great news - we ','You are not going to believe this! We ', 'Good golly! We ']
+  QUIPS = ['Wow, neat. We ', 'Great news - we ','You are not going to believe this! We ', 'Good golly! We ', 'Holy cow! We ']
 
-  def initialize(argv)
-    @mode = argv.shift.gsub("--","").upcase
-    raise "Unrecognized release mode. Must be set to --completed or --all on script init." unless REGISTERED_MODES.include?(@mode)
-
+  def initialize(completed: false , all: false)
+    raise "`completed` or `all` must be set to true" if [ completed, all ] == [ false, false ]
     @right_now = DateTime.now
-    @release_needin_ids = if @mode == "COMPLETED"
-                            puts "Alright, we're going to get all them completed transcript IDs..."
-                            get_from_release_count_json
-                          elsif @mode == "ALL"
-                            puts "Alright, we're going to get all them transcript IDs..."
-                            get_from_all_uids_json
-                          end
-  end
-
-  def create_guid_file
-    # write guids to file
-    puts "Now we're going to write those release guids (#{ @release_needin_ids.count }) to a file..."
-
-    File.open("ready_for_release_guids_#{ @right_now }.txt", "w+") do |f|
-      @release_needin_ids.each do |guid|
-        f << guid + "\n"
-      end
-    end
-  end
-
-  def get_from_release_count_json
-    puts "Alright, first we're going to have to ask #{TX_HOST} which ones are ready to release..."
-    response = RestClient.get(TX_HOST + '/release_count.json')
-    raise 'Didnt get a response for release_count...' unless response.body
-    JSON.parse(response.body)['data']
-  end
-
-  def get_from_all_uids_json
-    puts "Alright, first we're going to have to ask #{TX_HOST} for all the Transcript IDs..."
-    response = RestClient.get(TX_HOST + '/all_uids.json')
-    raise 'Didnt get a response for release_count...' unless response.body
-    JSON.parse(response.body)['data']
-  end
-
-  def set_released_flag_for_completed_transcripts
-    @release_needin_ids.each do |id|
-      puts "Updating the released flag on: #{id}"
-      RestClient.patch(TX_HOST + '/transcripts/' + id, { 'released' => true } )
-    end
+    @completed, @all = completed, all
   end
 
   def release
@@ -62,10 +22,17 @@ class TranscriptReleaser
     puts "Lemme get this straight - you want to release some transcripts?"
     puts "Right now, at #{@right_now}?"
 
-    create_guid_file
+    release_needin_ids = if @completed
+                          get_from_release_count_json
+                        elsif @all
+                          get_from_all_uids_json
+                        end
+
+    puts "Now we're going to write those release guids (#{ release_needin_ids.count }) to a file..."
+    create_guid_file(release_needin_ids)
 
     filename = nil
-    @release_needin_ids.each do |guid|
+    release_needin_ids.each do |guid|
       transcript_json = RestClient.get(TX_HOST + "/transcripts/aapb/#{ guid }.json")
       # filename = "transcript-#{ right_now }-#{guid}.json"
       filename = "#{guid.gsub('_','-')}-transcript.json"
@@ -83,9 +50,53 @@ class TranscriptReleaser
       File.delete(filename)
     end
 
-    set_released_flag_for_completed_transcripts if @mode == 'COMPLETED'
+    set_released_flag_for_completed_transcripts(release_needin_ids) if @completed
+
     puts 'Ah... That is the stuff.'
+  end
+
+  private
+
+  def create_guid_file(guids)
+    # write guids to file
+    File.open("ready_for_release_guids_#{ @right_now }.txt", "w+") do |f|
+      guids.each do |guid|
+        f << guid + "\n"
+      end
+    end
+  end
+
+  def get_from_release_count_json
+    puts "Alright, first we're going to have to ask #{TX_HOST} which ones are ready to release..."
+    response = RestClient.get(TX_HOST + '/release_count.json')
+    raise 'Didnt get a response for release_count...' unless response.body
+    JSON.parse(response.body)['data']
+  end
+
+  def get_from_all_uids_json
+    puts "Alright, first we're going to have to ask #{TX_HOST} for all the Transcript IDs..."
+    response = RestClient.get(TX_HOST + '/all_uids.json')
+    raise 'Didnt get a response for all_uids...' unless response.body
+    JSON.parse(response.body)['data']
+  end
+
+  def set_released_flag_for_completed_transcripts(guids)
+    guids.each do |id|
+      puts "Updating the released flag on: #{id}"
+      RestClient.patch(TX_HOST + '/transcripts/' + id, { 'released' => true } )
+    end
   end
 end
 
-TranscriptReleaser.new(ARGV).release
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: example.rb [options]"
+  opts.on("-c", "--complete", "Release completed, but unreleased, transcripts to S3") do |c|
+    options[:completed] = c
+  end
+  opts.on("-a", "--all", "Release ALL the transcripts to S3 with blatant disregard for completeness") do |a|
+    options[:all] = a
+  end
+end.parse!
+
+TranscriptReleaser.new(options).release
