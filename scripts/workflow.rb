@@ -12,7 +12,8 @@ class TranscriptReleaser
   QUIPS = ['Wow, neat. We ', 'Great news - we ','You are not going to believe this! We ', 'Good golly! We ', 'Holy cow! We ']
 
   def initialize(completed: false , all: false)
-    raise "`completed` or `all` must be set to true" if [ completed, all ] == [ false, false ]
+    raise "`completed` and `all` cannot be set to the same value. completed: #{completed} | all: #{all}" if completed == all
+
     @right_now = DateTime.now
     @completed, @all = completed, all
   end
