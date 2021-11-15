@@ -55,6 +55,10 @@ gem 'passenger'
 # for the screep
 gem 'rest-client'
 
+# for the meedjia
+gem 'sony_ci_api', git: 'https://github.com/WGBH-MLA/sony_ci_api_rewrite.git', branch: 'main'
+
+
 # Use unicorn on linux only
 platforms :ruby do # linux
   gem 'unicorn'
