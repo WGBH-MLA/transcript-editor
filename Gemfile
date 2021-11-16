@@ -1,10 +1,9 @@
 source 'https://rubygems.org'
 
-ruby '2.3.0'
+ruby '2.7.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.10'
-
+gem 'rails', '~> 4'
 # Use PostgreSQL as the database for Active Record
 gem 'pg', '0.21.0' #, '1.1.4'
 
@@ -23,14 +22,13 @@ gem 'dalli'
 
 # Back-end App is treated mostly as a JSON API
 gem 'jbuilder', '~> 2.0' # Build JSON APIs with ease
-gem 'rails-api' # pare down rails to act like an API; disabling unnecessary middleware
 gem 'rack-cors', :require => 'rack/cors'
 
 # Rails app configuration / ENV management
 gem 'figaro'
 
 # User management / auth
-gem 'devise_token_auth', '0.1.36'
+gem 'devise_token_auth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 
@@ -40,7 +38,6 @@ gem 'ejs'
 gem 'execjs'
 
 # For audio transcripts
-gem 'popuparchive'
 gem 'webvtt-ruby'
 
 # Error logging
@@ -57,6 +54,7 @@ gem 'rest-client'
 
 # for the meedjia
 gem 'sony_ci_api', git: 'https://github.com/WGBH-MLA/sony_ci_api_rewrite.git', branch: 'main'
+gem 'bigdecimal', '1.4.2'
 
 
 # Use unicorn on linux only
