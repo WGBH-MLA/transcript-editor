@@ -158,47 +158,8 @@ ActiveRecord::Schema.define(version: 20191104181458) do
 
   add_index "transcript_statuses", ["name"], name: "index_transcript_statuses_on_name", unique: true, using: :btree
 
-  create_table "transcripts", force: :cascade do |t|
-    t.string   "uid",                     default: "",        null: false
-    t.string   "title"
-    t.text     "description"
-    t.string   "url"
-    t.string   "audio_url"
-    t.string   "image_url"
-    t.integer  "collection_id",           default: 0,         null: false
-    t.integer  "vendor_id",               default: 0,         null: false
-    t.string   "vendor_identifier",       default: "",        null: false
-    t.integer  "duration",                default: 0,         null: false
-    t.integer  "lines",                   default: 0,         null: false
-    t.text     "notes"
-    t.integer  "transcript_status_id",    default: 1,         null: false
-    t.integer  "order",                   default: 0,         null: false
-    t.integer  "created_by",              default: 0,         null: false
-    t.string   "batch_id",                default: "unknown", null: false
-    t.datetime "transcript_retrieved_at"
-    t.datetime "transcript_processed_at"
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
-    t.jsonb    "vendor_audio_urls",       default: [],        null: false
-    t.string   "project_uid",             default: "",        null: false
-    t.integer  "percent_completed",       default: 0,         null: false
-    t.integer  "lines_completed",         default: 0,         null: false
-    t.integer  "percent_edited",          default: 0,         null: false
-    t.integer  "lines_edited",            default: 0,         null: false
-    t.integer  "is_published",            default: 1,         null: false
-    t.integer  "percent_reviewing",       default: 0,         null: false
-    t.integer  "lines_reviewing",         default: 0,         null: false
-    t.integer  "users_contributed",       default: 0,         null: false
-    t.integer  "can_download",            default: 1,         null: false
-    t.boolean  "released",                default: false
-  end
-
-  add_index "transcripts", ["collection_id"], name: "index_transcripts_on_collection_id", using: :btree
-  add_index "transcripts", ["duration"], name: "index_transcripts_on_duration", using: :btree
-  add_index "transcripts", ["project_uid"], name: "index_transcripts_on_project_uid", using: :btree
-  add_index "transcripts", ["transcript_status_id"], name: "index_transcripts_on_transcript_status_id", using: :btree
-  add_index "transcripts", ["uid"], name: "index_transcripts_on_uid", unique: true, using: :btree
-  add_index "transcripts", ["vendor_id"], name: "index_transcripts_on_vendor_id", using: :btree
+# Could not dump table "transcripts" because of following FrozenError
+#   can't modify frozen String: "false"
 
   create_table "user_roles", force: :cascade do |t|
     t.string   "name",        default: "", null: false
