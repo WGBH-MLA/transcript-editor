@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   match 'dashboard' => 'default#index', :via => [:get]
   match 'transcript_lines/:id/resolve' => 'transcript_lines#resolve', :via => [:post]
   match 'search' => 'transcripts#search', :via => [:get]
+  match 'media/:id' => 'media#show', :via => [:get]
+
 
   # Adds route for AAPB JSON transcript
   match 'transcripts/aapb/:id' => 'transcripts#aapb', :via => [:get], :as => :aapb_transcript

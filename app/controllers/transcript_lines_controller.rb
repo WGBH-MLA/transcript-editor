@@ -19,4 +19,8 @@ class TranscriptLinesController < ApplicationController
       @transcript_line = TranscriptLine.find(params[:id])
     end
 
+    def transcript_line_params
+      params.require(:transcript_line).permit(:transcript_id, :text)
+    end 
+
 end

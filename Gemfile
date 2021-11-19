@@ -3,9 +3,9 @@ source 'https://rubygems.org'
 ruby '2.7.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4'
+gem 'rails', '~> 6'
 # Use PostgreSQL as the database for Active Record
-gem 'pg', '0.21.0' #, '1.1.4'
+gem 'pg', '1.1.4'
 
 # for ruby 2.3
 gem 'pg_search', '2.1.4'
@@ -55,6 +55,7 @@ gem 'rest-client'
 # for the meedjia
 gem 'sony_ci_api', git: 'https://github.com/WGBH-MLA/sony_ci_api_rewrite.git', branch: 'main'
 gem 'bigdecimal', '1.4.2'
+gem 'rexml'
 
 
 # Use unicorn on linux only

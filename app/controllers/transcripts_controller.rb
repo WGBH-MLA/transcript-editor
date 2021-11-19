@@ -45,8 +45,8 @@ class TranscriptsController < ApplicationController
           @user_role = current_user.user_role
           @user_flags = Flag.getByTranscriptUser(@transcript.id, current_user.id)
         else
-          @user_edits = TranscriptEdit.getByTranscriptSession(@transcript.id, session.id)
-          @user_flags = Flag.getByTranscriptSession(@transcript.id, session.id)
+          @user_edits = TranscriptEdit.getByTranscriptSession(@transcript.id, session.id.to_s)
+          @user_flags = Flag.getByTranscriptSession(@transcript.id, session.id.to_s)
         end
       }
     end
@@ -107,6 +107,6 @@ class TranscriptsController < ApplicationController
     end
 
     def search_params
-      params.permit(:sort_by, :order, :collection_id, :q, :page, :deep)
+      params.permit(:sort_by, :order, :collection_id, :q, :page, :deep, :format)
     end
 end

@@ -143,7 +143,7 @@ class TranscriptLine < ActiveRecord::Base
     status_changed = (status_id != transcript_line_status_id)
     old_status_id = transcript_line_status_id
     if status_changed || best_guess_text != guess_text
-      update_attributes(transcript_line_status_id: status_id, guess_text: best_guess_text, text: final_text)
+      update(transcript_line_status_id: status_id, guess_text: best_guess_text, text: final_text)
 
       # Update transcript if line status has changed
       if status_changed
@@ -177,7 +177,7 @@ class TranscriptLine < ActiveRecord::Base
       best_speaker_id = groups[0][:speaker_id]
     end
 
-    update_attributes(speaker_id: best_speaker_id) if best_speaker_id != speaker_id
+    update(speaker_id: best_speaker_id) if best_speaker_id != speaker_id
   end
 
   private

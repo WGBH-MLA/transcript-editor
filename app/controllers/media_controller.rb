@@ -10,7 +10,7 @@ class MediaController < ApplicationController
     if transcript
 
       pbcore = RestClient.get(AAPB_HOST + "/catalog/#{ guid }.pbcore")
-      doc = Nokogiri::XML(xml)
+      doc = Nokogiri::XML(pbcore)
       doc.remove_namespaces!
       ci_node = doc.xpath( %(/*/pbcoreIdentifier[@source="Sony Ci"]) ).first
       ci_id = ci_node.text if ci_node

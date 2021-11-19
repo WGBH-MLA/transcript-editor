@@ -163,7 +163,7 @@ class Transcript < ActiveRecord::Base
       new_percent_completed = (1.0 * new_lines_completed / lines * 100).round.to_i
       new_percent_reviewing = (1.0 * new_lines_reviewing / lines * 100).round.to_i
 
-      update_attributes(lines_edited: new_lines_edited, lines_completed: new_lines_completed, lines_reviewing: new_lines_reviewing, percent_edited: new_percent_edited, percent_completed: new_percent_completed, percent_reviewing: new_percent_reviewing)
+      update(lines_edited: new_lines_edited, lines_completed: new_lines_completed, lines_reviewing: new_lines_reviewing, percent_edited: new_percent_edited, percent_completed: new_percent_completed, percent_reviewing: new_percent_reviewing)
     end
   end
 
@@ -188,7 +188,7 @@ class Transcript < ActiveRecord::Base
 
     if transcript_lines.length > 0
       # remove existing lines
-      TranscriptLine.destroy_all(:transcript_id => id)
+      TranscriptLine.where(transcript_id: id).destroy_all
 
       # create the lines
       TranscriptLine.create(transcript_lines)
@@ -198,13 +198,13 @@ class Transcript < ActiveRecord::Base
       transcript_duration = _getDurationFromHash(contents)
       vendor_audio_urls = _getAudioUrlsFromHash(contents)
 
-      update_attributes(lines: transcript_lines.length, transcript_status_id: transcript_status[:id], duration: transcript_duration, vendor_audio_urls: vendor_audio_urls, transcript_retrieved_at: DateTime.now)
+      update(lines: transcript_lines.length, transcript_status_id: transcript_status[:id], duration: transcript_duration, vendor_audio_urls: vendor_audio_urls, transcript_retrieved_at: DateTime.now)
       puts "Created #{transcript_lines.length} lines from transcript #{uid}"
 
     # transcript is still processing
     elsif contents["audio_files"] && contents["audio_files"].length > 0
       transcript_status = TranscriptStatus.find_by_name("transcript_processing")
-      update_attributes(transcript_status_id: transcript_status[:id])
+      update(transcript_status_id: transcript_status[:id])
       puts "Transcript #{uid} still processing with status: #{contents["audio_files"][0]["current_status"]}"
 
     # no audio recognized
@@ -218,7 +218,7 @@ class Transcript < ActiveRecord::Base
 
     if transcript_lines.length > 0
       # remove existing lines
-      TranscriptLine.destroy_all(:transcript_id => id)
+      TranscriptLine.where(transcript_id: id).destroy_all
 
       # create the lines
       TranscriptLine.create(transcript_lines)
@@ -226,8 +226,7 @@ class Transcript < ActiveRecord::Base
       # update transcript
       transcript_status = TranscriptStatus.find_by_name("transcript_downloaded")
       transcript_duration = _getDurationFromWebVTT(webvtt)
-
-      update_attributes(lines: transcript_lines.length, transcript_status_id: transcript_status[:id], duration: transcript_duration, transcript_retrieved_at: DateTime.now)
+      update(lines: transcript_lines.length,transcript_status_id: transcript_status[:id],duration: transcript_duration,transcript_retrieved_at: DateTime.now)
       puts "Created #{transcript_lines.length} lines from transcript #{uid}"
     end
 
@@ -235,7 +234,7 @@ class Transcript < ActiveRecord::Base
     speaker_ids = TranscriptSpeaker.select("speaker_id").where(:transcript_id => id)
     speaker_ids = speaker_ids.map {|i| i.speaker_id }
     Speaker.where(id: speaker_ids).delete_all
-    TranscriptSpeaker.destroy_all(:transcript_id => id)
+    TranscriptSpeaker.where(transcript_id: id).destroy_all
 
     # Check for speakers
     _getSpeakersWebVTT(webvtt)
@@ -266,7 +265,7 @@ class Transcript < ActiveRecord::Base
     _users_contributed = getUsersContributedCount()
 
     # Update
-    update_attributes(lines_edited: _lines_edited, lines_completed: _lines_completed, lines_reviewing: _lines_reviewing, percent_edited: _percent_edited, percent_completed: _percent_completed, percent_reviewing: _percent_reviewing, users_contributed: _users_contributed)
+    update(lines_edited: _lines_edited, lines_completed: _lines_completed, lines_reviewing: _lines_reviewing, percent_edited: _percent_edited, percent_completed: _percent_completed, percent_reviewing: _percent_reviewing, users_contributed: _users_contributed)
   end
 
   def self.search(options)
@@ -281,9 +280,11 @@ class Transcript < ActiveRecord::Base
     sort_by = "percent_completed" if sort_by.present? && sort_by=="completeness"
     sort_by = "title" if !Transcript.sortableFields().include? sort_by
     transcripts = nil
+
     transcripts = Transcript.select('transcripts.*, COALESCE(collections.title, \'\') as collection_title')
         .joins('LEFT OUTER JOIN collections ON collections.id = transcripts.collection_id')
         .where("transcripts.lines > 0 AND transcripts.project_uid = :project_uid AND transcripts.is_published = :is_published AND transcripts.released = false", {project_uid: ENV['PROJECT_ID'], is_published: 1})
+
 
     # Check for collection filter
     transcripts = transcripts.where("transcripts.collection_id = :collection_id", {collection_id: options[:collection_id].to_i}) if options[:collection_id].present?
@@ -294,14 +295,14 @@ class Transcript < ActiveRecord::Base
 
   def updateFromHash(contents)
     vendor_audio_urls = _getAudioUrlsFromHash(contents)
-    update_attributes(vendor_audio_urls: vendor_audio_urls)
+    update(vendor_audio_urls: vendor_audio_urls)
   end
 
   def updateUsersContributed(edits=[])
     _users_contributed = getUsersContributedCount(edits)
 
     if _users_contributed != users_contributed
-      update_attributes(users_contributed: _users_contributed)
+      update(users_contributed: _users_contributed)
     end
   end
 

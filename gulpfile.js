@@ -14,19 +14,19 @@ var rename = require('gulp-rename');
 
 var sass = require('gulp-sass');
 
-gulp.task('sass', function () {
+gulp.task('sass', function(){
   gulp.src(config.sass.src)
     .pipe(sass.sync().on('error', sass.logError))
     .pipe(sass(config.sass.opt))
     .pipe(gulp.dest(config.sass.dest));
-});
+})
 
 // Javascript compilation
 
 var uglify = require('gulp-uglify');
 
 gulp.task('js', function() {
-  gulp.src(config.include.src)
+  return gulp.src(config.include.src)
     // include non-minified version
     .pipe(include(config.include.opt).on('error', console.error.bind(console)))
     .pipe(gulp.dest(config.include.dest))
@@ -34,12 +34,13 @@ gulp.task('js', function() {
     .pipe(uglify(config.uglify.opt).on('error', console.error.bind(console)))
     .pipe(rename({ extname: '.min.js' }))
     .pipe(gulp.dest(config.uglify.dest));
-});
+})
+  
 
 // Templates
 
-gulp.task('templates', function() {
-  gulp.src(config.templates.src)
+gulp.task('templates', function () {
+  return gulp.src(config.templates.src)
     .pipe(map(function(contents, filename){
       contents = contents.toString();
       var name = config.templates.variable;
@@ -50,16 +51,27 @@ gulp.task('templates', function() {
     }))
     .pipe(concat(config.templates.outputFile))
     .pipe(gulp.dest(config.templates.dest));
-});
+})
+  
 
-gulp.task('build', ['sass', 'js', 'templates']);
 
 // Watchers
 
-gulp.task('watch', function () {
+gulp.task('watch', function(done){
   gulp.watch(config.sass.src, ['sass']);
   gulp.watch(config.uglify.src, ['js']);
   gulp.watch(config.templates.src, ['templates']);
-});
+  done()
+})
 
-gulp.task('default', ['watch', 'sass', 'js', 'templates']);
+gulp.task('basic', function(done){
+  gulp.series('watch', 'sass', 'js', 'templates')
+  done()
+})
+
+
+gulp.task('build', function(done){
+  gulp.series('sass', 'js', 'templates')
+  done()
+})
+

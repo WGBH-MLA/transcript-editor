@@ -1,6 +1,6 @@
 class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksController
 
-  before_filter :set_user_session
+  before_action :set_user_session
   after_filter :handle_user_sessions
 
   def handle_user_sessions
@@ -8,8 +8,8 @@ class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksCon
     if session[:previously_not_logged_in] && user_signed_in?
 
       # Assume previous session belongs to user
-      TranscriptEdit.updateUserSessions(session.id, current_user.id)
-      Flag.updateUserSessions(session.id, current_user.id)
+      TranscriptEdit.updateUserSessions(session.id.to_s, current_user.id)
+      Flag.updateUserSessions(session.id.to_s, current_user.id)
 
       # Check if user is an admin
       project = Project.getActive
