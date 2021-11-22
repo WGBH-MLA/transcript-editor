@@ -58,3 +58,4 @@ gem 'bigdecimal', '1.4.2'
 gem 'rexml'
 
 gem 'unicorn'
+gem 'rake', '13.0.6'

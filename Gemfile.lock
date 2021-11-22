@@ -262,6 +262,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 6)
   rails_12factor
+  rake (= 13.0.6)
   redcarpet
   rest-client
   rexml
