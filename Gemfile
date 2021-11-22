@@ -57,8 +57,4 @@ gem 'sony_ci_api', git: 'https://github.com/WGBH-MLA/sony_ci_api_rewrite.git', b
 gem 'bigdecimal', '1.4.2'
 gem 'rexml'
 
-
-# Use unicorn on linux only
-platforms :ruby do # linux
-  gem 'unicorn'
-end
+gem 'unicorn'
