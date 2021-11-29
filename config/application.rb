@@ -2,6 +2,7 @@ require File.expand_path('../boot', __FILE__)
 
 # disable so we can disable only active_storage
 # require 'rails/all'
+require 'rails'
 require "active_job/railtie"
 require "active_record/railtie"
 #require "active_storage/engine"
