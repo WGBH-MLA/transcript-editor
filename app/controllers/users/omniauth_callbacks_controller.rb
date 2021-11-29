@@ -1,7 +1,7 @@
 class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksController
 
   before_action :set_user_session
-  after_filter :handle_user_sessions
+  after_action :handle_user_sessions
 
   def handle_user_sessions
     # puts "Session After: #{session[:previously_not_logged_in]} , #{session.id}"
