@@ -11,9 +11,6 @@ gem 'pg', '1.1.4'
 gem 'pg_search', '2.1.4'
 gem 'will_paginate'
 
-# Caching
-gem 'dalli'
-
 # Disabling assets; replaced with Gulp
 # gem 'sass-rails', '~> 5.0'
 # gem 'uglifier', '>= 1.3.0'
