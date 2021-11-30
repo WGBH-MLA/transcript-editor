@@ -1,77 +1,114 @@
-var gulp = require('gulp');
+        
+const {
+    src,
+    dest,
+    parallel,
+    series,
+    watch
+} = require('gulp');
 
-// config
-var config = require('./gulp/config');
+// Load plugins
 
-// utilities
-var concat = require('gulp-concat');
-var include = require('gulp-include');
-var map = require('vinyl-map');
-var path = require('path');
-var rename = require('gulp-rename');
+const uglify = require('gulp-uglify');
+const rename = require('gulp-rename');
+const sass = require('gulp-sass');
+// const autoprefixer = require('gulp-autoprefixer');
+const cssnano = require('gulp-cssnano');
+const concat = require('gulp-concat');
+const clean = require('gulp-clean');
+// const imagemin = require('gulp-imagemin');
+const changed = require('gulp-changed');
+// for templates
+const map = require('vinyl-map');
+const path = require('path');
+// const browsersync = require('browser-sync').create();
 
-// Sass compilation
+// Clean assets
 
-var sass = require('gulp-sass');
+function clear() {
+    return src('./assets/*', {
+            read: false
+        })
+        .pipe(clean());
+}
 
-gulp.task('sass', function(){
-  gulp.src(config.sass.src)
-    .pipe(sass.sync().on('error', sass.logError))
-    .pipe(sass(config.sass.opt))
-    .pipe(gulp.dest(config.sass.dest));
-})
+// JS function 
 
-// Javascript compilation
+function js() {
+    const source = './gulp/js/*.js';
 
-var uglify = require('gulp-uglify');
+    return src(source)
+        .pipe(changed(source))
+        .pipe(concat('default.js'))
+        // .pipe(uglify())
+        .pipe(rename({
+            extname: '.min.js'
+        }))
+        .pipe(dest('./public/assets/js/'))
+}
 
-gulp.task('js', function() {
-  return gulp.src(config.include.src)
-    // include non-minified version
-    .pipe(include(config.include.opt).on('error', console.error.bind(console)))
-    .pipe(gulp.dest(config.include.dest))
-    // and the minified version
-    .pipe(uglify(config.uglify.opt).on('error', console.error.bind(console)))
-    .pipe(rename({ extname: '.min.js' }))
-    .pipe(gulp.dest(config.uglify.dest));
-})
-  
+// CSS function 
 
-// Templates
+function css() {
+    const source = './gulp/scss/**/*.scss';
 
-gulp.task('templates', function () {
-  return gulp.src(config.templates.src)
-    .pipe(map(function(contents, filename){
-      contents = contents.toString();
-      var name = config.templates.variable;
-      filename = path.basename(filename);
+    return src(source)
+        .pipe(changed(source))
+        .pipe(sass())
+        .pipe(rename({
+            extname: '.min.css'
+        }))
+        .pipe(cssnano())
+        .pipe(dest('./public/assets/css/'))
+}
 
-      contents = 'window.'+name+'=window.'+name+' || {}; window.'+name+'["'+filename+'"] = \'' + contents.replace(/'/g, "\\'").replace(/(\r\n|\n|\r)/gm,"") + '\';';
-      return contents;
-    }))
-    .pipe(concat(config.templates.outputFile))
-    .pipe(gulp.dest(config.templates.dest));
-})
-  
+function templates() {
+  const source = './gulp/templates/**/*.ejs';
 
+  return src(source)
+      .pipe(changed(source))
+       .pipe(map(function(contents, filename){
+          contents = contents.toString();
+          var name = 'TEMPLATES';
+          filename = path.basename(filename);
 
-// Watchers
+          contents = 'window.'+name+'=window.'+name+' || {}; window.'+name+'["'+filename+'"] = \'' + contents.replace(/'/g, "\\'").replace(/(\r\n|\n|\r)/gm,"") + '\';';
+          return contents;
+      }))
+      .pipe(concat('templates.js'))
+      // .pipe(uglify())
+      .pipe(dest('./public/assets/js/'))
+}
 
-gulp.task('watch', function(done){
-  gulp.watch(config.sass.src, ['sass']);
-  gulp.watch(config.uglify.src, ['js']);
-  gulp.watch(config.templates.src, ['templates']);
-  done()
-})
+// Optimize images
 
-gulp.task('basic', function(done){
-  gulp.series('watch', 'sass', 'js', 'templates')
-  done()
-})
+// function img() {
+//     return src('./src/img/*')
+//         .pipe(imagemin())
+//         .pipe(dest('./assets/img'));
+// }
 
+// Watch files
 
-gulp.task('build', function(done){
-  gulp.series('sass', 'js', 'templates')
-  done()
-})
+// function watchFiles() {
+//     watch('./src/scss/*', css);
+//     watch('./src/js/*', js);
+//     watch('./src/img/*', img);
+// }
 
+// BrowserSync
+
+// function browserSync() {
+//     browsersync.init({
+//         server: {
+//             baseDir: './'
+//         },
+//         port: 3000
+//     });
+// }
+
+// Tasks to define the execution of the functions simultaneously or in series
+
+// exports.watch = parallel(watchFiles, browserSync);
+exports.default = series(clear, parallel(js, css, templates));
+    
