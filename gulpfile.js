@@ -21,12 +21,13 @@ const changed = require('gulp-changed');
 // for templates
 const map = require('vinyl-map');
 const path = require('path');
+const include = require('gulp-include');
 // const browsersync = require('browser-sync').create();
 
 // Clean assets
 
 function clear() {
-    return src('./assets/*', {
+    return src('./public/assets/*', {
             read: false
         })
         .pipe(clean());
@@ -34,12 +35,27 @@ function clear() {
 
 // JS function 
 
-function js() {
-    const source = './gulp/js/*.js';
+function defaultjs() {
+    const source = ['./gulp/js/default.js']
 
     return src(source)
-        .pipe(changed(source))
-        .pipe(concat('default.js'))
+        // .pipe(changed(source))
+        .pipe(include())
+        .pipe(concat('default.js'), {newLine: "\n\n"})
+        // .pipe(uglify())
+        .pipe(rename({
+            extname: '.min.js'
+        }))
+        .pipe(dest('./public/assets/js/'))
+}
+
+function adminjs() {
+    const source = ['./gulp/js/admin.js']
+
+    return src(source)
+        // .pipe(changed(source))
+        .pipe(include())
+        .pipe(concat('admin.js'), {newLine: "\n\n"})
         // .pipe(uglify())
         .pipe(rename({
             extname: '.min.js'
@@ -53,7 +69,7 @@ function css() {
     const source = './gulp/scss/**/*.scss';
 
     return src(source)
-        .pipe(changed(source))
+        // .pipe(changed(source))
         .pipe(sass())
         .pipe(rename({
             extname: '.min.css'
@@ -110,5 +126,5 @@ function templates() {
 // Tasks to define the execution of the functions simultaneously or in series
 
 // exports.watch = parallel(watchFiles, browserSync);
-exports.default = series(clear, parallel(js, css, templates));
+exports.default = series(clear, parallel(defaultjs, adminjs, css, templates));
     
