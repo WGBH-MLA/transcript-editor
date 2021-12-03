@@ -156,6 +156,9 @@ GEM
     omniauth-oauth2 (1.7.2)
       oauth2 (~> 1.4)
       omniauth (>= 1.9, < 3)
+    omniauth-rails_csrf_protection (1.0.0)
+      actionpack (>= 4.2)
+      omniauth (~> 2.0)
     orm_adapter (0.5.0)
     passenger (6.0.12)
       rack
@@ -258,6 +261,7 @@ DEPENDENCIES
   newrelic_rpm
   omniauth-facebook
   omniauth-google-oauth2
+  omniauth-rails_csrf_protection
   passenger
   pg (= 1.1.4)
   pg_search (= 2.1.4)

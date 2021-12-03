@@ -29,6 +29,9 @@ gem 'devise_token_auth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 
+# required for omniauth 2+
+gem 'omniauth-rails_csrf_protection'
+
 # Parsers for project asset precompilation
 gem 'redcarpet'
 gem 'ejs'
