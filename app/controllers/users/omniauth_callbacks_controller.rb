@@ -4,6 +4,7 @@ class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksCon
   after_action :handle_user_sessions
 
   def callback
+    raise "THIS FAILS"
   end
 
   def handle_user_sessions
