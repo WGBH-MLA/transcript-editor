@@ -3,6 +3,9 @@ class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksCon
   before_action :set_user_session
   after_action :handle_user_sessions
 
+  def callback
+  end
+
   def handle_user_sessions
     # puts "Session After: #{session[:previously_not_logged_in]} , #{session.id}"
     if session[:previously_not_logged_in] && user_signed_in?
