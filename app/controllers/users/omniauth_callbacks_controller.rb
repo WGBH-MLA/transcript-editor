@@ -28,10 +28,4 @@ class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksCon
       session[:previously_not_logged_in] = true
     end
   end
-
-
-  def is_flashing_format?
-    false
-  end
-
 end
