@@ -250,7 +250,7 @@ production:
    {
      "name": "google",
      "label": "Google",
-     "path": "/auth/google_oauth2"
+     "path": "/omniauth/google_oauth2"
    }
  ],
 ```
