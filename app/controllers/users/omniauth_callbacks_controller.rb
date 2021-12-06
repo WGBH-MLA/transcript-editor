@@ -29,4 +29,9 @@ class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksCon
     end
   end
 
+
+  def is_flashing_format?
+    false
+  end
+
 end
