@@ -36,9 +36,11 @@ Rails.application.routes.draw do
   match 'moderator' => 'admin/flags#index', :via => [:get], :as => :moderator
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks"}
-  devise_scope :user do
-    get 'omniauth/google_oauth2/callback', to: 'omniauth_callbacks#callback'
-  end
-  # mount_devise_token_auth_for 'User', at: 'auth', controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  # devise_scope :user do
+  #   get 'omniauth/google_oauth2/callback', to: 'omniauth_callbacks#callback'
+  # end
+
+  # get 'omniauth/google_oauth2/callback', to: 'omniauth_callbacks#callback'
   root :to => 'default#index'
+  mount_devise_token_auth_for 'User', at: 'auth', controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 end
