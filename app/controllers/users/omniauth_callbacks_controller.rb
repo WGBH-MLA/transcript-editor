@@ -24,6 +24,10 @@ class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksCon
     # puts "Session Before: #{session[:previously_not_logged_in]} , #{session.id}"
 
     session[:previously_not_logged_in] = false
+    puts request.inspect
+    puts session.inspect
+
+
     unless user_signed_in?
       session[:previously_not_logged_in] = true
     end
