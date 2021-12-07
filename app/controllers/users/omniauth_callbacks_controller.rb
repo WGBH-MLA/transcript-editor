@@ -22,7 +22,7 @@ class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksCon
 
   def set_user_session
     # puts "Session Before: #{session[:previously_not_logged_in]} , #{session.id}"
-    params[:resource_class] ||= "User"
+    # params[:resource_class] ||= "User"
 
     session[:previously_not_logged_in] = false
     puts request.inspect
