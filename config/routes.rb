@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   mount_devise_token_auth_for 'User', at: 'auth', controllers: { :omniauth_callbacks => "users/omniauth_callbacks"}
 
   resources :flags, only: [:index, :show, :create]

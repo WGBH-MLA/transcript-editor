@@ -2,18 +2,17 @@ class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksCon
 
   before_action :set_user_session
   after_action :handle_user_sessions
-  after_action :update_auth_header, only: :omniauth_success
 
-  def assign_provider_attrs(user, auth_hash)
-    all_attrs = auth_hash["info"].slice(*user.attributes.keys)
-    orig_val = ActionController::Parameters.permit_all_parameters
-    ActionController::Parameters.permit_all_parameters = true
-    permitted_attrs = ActionController::Parameters.new(all_attrs)
-    permitted_attrs.permit({})
-    user.assign_attributes(permitted_attrs)
-    ActionController::Parameters.permit_all_parameters = orig_val
-    user
-  end
+  # def assign_provider_attrs(user, auth_hash)
+  #   all_attrs = auth_hash["info"].slice(*user.attributes.keys)
+  #   orig_val = ActionController::Parameters.permit_all_parameters
+  #   ActionController::Parameters.permit_all_parameters = true
+  #   permitted_attrs = ActionController::Parameters.new(all_attrs)
+  #   permitted_attrs.permit({})
+  #   user.assign_attributes(permitted_attrs)
+  #   ActionController::Parameters.permit_all_parameters = orig_val
+  #   user
+  # end
 
   def handle_user_sessions
     # puts "Session After: #{session[:previously_not_logged_in]} , #{session.id}"
