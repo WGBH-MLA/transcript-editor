@@ -1,5 +1,7 @@
+require "devise_token_auth"
+
 Rails.application.routes.draw do
-  mount_devise_token_auth_for 'User', at: 'auth'
+  mount_devise_token_auth_for 'User', at: 'auth', controllers: { :omniauth_callbacks => "users/omniauth_callbacks"}
 
   resources :flags, only: [:index, :show, :create]
   resources :transcript_speaker_edits, only: [:create]
