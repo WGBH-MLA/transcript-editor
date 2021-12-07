@@ -2,6 +2,7 @@ class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksCon
 
   before_action :set_user_session
   after_action :handle_user_sessions
+  after_action :update_auth_header, only: :omniauth_success
 
   def assign_provider_attrs(user, auth_hash)
     all_attrs = auth_hash["info"].slice(*user.attributes.keys)

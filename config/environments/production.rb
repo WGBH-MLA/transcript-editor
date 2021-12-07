@@ -13,8 +13,6 @@ Rails.application.configure do
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  config.action_controller.permit_all_parameters
-  
 
   # not used
   # unless ENV['MEMCACHIER_SERVERS'].nil? || ENV["MEMCACHIER_USERNAME"].nil? || ENV["MEMCACHIER_PASSWORD"].nil?
