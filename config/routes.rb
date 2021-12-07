@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  mount_devise_token_auth_for 'User', at: 'auth', controllers: { :omniauth_callbacks => "users/omniauth_callbacks"}
+  mount_devise_token_auth_for 'User', at: 'auth'
 
   resources :flags, only: [:index, :show, :create]
   resources :transcript_speaker_edits, only: [:create]
@@ -36,10 +36,5 @@ Rails.application.routes.draw do
   end
   match 'moderator' => 'admin/flags#index', :via => [:get], :as => :moderator
 
-  # devise_scope :user do
-  #   get 'omniauth/google_oauth2/callback', to: 'omniauth_callbacks#callback'
-  # end
-
-  # get 'omniauth/google_oauth2/callback', to: 'omniauth_callbacks#callback'
   root :to => 'default#index'
 end
