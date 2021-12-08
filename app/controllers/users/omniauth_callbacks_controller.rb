@@ -1,6 +1,6 @@
 class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksController
 
-  before_action :set_user_session
+  # before_action :set_user_session
   after_action :handle_user_sessions
 
   # def google_oauth2
@@ -28,7 +28,7 @@ class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksCon
     end
   end
 
-  def set_user_session
+  def google_oauth2
     # puts "Session Before: #{session[:previously_not_logged_in]} , #{session.id}"
 
     session[:previously_not_logged_in] = false
