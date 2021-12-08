@@ -25,7 +25,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'figaro'
 
 # User management / auth
-gem 'devise_token_auth'
+# gem 'devise_token_auth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 
