@@ -26,6 +26,7 @@ gem 'figaro'
 
 # User management / auth
 # gem 'devise_token_auth'
+gem 'devise'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 
