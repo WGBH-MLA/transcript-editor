@@ -3,10 +3,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_action :set_user_session
   after_action :handle_user_sessions
 
-  def passthru
-    puts "Oh yeah!"
-  end
-
   def google_oauth2
      @user = User.from_omniauth(request.env["omniauth.auth"])
       session[:google_oauth2] = request.env["omniauth.auth"]["uid"]
