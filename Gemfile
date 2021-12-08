@@ -33,6 +33,8 @@ gem 'omniauth-facebook'
 # required for omniauth 2+
 gem 'omniauth-rails_csrf_protection'
 
+gem 'activerecord-session_store'
+
 # Parsers for project asset precompilation
 gem 'redcarpet'
 gem 'ejs'
