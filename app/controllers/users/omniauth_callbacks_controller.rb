@@ -3,9 +3,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_action :set_user_session
   after_action :handle_user_sessions
 
-  alias_method :google_oauth2, :passthru
-
-  def google_oauth2
+  def passthru
      @user = User.from_omniauth(request.env["omniauth.auth"])
       session[:google_oauth2] = request.env["omniauth.auth"]["uid"]
      redirect_to root_path
