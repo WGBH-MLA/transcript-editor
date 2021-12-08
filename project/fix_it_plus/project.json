@@ -17,7 +17,7 @@
     "rynmarchese@gmail.com",
     "lesliek.bourgeois@gmail.com"
   ],
-  "authProviders": [{ "name": "google", "label": "Google", "path": "/users/auth/google_oauth2.json" }],
+  "authProviders": [],
   "consensus": {
     "maxLineEdits": 2,
     "minLinesForConsensus": 2,
