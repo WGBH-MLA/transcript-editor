@@ -88,6 +88,10 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    devise_token_auth (1.2.0)
+      bcrypt (~> 3.0)
+      devise (> 3.5.2, < 5)
+      rails (>= 4.2.0, < 6.2)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     ejs (1.1.1)
@@ -256,7 +260,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-session_store
   bigdecimal (= 1.4.2)
-  devise
+  devise_token_auth
   ejs
   execjs
   figaro
