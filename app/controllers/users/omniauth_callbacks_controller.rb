@@ -4,6 +4,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   after_action :handle_user_sessions
 
   def passthru
+    puts request.inspect
+
      @user = User.from_omniauth(request.env["omniauth.auth"])
       session[:google_oauth2] = request.env["omniauth.auth"]["uid"]
      redirect_to root_path
@@ -30,8 +32,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # puts "Session Before: #{session[:previously_not_logged_in]} , #{session.id}"
 
     session[:previously_not_logged_in] = false
-    puts request.inspect
-    puts session.inspect
+    
+    # puts request.inspect
+    # puts session.inspect
 
 
     unless user_signed_in?

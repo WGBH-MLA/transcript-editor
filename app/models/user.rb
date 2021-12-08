@@ -8,6 +8,9 @@ class User < ActiveRecord::Base
   belongs_to :user_role
 
   def self.from_omniauth(auth)
+
+    puts auth
+
     user = User.find_or_create_by(email: auth['info']['email']) do |user|
       user.provider = auth['provider']
       user.uid = auth['uid']
