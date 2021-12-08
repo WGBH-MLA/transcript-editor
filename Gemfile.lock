@@ -264,7 +264,7 @@ DEPENDENCIES
   newrelic_rpm
   omniauth-facebook
   omniauth-google-oauth2
-  omniauth-rails_csrf_protection
+  omniauth-rails_csrf_protection (~> 1.0)
   passenger
   pg (= 1.1.4)
   pg_search (= 2.1.4)
