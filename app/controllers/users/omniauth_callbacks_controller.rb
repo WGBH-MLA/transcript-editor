@@ -1,4 +1,4 @@
-class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksController
+class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   before_action :set_user_session
   after_action :handle_user_sessions
