@@ -28,7 +28,7 @@ module TranscriptEditor
     config.api_only = false
     
     # omniauth settings
-
+    config.middleware.use ActionDispatch::Cookies
 
     raise "Missing PROJECT_ID!" unless ENV["PROJECT_ID"]
   end
