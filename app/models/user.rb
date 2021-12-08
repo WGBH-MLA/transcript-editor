@@ -2,10 +2,19 @@ class User < ActiveRecord::Base
   extend Devise::Models
 
   # Include default devise modules.
-  devise :database_authenticatable, :rememberable, :trackable, :validatable, :omniauthable
+  devise :database_authenticatable, :rememberable, :trackable, :validatable
+  devise :omniauthable, omniauth_providers: [:google_oauth2]
   include DeviseTokenAuth::Concerns::User
 
   belongs_to :user_role
+
+  def self.from_omniauth(auth)
+    user = User.find_or_create_by(email: auth['info']['email']) do |user|
+      user.provider = auth['provider']
+      user.uid = auth['uid']
+      user.email = auth['info']['email']
+    end
+  end
 
   def incrementLinesEdited(amount=1)
     update(lines_edited: lines_edited + amount)
