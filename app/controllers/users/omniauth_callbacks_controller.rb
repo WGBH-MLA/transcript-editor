@@ -28,16 +28,21 @@ class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksCon
     end
   end
 
-  def google_oauth2
+  def set_user_session
     # puts "Session Before: #{session[:previously_not_logged_in]} , #{session.id}"
 
     session[:previously_not_logged_in] = false
-    puts request.inspect
-    puts session.inspect
+    # puts request.inspect
+    # puts session.inspect
+
+    puts "Hello again!!!"
 
 
     unless user_signed_in?
       session[:previously_not_logged_in] = true
     end
+
+    # only a test
+    # redirect_to redirect_callbacks && return
   end
 end
