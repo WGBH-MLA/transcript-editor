@@ -2,8 +2,8 @@ class User < ActiveRecord::Base
   extend Devise::Models
 
   # Include default devise modules.
-  devise :database_authenticatable, :rememberable, :trackable, :validatable
-  devise :omniauthable, omniauth_providers: [:google_oauth2]
+  devise :database_authenticatable, :rememberable, :trackable, :validatable, :omniauthable
+  include DeviseTokenAuth::Concerns::User
 
   belongs_to :user_role
 
