@@ -1,6 +1,6 @@
 class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksController
 
-  # before_action :set_user_session
+  before_action :set_user_session
   after_action :handle_user_sessions
 
   # def google_oauth2
