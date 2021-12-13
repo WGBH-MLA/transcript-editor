@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  # devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
-
   resources :flags, only: [:index, :show, :create]
   resources :transcript_speaker_edits, only: [:create]
   resources :transcript_edits, only: [:index, :show, :create]

@@ -11,12 +11,6 @@ gem 'pg', '1.1.4'
 gem 'pg_search', '2.1.4'
 gem 'will_paginate'
 
-# Disabling assets; replaced with Gulp
-# gem 'sass-rails', '~> 5.0'
-# gem 'uglifier', '>= 1.3.0'
-# gem 'coffee-rails', '~> 4.1.0'
-# gem 'jquery-rails'
-
 # Back-end App is treated mostly as a JSON API
 gem 'jbuilder', '~> 2.0' # Build JSON APIs with ease
 gem 'rack-cors', :require => 'rack/cors'
