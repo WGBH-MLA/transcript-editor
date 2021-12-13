@@ -12,7 +12,9 @@ class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksCon
   # end
 
   def omniauth_success
-    puts "THIS IS A TEST"
+    
+    session['dta.omniauth.auth'] = request.env['omniauth.auth']
+    puts "THIS IS A TEST and this is how it went #{session['dta.omniauth.auth']}"
     super
   end
 
