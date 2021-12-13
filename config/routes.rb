@@ -36,6 +36,6 @@ Rails.application.routes.draw do
   end
   match 'moderator' => 'admin/flags#index', :via => [:get], :as => :moderator
 
-  mount_devise_token_auth_for 'User', at: 'omniauth', controllers: { :omniauth_callbacks => "users/omniauth_callbacks"}
+  mount_devise_token_auth_for 'User', at: 'auth', controllers: { :omniauth_callbacks => "users/omniauth_callbacks"}
   root :to => 'default#index'
 end
