@@ -3,18 +3,9 @@ class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksCon
   before_action :set_user_session
   after_action :handle_user_sessions
 
-  # def google_oauth2
-  #   puts "Hey Its Us In The Method!"
-
-  #    @user = User.from_omniauth(request.env["omniauth.auth"])
-  #     session[:google_oauth2] = request.env["omniauth.auth"]["uid"]
-  #    redirect_to root_pathk
-  # end
-
   def omniauth_success
-    
+    # monkey patch to preserve token that gets lost in normal flow
     session['dta.omniauth.auth'] = request.env['omniauth.auth']
-    puts "THIS IS A TEST and this is how it went #{session['dta.omniauth.auth']}"
     super
   end
 
@@ -36,15 +27,7 @@ class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksCon
   end
 
   def set_user_session
-    # puts "Session Before: #{session[:previously_not_logged_in]} , #{session.id}"
-
     session[:previously_not_logged_in] = false
-    # puts request.inspect
-    # puts session.inspect
-
-    puts "Hello again!!!"
-
-
     unless user_signed_in?
       session[:previously_not_logged_in] = true
     end
