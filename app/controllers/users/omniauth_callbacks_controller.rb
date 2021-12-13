@@ -41,8 +41,5 @@ class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksCon
     unless user_signed_in?
       session[:previously_not_logged_in] = true
     end
-
-    # only a test
-    # redirect_to redirect_callbacks && return
   end
 end
