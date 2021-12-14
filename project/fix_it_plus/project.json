@@ -15,7 +15,8 @@
     "kcariani@gmail.com",
     "rebeccafraimow@gmail.com",
     "rynmarchese@gmail.com",
-    "lesliek.bourgeois@gmail.com"
+    "lesliek.bourgeois@gmail.com",
+    "timothy_lepczyk@wgbh.org"
   ],
   "authProviders": [{ "name": "google", "label": "Google", "path": "/auth/google_oauth2.json" }],
   "consensus": {
