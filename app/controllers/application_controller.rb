@@ -43,6 +43,11 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate_moderator!
+
+    puts current_user.inspect
+    puts current_user.isAdmin?
+    puts current_user.isModerator?
+
     unless is_moderator?
       render json: {
         error: 1,
