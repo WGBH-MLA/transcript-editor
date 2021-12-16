@@ -28,6 +28,10 @@ class TranscriptsController < ApplicationController
   # GET /transcripts/the-uid
   # GET /transcripts/the-uid.json
   def show
+    puts "uUMMM HELLO!!!"
+    puts current_user.inspect
+
+
     respond_to do |format|
       format.html {
         render :file => "public/#{ENV['PROJECT_ID']}/index.html"
