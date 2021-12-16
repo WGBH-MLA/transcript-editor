@@ -1,5 +1,6 @@
 class Admin::StatsController < ApplicationController
-  include ActionController::MimeResponds
+include DeviseTokenAuth::Concerns::SetUserByToken
+include ActionController::MimeResponds
 
   before_action :authenticate_moderator!
 
