@@ -21,6 +21,9 @@ class ApplicationController < ActionController::API
   end
 
   def is_admin?
+    puts "HEY!!!"
+    puts request.inspect
+    puts session.inspect
     user_signed_in? && current_user.isAdmin?
   end
 
