@@ -1,8 +1,6 @@
 class Admin::StatsController < ApplicationController
-include DeviseTokenAuth::Concerns::SetUserByToken
-include ActionController::MimeResponds
-
-  before_action :authenticate_moderator!
+  include ActionController::MimeResponds
+  before_action :authenticate_admin!, :authenticate_moderator!
 
   # GET /admin
   # GET /admin.json
