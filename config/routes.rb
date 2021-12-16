@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   match 'release_count' => 'transcripts#release_count', via: [:get]
   match 'all_uids' => 'transcripts#all_uids', via: [:get]
 
+  mount_devise_token_auth_for 'User', at: 'auth', controllers: { :omniauth_callbacks => "users/omniauth_callbacks"}
+
   # admin
   namespace :admin do
     resources :users, only: [:index, :update]
@@ -34,6 +36,5 @@ Rails.application.routes.draw do
   end
   match 'moderator' => 'admin/flags#index', :via => [:get], :as => :moderator
 
-  mount_devise_token_auth_for 'User', at: 'auth', controllers: { :omniauth_callbacks => "users/omniauth_callbacks"}
   root :to => 'default#index'
 end

@@ -1,6 +1,6 @@
 class Admin::StatsController < ApplicationController
   include ActionController::MimeResponds
-  before_action :authenticate_user, :authenticate_moderator!
+  before_action :authenticate_moderator!
 
   # GET /admin
   # GET /admin.json
