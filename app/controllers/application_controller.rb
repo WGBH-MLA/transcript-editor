@@ -12,7 +12,7 @@ class ApplicationController < ActionController::API
   # self.perform_caching = true
   # self.cache_store = ActionController::Base.cache_store
 
-  before_action :touch_session, :authenticate_user!
+  before_action :touch_session
 
 
   # Ensure a session id is available for all!
