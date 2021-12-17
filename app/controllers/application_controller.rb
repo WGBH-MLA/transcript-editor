@@ -12,7 +12,15 @@ class ApplicationController < ActionController::API
   # self.perform_caching = true
   # self.cache_store = ActionController::Base.cache_store
 
-  before_action :touch_session
+  before_action :touch_session, :show_user
+
+  def show_user
+    puts "IM HERE TO INFORM YOU"
+    puts current_user.inspect
+    puts request.inspect
+    puts session.inspect
+
+  end
 
 
   # Ensure a session id is available for all!
@@ -21,9 +29,7 @@ class ApplicationController < ActionController::API
   end
 
   def is_admin?
-    puts "HEY!!!"
-    puts request.inspect
-    puts session.inspect
+
     user_signed_in? && current_user.isAdmin?
   end
 
@@ -47,11 +53,6 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate_moderator!
-
-    puts current_user.inspect
-    puts current_user.isAdmin?
-    puts current_user.isModerator?
-
     unless is_moderator?
       render json: {
         error: 1,
