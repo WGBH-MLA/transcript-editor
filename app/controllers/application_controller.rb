@@ -19,7 +19,6 @@ class ApplicationController < ActionController::API
     puts current_user.inspect
     puts request.inspect
     puts session.inspect
-
   end
 
 

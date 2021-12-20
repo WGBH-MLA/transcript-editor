@@ -1,12 +1,10 @@
-class Admin::StatsController < ApplicationController
+class StatsController < ApplicationController
   include ActionController::MimeResponds
   before_action :authenticate_moderator!
 
   # GET /admin
   # GET /admin.json
   def index
-    current_user = User.all.first
-
     respond_to do |format|
       format.html {
         render :file => "public/#{ENV['PROJECT_ID']}/index.html"
