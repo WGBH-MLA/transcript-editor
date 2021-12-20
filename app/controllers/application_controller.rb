@@ -42,10 +42,10 @@ class ApplicationController < ActionController::API
         redirect_to moderator_url
         return
       else
-        render json: {
-          error: 1,
-          message: 'You must log in as admin to access this section'
-        }
+        respond_to do |format|
+          format.json { render json: { error: 1, message: 'You must log in as admin to access this section' } }
+          format.html { return 'not so sneaky now, eh!' }
+        end
         return
       end
     end
@@ -53,10 +53,11 @@ class ApplicationController < ActionController::API
 
   def authenticate_moderator!
     unless is_moderator?
-      render json: {
-        error: 1,
-        message: 'You must log in as admin or moderator to access this section'
-      }
+      respond_to do |format|
+        format.json { render json: { error: 1, message: 'You must log in as admin or moderator to access this section' } }
+        format.html { return 'not so sneaky now, eh!' }
+      end
+      
       return
     end
   end
