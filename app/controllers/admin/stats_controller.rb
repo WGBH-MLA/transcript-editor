@@ -1,4 +1,4 @@
-class StatsController < ApplicationController
+class Admin::StatsController < ApplicationController
   include ActionController::MimeResponds
   before_action :authenticate_moderator!
 
