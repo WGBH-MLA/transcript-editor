@@ -7,7 +7,7 @@ class Admin::StatsController < ApplicationController
   def index
     respond_to do |format|
       format.html {
-        render :file => "public/#{ENV['PROJECT_ID']}/admin.html"
+        render :file => "public/#{ENV['PROJECT_ID']}/index.html"
       }
       format.json {
         @stats = [
