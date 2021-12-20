@@ -44,7 +44,7 @@ class ApplicationController < ActionController::API
       else
         respond_to do |format|
           format.json { render json: { error: 1, message: 'You must log in as admin to access this section' } }
-          format.html { return 'not so sneaky now, eh!' }
+          format.html { render 'not so sneaky now, eh!' }
         end
         return
       end
@@ -55,7 +55,7 @@ class ApplicationController < ActionController::API
     unless is_moderator?
       respond_to do |format|
         format.json { render json: { error: 1, message: 'You must log in as admin or moderator to access this section' } }
-        format.html { return 'not so sneaky now, eh!' }
+        format.html { render 'not so sneaky now, eh!' }
       end
       
       return
