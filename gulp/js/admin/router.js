@@ -23,6 +23,7 @@ app.routers.DefaultRouter = Backbone.Router.extend({
   },
 
   stats: function(){
+    console.log("HERE IS DATA HO HO HO", data)
     var data = this._getData(data);
     var header = new app.views.Header(data);
     var stats = new app.views.AdminStats(data);
@@ -42,7 +43,7 @@ app.routers.DefaultRouter = Backbone.Router.extend({
   },
 
   _getData: function(data){
-
+    console.log("HERE IS USER HAHA ", $.auth.user)
     var user = {};
     if ($.auth.user && $.auth.user.signedIn) {
       user = $.auth.user;
