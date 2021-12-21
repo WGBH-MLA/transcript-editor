@@ -6,8 +6,10 @@
 //=include vendor/jquery-deparam.js
 //=include vendor/pubsub.min.js
 //=include vendor/jquery.j-toker.min.js
+//=include vendor/fuse.min.js
 //=include utilities.js
 //=include components.js
+//=include analytics.js
 //=include app.js
 //=include admin/router.js
 //=include views/base.js
