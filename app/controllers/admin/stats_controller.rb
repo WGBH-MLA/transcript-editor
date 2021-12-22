@@ -8,17 +8,22 @@ class Admin::StatsController < ApplicationController
     puts "TOP OF STATS CONTROLLER"
     if is_moderator?
 
-    respond_to do |format|
-      format.html {
-        render :file => "public/#{ENV['PROJECT_ID']}/admin.html"
-      }
-      format.json {
-        @stats = [
-          {label: "User Registration Stats", data: User.getStatsByDay},
-          {label: "Transcript Edit Stats", data: TranscriptEdit.getStatsByDay}
-        ]
-      }
-    end
+      respond_to do |format|
+        format.html {
+          render :file => "public/#{ENV['PROJECT_ID']}/admin.html"
+        }
+        format.json {
+          @stats = [
+            {label: "User Registration Stats", data: User.getStatsByDay},
+            {label: "Transcript Edit Stats", data: TranscriptEdit.getStatsByDay}
+          ]
+        }
+      end
+    else
+      respond_to do |format|
+        format.html { "HTML BAD "}
+        format.json { "JSON BAD "}
+      end
 
     end
     puts "bottom of stats controller"
