@@ -12,6 +12,7 @@
 //=include analytics.js
 //=include app.js
 //=include admin/router.js
+//=include models/*.js
 //=include views/base.js
 //=include views/header.js
 //=include views/footer.js
