@@ -19,12 +19,8 @@ class Admin::StatsController < ApplicationController
           ]
         }
       end
-    else
-      respond_to do |format|
-        format.html { "HTML BAD "}
-        format.json { "JSON BAD "}
-      end
-
+    else 
+      render :text => "SORRY!!!!"
     end
     puts "bottom of stats controller"
   end
