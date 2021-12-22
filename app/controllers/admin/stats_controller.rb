@@ -11,10 +11,15 @@ class Admin::StatsController < ApplicationController
         render :file => "public/#{ENV['PROJECT_ID']}/admin.html"
       }
       format.json {
-        @stats = [
-          {label: "User Registration Stats", data: User.getStatsByDay},
-          {label: "Transcript Edit Stats", data: TranscriptEdit.getStatsByDay}
-        ]
+
+        if authenticate_moderator!
+          @stats = [
+            {label: "User Registration Stats", data: User.getStatsByDay},
+            {label: "Transcript Edit Stats", data: TranscriptEdit.getStatsByDay}
+          ]
+        else
+          @stats = nil
+        end
       }
     end
   end

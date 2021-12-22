@@ -19,7 +19,7 @@
     "timothy_lepczyk@wgbh.org",
     "henry_neels@wgbh.org"
   ],
-  "authProviders": [{ "name": "google", "label": "Google", "path": "/auth/google_oauth2.json" }],
+  "authProviders": [{ "name": "google", "label": "Google", "path": "/auth/google_oauth2" }],
   "consensus": {
     "maxLineEdits": 2,
     "minLinesForConsensus": 2,

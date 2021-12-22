@@ -10,6 +10,9 @@ class Admin::FlagsController < ApplicationController
     puts "BUT WHAT ABOUT THIS!"
     puts current_user.inspect
 
+
+    # where is da user???
+
     respond_to do |format|
       format.html {
         render :file => "public/#{ENV['PROJECT_ID']}/admin.html"
