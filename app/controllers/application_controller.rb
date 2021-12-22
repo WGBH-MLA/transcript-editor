@@ -18,7 +18,6 @@ class ApplicationController < ActionController::API
     puts session.inspect
   end
 
-
   # Ensure a session id is available for all!
   def touch_session
     session[:touched] = 1

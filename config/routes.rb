@@ -28,7 +28,6 @@ Rails.application.routes.draw do
     resources :transcripts, only: [:index]
     resources :flags, only: [:index]
   end
-  match 'admin' => 'admin/stats#index', :via => [:get], :as => :admin
 
   # moderator
   namespace :moderator do
@@ -36,5 +35,6 @@ Rails.application.routes.draw do
   end
   match 'moderator' => 'admin/flags#index', :via => [:get], :as => :moderator
 
+  match 'admin' => 'default#admin', :via => [:get], :as => :admin
   root :to => 'default#index'
 end
