@@ -37,7 +37,7 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate_admin!
-    unless request.format.json? && is_admin?
+    if request.format.json? && !is_admin?
       if is_moderator?
         redirect_to moderator_url
         return
@@ -52,7 +52,7 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate_moderator!
-    unless request.format.json? && is_moderator?
+    if request.format.json? && !is_moderator?
       respond_to do |format|
         format.json { render json: { error: 1, message: 'You must log in as admin or moderator to access this section' } }
         # format.html { render :html => 'not so sneaky now, eh!' }
