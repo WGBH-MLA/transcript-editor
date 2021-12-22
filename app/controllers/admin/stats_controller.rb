@@ -1,6 +1,6 @@
 class Admin::StatsController < ApplicationController
   include ActionController::MimeResponds
-  before_action :authenticate_moderator!
+  after_action :authenticate_moderator!
 
   # GET /admin
   # GET /admin.json
@@ -18,6 +18,8 @@ class Admin::StatsController < ApplicationController
         ]
       }
     end
+
+    puts "bottom of stats controller"
   end
 
 end
