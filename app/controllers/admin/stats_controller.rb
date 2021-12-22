@@ -6,6 +6,7 @@ class Admin::StatsController < ApplicationController
   # GET /admin.json
   def index
     puts "TOP OF STATS CONTROLLER"
+    if is_moderator?
 
     respond_to do |format|
       format.html {
@@ -19,6 +20,7 @@ class Admin::StatsController < ApplicationController
       }
     end
 
+    end
     puts "bottom of stats controller"
   end
 
