@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   end
   match 'moderator' => 'admin/flags#index', :via => [:get], :as => :moderator
 
-  match 'admin' => 'default#admin', :via => [:get]
   match 'admin.json' => 'admin/stats#index', :via => [:get]
+  match 'admin' => 'default#admin', :via => [:get]
   root :to => 'default#index'
 end
