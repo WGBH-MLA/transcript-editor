@@ -3,11 +3,11 @@ class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksCon
   before_action :set_user_session
   after_action :handle_user_sessions
 
-  def omniauth_success
-    # monkey patch to preserve token that gets lost in normal flow
-    session['dta.omniauth.auth'] = request.env['omniauth.auth']
-    super
-  end
+  # def omniauth_success
+  #   # monkey patch to preserve token that gets lost in normal flow
+  #   session['dta.omniauth.auth'] = request.env['omniauth.auth']
+  #   super
+  # end
 
   def handle_user_sessions
     # puts "Session After: #{session[:previously_not_logged_in]} , #{session.id}"
