@@ -45,12 +45,15 @@ app.routers.DefaultRouter = Backbone.Router.extend({
     var user = {};
     if ($.auth.user && $.auth.user.signedIn) {
       user = $.auth.user;
+      console.log( 'user!!', user )
     }
 
     data = data || {};
     data = $.extend({}, {project: PROJECT, user: user, debug: DEBUG, route: this._getRouteData()}, data);
 
     DEBUG && console.log('Route', data.route);
+
+    console.log("HEy! ", data)
 
     return data;
   },
