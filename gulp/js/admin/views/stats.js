@@ -12,6 +12,15 @@ app.views.AdminStats = app.views.Base.extend({
 
   loadData: function(){
     var _this = this;
+
+    $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+      // append outbound auth headers
+      $.auth.appendAuthHeaders(xhr, settings);
+
+      // now do whatever you want
+    }
+  });
     $.getJSON("/admin.json", function(data) {
       _this.parseData(data.stats);
     });
