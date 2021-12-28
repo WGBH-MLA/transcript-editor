@@ -76,7 +76,7 @@ app.routers.DefaultRouter = Backbone.Router.extend({
 
 
     data = data || {};
-    data = $.extend({}, {project: PROJECT, user: user, debug: DEBUG, route: this._getRouteData()}, data);
+    data = $.extend({}, {project: PROJECT, user: $.auth.user, debug: DEBUG, route: this._getRouteData()}, data);
 
     DEBUG && console.log('Route', data.route);
 
