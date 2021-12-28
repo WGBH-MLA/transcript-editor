@@ -14,7 +14,6 @@ window.app = {
     $.auth.configure({
       apiUrl: API_URL,
       authProviderPaths: auth_provider_paths,
-      validateOnPageLoad: true
     });
 
     // Debug
