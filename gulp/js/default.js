@@ -1,4 +1,4 @@
-//=include vendor/jquery-1.12.0.min.js
+//=include vendor/jquery-3.6.0.min.js
 //=include vendor/underscore-min.js
 //=include vendor/backbone-min.js
 //=include vendor/backbone.routefilter.min.js
