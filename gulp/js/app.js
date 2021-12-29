@@ -20,7 +20,7 @@ window.app = {
       console.log("yeah Ill do it!")
       xhr.setRequestHeader('access-token', $.auth.token)
       xhr.setRequestHeader('uid', $.auth.user.uid)
-    });
+    }});
 
     // Debug
     DEBUG && console.log("Project", PROJECT);
