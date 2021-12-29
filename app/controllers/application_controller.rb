@@ -5,9 +5,9 @@ class ApplicationController < ActionController::API
   include ActionController::ImplicitRender
 
   # Allow us to cache
-  # include ActionController::Caching
-  # self.perform_caching = true
-  # self.cache_store = ActionController::Base.cache_store
+  include ActionController::Caching
+  self.perform_caching = true
+  self.cache_store = ActionController::Base.cache_store
 
   before_action :touch_session
 
