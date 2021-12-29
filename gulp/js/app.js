@@ -16,6 +16,12 @@ window.app = {
       authProviderPaths: auth_provider_paths,
     });
 
+    $.ajaxSetup({ beforeSend: function(xhr) {
+      console.log("yeah Ill do it!")
+      xhr.setRequestHeader('access-token', $.auth.token)
+      xhr.setRequestHeader('uid', $.auth.user.uid)
+    });
+
     // Debug
     DEBUG && console.log("Project", PROJECT);
     PubSub.subscribe('auth.validation.success', function(ev, user) {
