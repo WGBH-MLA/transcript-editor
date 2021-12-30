@@ -18,8 +18,9 @@ window.app = {
 
     $.ajaxSetup({ beforeSend: function(xhr) {
       console.log("yeah Ill do it!", $.auth)
+      console.log( 'specificcaqlly ', $.auth.user, $.auth.user.uid )
       xhr.setRequestHeader('access-token', $.auth.token)
-      xhr.setRequestHeader('uid', "fakefakefake")
+      xhr.setRequestHeader('uid', $.auth.user.uid)
     }});
 
     // Debug
