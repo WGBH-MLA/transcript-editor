@@ -1,6 +1,13 @@
 class Admin::StatsController < ApplicationController
   include ActionController::MimeResponds
-  before_action :authenticate_moderator!
+  before_action :show_user, :authenticate_moderator!
+
+  def show_user
+    puts "IM HERE TO INFORM YOU OF THE"
+    puts current_user.inspect
+  end
+
+
 
   # GET /admin.json
   def index
