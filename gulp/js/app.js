@@ -18,9 +18,9 @@ window.app = {
 
     $.ajaxSetup({ beforeSend: function(xhr) {
       // console.log( 'specificcaqlly ', $.cookie().authHeaders['access-token'] )
-      console.log( 'specificcaqlly ', Object.keys($.cookie().authHeaders) )
-      xhr.setRequestHeader('access-token', $.cookie().authHeaders['access-token'])
-      xhr.setRequestHeader('uid', $.cookie().authHeaders['uid'] )
+      console.log( 'specificcaqlly ', JSON.parse($.cookie().authHeaders) )
+      xhr.setRequestHeader('access-token', JSON.parse($.cookie().authHeaders)['access-token'])
+      xhr.setRequestHeader('uid', JSON.parse($.cookie().authHeaders)['uid'] )
     }});
 
     // Debug
