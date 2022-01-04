@@ -4,12 +4,6 @@ class Admin::StatsController < ApplicationController
 
   # GET /admin.json
   def index
-    # puts "TOP OF STATS CONTROLLER"
-    # puts request.inspect
-    # puts session.inspect
-    # puts current_user.inspect
-    puts "END LOGGO"
-
     respond_to do |format|
       format.json {
         @stats = [
@@ -18,7 +12,6 @@ class Admin::StatsController < ApplicationController
         ]
       }
     end
-    puts "bottom of stats controller"
   end
 
 end

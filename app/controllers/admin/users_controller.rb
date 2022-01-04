@@ -8,9 +8,6 @@ class Admin::UsersController < ApplicationController
   # GET /admin/users.json
   def index
     respond_to do |format|
-      format.html {
-        render :file => "public/#{ENV['PROJECT_ID']}/admin.html"
-      }
       format.json {
         @users = User.getAll
         @user_roles = UserRole.getAll

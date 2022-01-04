@@ -35,7 +35,12 @@ Rails.application.routes.draw do
   match 'moderator' => 'admin/flags#index', :via => [:get], :as => :moderator
 
   match 'admin.json' => 'admin/stats#index', :via => [:get]
+  
+
+
   match 'admin' => 'default#admin', :via => [:get]
+  match 'admin/users' => 'default#admin', :via => [:get]
+  
   mount_devise_token_auth_for 'User', at: 'auth', controllers: { :omniauth_callbacks => "users/omniauth_callbacks"}
   
   root :to => 'default#index'

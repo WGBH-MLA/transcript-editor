@@ -17,8 +17,6 @@ window.app = {
     });
 
     $.ajaxSetup({ beforeSend: function(xhr) {
-      // console.log( 'specificcaqlly ', $.cookie().authHeaders['access-token'] )
-      console.log( 'specificcaqlly ', JSON.parse($.cookie().authHeaders) )
       xhr.setRequestHeader('access-token', JSON.parse($.cookie().authHeaders)['access-token'])
       xhr.setRequestHeader('client', JSON.parse($.cookie().authHeaders)['client'])
       xhr.setRequestHeader('token-type', JSON.parse($.cookie().authHeaders)['token-type'])
