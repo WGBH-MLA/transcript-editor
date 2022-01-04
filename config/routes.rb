@@ -23,7 +23,6 @@ Rails.application.routes.draw do
 
   # admin
   namespace :admin do
-    resources :users, only: [:index, :update]
     resources :transcripts, only: [:index]
     resources :flags, only: [:index]
   end
@@ -35,8 +34,8 @@ Rails.application.routes.draw do
   match 'moderator' => 'admin/flags#index', :via => [:get], :as => :moderator
 
   match 'admin.json' => 'admin/stats#index', :via => [:get]
-  
-
+  match 'admin/users.json' => 'admin/users#index', :via => [:get]
+  match 'admin/users.json' => 'admin/users#update', :via => [:patch, :put]
 
   match 'admin' => 'default#admin', :via => [:get]
   match 'admin/users' => 'default#admin', :via => [:get]
