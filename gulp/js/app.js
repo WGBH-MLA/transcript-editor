@@ -1,7 +1,7 @@
 window.API_URL = PROJECT.apiUrl || window.location.protocol + '//' + window.location.hostname;
 if (window.location.port && !PROJECT.apiUrl) window.API_URL += ':' + window.location.port
 
-window.DEBUG = true;
+window.DEBUG = false;
 
 window.app = {
   models: {},
@@ -16,6 +16,7 @@ window.app = {
       authProviderPaths: auth_provider_paths,
     });
 
+    // explicitly add auth headers toe very request so that admin data api (*.json) requests use auth correctly
     $.ajaxSetup({ beforeSend: function(xhr) {
       xhr.setRequestHeader('access-token', JSON.parse($.cookie().authHeaders)['access-token'])
       xhr.setRequestHeader('client', JSON.parse($.cookie().authHeaders)['client'])

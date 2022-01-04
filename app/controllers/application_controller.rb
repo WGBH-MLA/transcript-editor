@@ -3,12 +3,6 @@ class ApplicationController < ActionController::API
 
   # Allow us to use JBuilder
   include ActionController::ImplicitRender
-
-  # Allow us to cache
-  # include ActionController::Caching
-  # self.perform_caching = true
-  # self.cache_store = ActionController::Base.cache_store
-
   before_action :touch_session
 
   # Ensure a session id is available for all!
@@ -17,7 +11,6 @@ class ApplicationController < ActionController::API
   end
 
   def is_admin?
-
     user_signed_in? && current_user.isAdmin?
   end
 
