@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     resources :transcripts, only: [:index]
     resources :flags, only: [:index]
   end
+  # so it doesnt overlap with the admin layout route below
   match 'admin.json' => 'admin/stats#index', :via => [:get], :as => :admin
 
   # moderator
