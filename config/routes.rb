@@ -12,7 +12,6 @@ Rails.application.routes.draw do
   match 'search' => 'transcripts#search', :via => [:get]
   match 'media/:id' => 'media#show', :via => [:get]
 
-
   # Adds route for AAPB JSON transcript
   match 'transcripts/aapb/:id' => 'transcripts#aapb', :via => [:get], :as => :aapb_transcript
 
