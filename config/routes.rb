@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   resources :flags, only: [:index, :show, :create]
   resources :transcript_speaker_edits, only: [:create]
   resources :transcript_edits, only: [:index, :show, :create]
@@ -6,11 +7,12 @@ Rails.application.routes.draw do
   resources :transcripts, only: [:index, :show, :update]
   resources :collections, only: [:index, :show]
 
+  mount_devise_token_auth_for 'User', at: 'auth', controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+
   match 'page/:id' => 'default#index', :via => [:get]
   match 'dashboard' => 'default#index', :via => [:get]
   match 'transcript_lines/:id/resolve' => 'transcript_lines#resolve', :via => [:post]
   match 'search' => 'transcripts#search', :via => [:get]
-  match 'media/:id' => 'media#show', :via => [:get]
 
   # Adds route for AAPB JSON transcript
   match 'transcripts/aapb/:id' => 'transcripts#aapb', :via => [:get], :as => :aapb_transcript
@@ -19,37 +21,19 @@ Rails.application.routes.draw do
   match 'release_count' => 'transcripts#release_count', via: [:get]
   match 'all_uids' => 'transcripts#all_uids', via: [:get]
 
-
   # admin
   namespace :admin do
     resources :users, only: [:index, :update]
     resources :transcripts, only: [:index]
     resources :flags, only: [:index]
   end
+  match 'admin' => 'admin/stats#index', :via => [:get], :as => :admin
 
   # moderator
   namespace :moderator do
     resources :flags, only: [:index]
   end
   match 'moderator' => 'admin/flags#index', :via => [:get], :as => :moderator
-  match 'admin.json' => 'admin/stats#index', :via => [:get]
 
-  # match 'flags.json' => 'flags#index', :via => [:get]
-  # match 'flags/:id.json' => 'flags#show', :via => [:get]
-  # match 'flags.json' => 'flags#create', :via => [:post]
-  # match 'flags/:id.json' => 'flags#update', :via => [:patch, :put]
-  # match 'flags/:id.json' => 'flags#destroy', :via => [:delete]
-
-  # inaccessible with current admin/router.js + router.js
-  # match 'admin/users.json' => 'admin/users#index', :via => [:get]
-  # match 'admin/users.json' => 'admin/users#update', :via => [:patch, :put]
-
-
-  match 'admin' => 'default#admin', :via => [:get]
-  match 'admin/users' => 'default#admin', :via => [:get]
-  match 'moderator/flags' => 'default#admin', :via => [:get]
-  
-  mount_devise_token_auth_for 'User', at: 'auth', controllers: { :omniauth_callbacks => "users/omniauth_callbacks"}
-  
   root :to => 'default#index'
 end
