@@ -32,16 +32,22 @@ Rails.application.routes.draw do
     resources :flags, only: [:index]
   end
   match 'moderator' => 'admin/flags#index', :via => [:get], :as => :moderator
-
   match 'admin.json' => 'admin/stats#index', :via => [:get]
 
-  # inaccessible with current admin/router.js
+  # match 'flags.json' => 'flags#index', :via => [:get]
+  # match 'flags/:id.json' => 'flags#show', :via => [:get]
+  # match 'flags.json' => 'flags#create', :via => [:post]
+  # match 'flags/:id.json' => 'flags#update', :via => [:patch, :put]
+  # match 'flags/:id.json' => 'flags#destroy', :via => [:delete]
+
+  # inaccessible with current admin/router.js + router.js
   # match 'admin/users.json' => 'admin/users#index', :via => [:get]
   # match 'admin/users.json' => 'admin/users#update', :via => [:patch, :put]
 
 
   match 'admin' => 'default#admin', :via => [:get]
   match 'admin/users' => 'default#admin', :via => [:get]
+  match 'moderator/flags' => 'default#admin', :via => [:get]
   
   mount_devise_token_auth_for 'User', at: 'auth', controllers: { :omniauth_callbacks => "users/omniauth_callbacks"}
   
