@@ -31,9 +31,9 @@ Rails.application.routes.draw do
   match 'admin.json' => 'admin/stats#index', :via => [:get], :as => :admin
 
   # moderator
-  namespace :moderator do
-    resources :flags, only: [:index]
-  end
+  # namespace :moderator do
+  #   resources :flags, only: [:index]
+  # end
   match 'moderator' => 'admin/flags#index', :via => [:get], :as => :moderator
 
   match 'admin' => 'default#admin', :via => [:get]

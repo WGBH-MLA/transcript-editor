@@ -27,5 +27,6 @@ module TranscriptEditor
     config.api_only = false
     # various app functions fail without this, so dont boot unless its defined
     raise "Missing PROJECT_ID!" unless ENV["PROJECT_ID"]
+    raise "Missing Sony Ci config!" unless File.exist?(Rails.root + "/config/ci.yml")
   end
 end
