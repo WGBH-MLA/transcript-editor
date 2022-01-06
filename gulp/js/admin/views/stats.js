@@ -12,7 +12,7 @@ app.views.AdminStats = app.views.Base.extend({
 
   loadData: function(){
     var _this = this;
-    $.get("/admin.json", function(data) {
+    $.get("/stats.json", function(data) {
       _this.parseData(data.stats);
     });
   },
