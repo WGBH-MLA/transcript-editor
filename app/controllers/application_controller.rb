@@ -34,7 +34,7 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate_moderator!
-    unless is_moderator?
+    unless is_admin? || is_moderator?
       if request.format.json?
         render json: {
           error: 1,
