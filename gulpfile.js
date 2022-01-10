@@ -1,4 +1,3 @@
-        
 const {
     src,
     dest,
@@ -88,12 +87,23 @@ function templates() {
           var name = 'TEMPLATES';
           filename = path.basename(filename);
 
-          contents = 'window.'+name+'=window.'+name+' || {}; window.'+name+'["'+filename+'"] = \'' + contents.replace(/'/g, "\\'").replace(/(\r\n|\n|\r)/gm,"") + '\';';
+          contents = 'window.'+name+'=window.'+name+' || {}; window.'+name+'["'+filename+'"] = \'' + contents.replace(/'/g, "\\'").replace(/(\r\n|\n|\r)/gm,"") + '\';'
           return contents;
       }))
       .pipe(concat('templates.js'))
       // .pipe(uglify())
       .pipe(dest('./public/assets/js/'))
+}
+
+function cacheBust() {
+  var cbString = new Date().getTime()
+  return src(["./public/assets/index.html", "./public/assets/admin.html"])
+    .pipe(
+      replace(/v=\d+/g, function() {
+        return "v=" + cbString
+      }
+    )
+    .pipe(gulp.dest("."))
 }
 
 // Optimize images
@@ -126,5 +136,5 @@ function templates() {
 // Tasks to define the execution of the functions simultaneously or in series
 
 // exports.watch = parallel(watchFiles, browserSync);
-exports.default = series(clear, parallel(defaultjs, adminjs, css, templates));
+exports.default = series(clear, parallel(defaultjs, adminjs, css, templates, cacheBust));
     

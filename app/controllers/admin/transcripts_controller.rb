@@ -8,7 +8,7 @@ class Admin::TranscriptsController < ApplicationController
   def index
     respond_to do |format|
       format.html {
-        render :file => "public/#{ENV['PROJECT_ID']}/admin.html"
+        render :file => "public/assets/admin.html"
       }
       format.json {
         @transcripts = []

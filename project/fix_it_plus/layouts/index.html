@@ -40,13 +40,13 @@
     </div>
 
     <!-- json payload -->
-    <script src="/<%= project_key %>/project.js?v=2"></script>
+    <script src="/<%= project_key %>/project.js?v=1"></script>
     <!-- all templates -->
-    <script src="/assets/js/templates.js"></script>
+    <script src="/assets/js/templates.js?v=1"></script>
     <!-- minified bundle of assets from default.js file -->
-    <script src="/assets/js/default.min.js"></script>
+    <script src="/assets/js/default.min.js?v=1"></script>
     <!-- custom js -->
-    <script src="/<%= project_key %>/assets/js/custom.js"></script>
+    <script src="/<%= project_key %>/assets/js/custom.js?v=1"></script>
 
     <% if (project["gaCode"]) { %>
     <script>

@@ -30,7 +30,7 @@ class TranscriptsController < ApplicationController
   def show
     respond_to do |format|
       format.html {
-        render :file => "public/#{ENV['PROJECT_ID']}/index.html"
+        render :file => "public/assets/index.html"
       }
       format.json {
         @user_role = nil
