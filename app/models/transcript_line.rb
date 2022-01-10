@@ -20,11 +20,11 @@ class TranscriptLine < ActiveRecord::Base
 
   def incrementFlag
     new_flag_count = flag_count + 1
-    update_attributes(flag_count: new_flag_count)
+    update(flag_count: new_flag_count)
   end
 
   def resolve
-    update_attributes(flag_count: 0)
+    update(flag_count: 0)
   end
 
   def start_time_string
