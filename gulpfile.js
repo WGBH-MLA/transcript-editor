@@ -97,13 +97,16 @@ function templates() {
 
 function cacheBust() {
   var cbString = new Date().getTime()
-  return src(["./public/assets/index.html", "./public/assets/admin.html"])
-    .pipe(
-      replace(/v=\d+/g, function() {
-        return "v=" + cbString
-      }
-    )
-    .pipe(gulp.dest("."))
+  const source = './public/*html';
+
+  return src(source)
+      .pipe(map(function(contents, filename) {
+        contents = contents.toString().replace(/v=\d+/g, function() {
+            return "v=" + cbString
+        })
+        return contents
+      }))
+      .pipe(dest("./public/"))
 }
 
 // Optimize images

@@ -3,14 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title><%= project["name"] %></title>
-    <meta name="description" content="<%= project["description"] %>">
+    <title>FIX IT +</title>
+    <meta name="description" content="A web app for transcripts that were automatically generated from speech-to-text software">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/assets/css/app.min.css?v=1">
-    <link rel="stylesheet" href="/<%= project_key %>/assets/css/styles.css?v=1">
-    <link rel="shortcut icon" href="/<%= project_key %>/assets/img/favicon.ico?v=1">
+    <link rel="stylesheet" href="/assets/css/app.min.css?v=1641843549383">
+    <link rel="stylesheet" href="/fix_it_plus/assets/css/styles.css?v=1641843549383">
+    <link rel="shortcut icon" href="/fix_it_plus/assets/img/favicon.ico?v=1641843549383">
   </head>
   <body>
 
@@ -40,25 +40,25 @@
     </div>
 
     <!-- json payload -->
-    <script src="/<%= project_key %>/project.js?v=1"></script>
+    <script src="/fix_it_plus/project.js?v=1641843549383"></script>
     <!-- all templates -->
-    <script src="/assets/js/templates.js?v=1"></script>
+    <script src="/assets/js/templates.js?v=1641843549383"></script>
     <!-- minified bundle of assets from default.js file -->
-    <script src="/assets/js/default.min.js?v=1"></script>
+    <script src="/assets/js/default.min.js?v=1641843549383"></script>
     <!-- custom js -->
-    <script src="/<%= project_key %>/assets/js/custom.js?v=1"></script>
+    <script src="/fix_it_plus/assets/js/custom.js?v=1641843549383"></script>
 
-    <% if (project["gaCode"]) { %>
+    
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      ga('create', '<%= project["gaCode"] %>', 'auto');
+      ga('create', 'UA-60323667-4', 'auto');
       ga('send', 'pageview');
 
     </script>
-    <% } %>
+    
   </body>
 </html>
