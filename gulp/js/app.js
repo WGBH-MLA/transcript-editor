@@ -18,11 +18,16 @@ window.app = {
 
     // explicitly add auth headers toe very request so that admin data api (*.json) requests use auth correctly
     $.ajaxSetup({ beforeSend: function(xhr) {
-      xhr.setRequestHeader('access-token', JSON.parse($.cookie().authHeaders)['access-token'])
-      xhr.setRequestHeader('client', JSON.parse($.cookie().authHeaders)['client'])
-      xhr.setRequestHeader('token-type', JSON.parse($.cookie().authHeaders)['token-type'])
-      xhr.setRequestHeader('expiry', JSON.parse($.cookie().authHeaders)['expiry'])
-      xhr.setRequestHeader('uid', JSON.parse($.cookie().authHeaders)['uid'] )
+
+      if(typeof $.cookie().authHeaders !== 'undefined'){
+        let cookieData = JSON.parse($.cookie().authHeaders)
+        xhr.setRequestHeader('access-token', cookieData['access-token'])
+        xhr.setRequestHeader('client', cookieData['client'])
+        xhr.setRequestHeader('token-type', cookieData['token-type'])
+        xhr.setRequestHeader('expiry', cookieData['expiry'])
+        xhr.setRequestHeader('uid', cookieData['uid'])
+      }
+
     }});
 
     // Debug
