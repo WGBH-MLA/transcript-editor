@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  # load layouts
+  match 'admin' => 'default#admin', :via => [:get]
+  match 'admin/users' => 'default#admin', :via => [:get]
+  match 'moderator/flags' => 'default#admin', :via => [:get]
+  match 'transcripts/:id' => 'default#index', :via => [:get]
+  match 'admin/transcripts' => 'default#admin', :via => [:get]
+  
   resources :flags, only: [:index, :show, :create]
   resources :transcript_speaker_edits, only: [:create]
   resources :transcript_edits, only: [:index, :show, :create]
@@ -28,13 +35,6 @@ Rails.application.routes.draw do
     resources :flags, only: [:index]
   end
   match 'stats.json' => 'admin/stats#index', :via => [:get]
-
-  # load layouts
-  match 'admin' => 'default#admin', :via => [:get]
-  match 'admin/users' => 'default#admin', :via => [:get]
-  match 'moderator/flags' => 'default#admin', :via => [:get]
-  match 'transcripts/:id' => 'default#index', :via => [:get]
-  match 'admin/transcripts' => 'default#admin', :via => [:get]
 
   # mediacontroller
   match 'media/:id' => 'media#show', :via => [:get]
