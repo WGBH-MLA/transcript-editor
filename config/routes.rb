@@ -33,6 +33,8 @@ Rails.application.routes.draw do
   match 'admin' => 'default#admin', :via => [:get]
   match 'admin/users' => 'default#admin', :via => [:get]
   match 'moderator/flags' => 'default#admin', :via => [:get]
+  match 'transcripts/:id' => 'default#index', :via => [:get]
+  match 'admin/transcripts' => 'default#admin', :via => [:get]
 
   # mediacontroller
   match 'media/:id' => 'media#show', :via => [:get]
