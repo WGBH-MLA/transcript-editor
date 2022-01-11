@@ -225,8 +225,6 @@ app.views.Transcript = app.views.Base.extend({
         _this.onTranscriptLoad(model);
       },
       error: function(model, response, options){
-        console.log( 'ugh error', response )
-
         $(window).trigger('alert', ['Whoops! We seem to have trouble loading this transcript. Please try again by refreshing your browser or come back later!']);
       }
     });
