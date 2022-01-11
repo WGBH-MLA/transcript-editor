@@ -25,9 +25,13 @@ class TranscriptsController < ApplicationController
     end
   end
 
+  # GET /transcripts/the-uid
   # GET /transcripts/the-uid.json
   def show
     respond_to do |format|
+      format.html {
+        render :file => Rails.root + "public/index.html"
+      }
       format.json {
         @user_role = nil
         @user_edits = []
