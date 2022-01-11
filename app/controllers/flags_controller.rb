@@ -14,7 +14,7 @@ class FlagsController < ApplicationController
   # POST /flags.json
   def create
     @flag = nil
-    params[:flag][:session_id] = session.id
+    params[:flag][:session_id] = session.id.to_s
     flag = params[:flag]
 
     # Retrieve existing edit for user or session

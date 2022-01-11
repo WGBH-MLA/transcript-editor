@@ -1,65 +1,143 @@
-var gulp = require('gulp');
+const {
+    src,
+    dest,
+    parallel,
+    series,
+    watch
+} = require('gulp');
 
-// config
-var config = require('./gulp/config');
+// Load plugins
 
-// utilities
-var concat = require('gulp-concat');
-var include = require('gulp-include');
-var map = require('vinyl-map');
-var path = require('path');
-var rename = require('gulp-rename');
+const uglify = require('gulp-uglify');
+const rename = require('gulp-rename');
+const sass = require('gulp-sass');
+// const autoprefixer = require('gulp-autoprefixer');
+const cssnano = require('gulp-cssnano');
+const concat = require('gulp-concat');
+const clean = require('gulp-clean');
+// const imagemin = require('gulp-imagemin');
+const changed = require('gulp-changed');
+// for templates
+const map = require('vinyl-map');
+const path = require('path');
+const include = require('gulp-include');
+// const browsersync = require('browser-sync').create();
 
-// Sass compilation
+// Clean assets
 
-var sass = require('gulp-sass');
+function clear() {
+    return src('./public/assets/*', {
+            read: false
+        })
+        .pipe(clean());
+}
 
-gulp.task('sass', function () {
-  gulp.src(config.sass.src)
-    .pipe(sass.sync().on('error', sass.logError))
-    .pipe(sass(config.sass.opt))
-    .pipe(gulp.dest(config.sass.dest));
-});
+// JS function 
 
-// Javascript compilation
+function defaultjs() {
+    const source = ['./gulp/js/default.js']
 
-var uglify = require('gulp-uglify');
+    return src(source)
+        // .pipe(changed(source))
+        .pipe(include())
+        .pipe(concat('default.js'), {newLine: "\n\n"})
+        // .pipe(uglify())
+        .pipe(rename({
+            extname: '.min.js'
+        }))
+        .pipe(dest('./public/assets/js/'))
+}
 
-gulp.task('js', function() {
-  gulp.src(config.include.src)
-    // include non-minified version
-    .pipe(include(config.include.opt).on('error', console.error.bind(console)))
-    .pipe(gulp.dest(config.include.dest))
-    // and the minified version
-    .pipe(uglify(config.uglify.opt).on('error', console.error.bind(console)))
-    .pipe(rename({ extname: '.min.js' }))
-    .pipe(gulp.dest(config.uglify.dest));
-});
+function adminjs() {
+    const source = ['./gulp/js/admin.js']
 
-// Templates
+    return src(source)
+        // .pipe(changed(source))
+        .pipe(include())
+        .pipe(concat('admin.js'), {newLine: "\n\n"})
+        // .pipe(uglify())
+        .pipe(rename({
+            extname: '.min.js'
+        }))
+        .pipe(dest('./public/assets/js/'))
+}
 
-gulp.task('templates', function() {
-  gulp.src(config.templates.src)
-    .pipe(map(function(contents, filename){
-      contents = contents.toString();
-      var name = config.templates.variable;
-      filename = path.basename(filename);
+// CSS function 
 
-      contents = 'window.'+name+'=window.'+name+' || {}; window.'+name+'["'+filename+'"] = \'' + contents.replace(/'/g, "\\'").replace(/(\r\n|\n|\r)/gm,"") + '\';';
-      return contents;
-    }))
-    .pipe(concat(config.templates.outputFile))
-    .pipe(gulp.dest(config.templates.dest));
-});
+function css() {
+    const source = './gulp/scss/**/*.scss';
 
-gulp.task('build', ['sass', 'js', 'templates']);
+    return src(source)
+        // .pipe(changed(source))
+        .pipe(sass())
+        .pipe(rename({
+            extname: '.min.css'
+        }))
+        .pipe(cssnano())
+        .pipe(dest('./public/assets/css/'))
+}
 
-// Watchers
+function templates() {
+  const source = './gulp/templates/**/*.ejs';
 
-gulp.task('watch', function () {
-  gulp.watch(config.sass.src, ['sass']);
-  gulp.watch(config.uglify.src, ['js']);
-  gulp.watch(config.templates.src, ['templates']);
-});
+  return src(source)
+      .pipe(changed(source))
+       .pipe(map(function(contents, filename){
+          contents = contents.toString();
+          var name = 'TEMPLATES';
+          filename = path.basename(filename);
 
-gulp.task('default', ['watch', 'sass', 'js', 'templates']);
+          contents = 'window.'+name+'=window.'+name+' || {}; window.'+name+'["'+filename+'"] = \'' + contents.replace(/'/g, "\\'").replace(/(\r\n|\n|\r)/gm,"") + '\';'
+          return contents;
+      }))
+      .pipe(concat('templates.js'))
+      // .pipe(uglify())
+      .pipe(dest('./public/assets/js/'))
+}
+
+function cacheBust() {
+  var cbString = new Date().getTime()
+  const source = './public/*html';
+
+  return src(source)
+      .pipe(map(function(contents, filename) {
+        contents = contents.toString().replace(/v=\d+/g, function() {
+            return "v=" + cbString
+        })
+        return contents
+      }))
+      .pipe(dest("./public/"))
+}
+
+// Optimize images
+
+// function img() {
+//     return src('./src/img/*')
+//         .pipe(imagemin())
+//         .pipe(dest('./assets/img'));
+// }
+
+// Watch files
+
+// function watchFiles() {
+//     watch('./src/scss/*', css);
+//     watch('./src/js/*', js);
+//     watch('./src/img/*', img);
+// }
+
+// BrowserSync
+
+// function browserSync() {
+//     browsersync.init({
+//         server: {
+//             baseDir: './'
+//         },
+//         port: 3000
+//     });
+// }
+
+// Tasks to define the execution of the functions simultaneously or in series
+
+// exports.watch = parallel(watchFiles, browserSync);
+exports.default = series(clear, parallel(defaultjs, adminjs, css, templates, cacheBust));
+    

@@ -107,7 +107,8 @@ namespace :project do
     Dir.glob(layout_files).each do |layout_file|
       content = File.read(layout_file)
       compiled = EJS.evaluate(content, :project => project, :project_key => project_key)
-      target_file = Rails.root.join('public', project_key, File.basename(layout_file))
+      target_file = Rails.root.join('public', File.basename(layout_file))
+      puts "Copy layout to target file #{target_file}"
       File.open(target_file, 'w') { |file| file.write(compiled) }
     end
 

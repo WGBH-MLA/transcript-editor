@@ -113,7 +113,7 @@ class AAPBRecord
   end
 
   def media_srcs
-    @media_srcs ||= (1..ci_ids.count).map { |part| "https://americanarchive.org/media/#{uid}?part=#{part}" }
+    @media_srcs ||= (1..ci_ids.count).map { |part| "/media/#{uid}?part=#{part}" }
   end
 
   def media_type

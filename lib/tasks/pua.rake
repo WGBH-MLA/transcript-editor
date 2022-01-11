@@ -1,6 +1,5 @@
 require 'fileutils'
 require 'json'
-require 'popuparchive'
 
 namespace :pua do
 

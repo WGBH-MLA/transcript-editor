@@ -25,6 +25,7 @@ app.routers.DefaultRouter = Backbone.Router.extend({
   stats: function(){
     var data = this._getData(data);
     var header = new app.views.Header(data);
+    // THIS IS WHERE ADMIN VIEWS GET CALLED AS PARTIALS FOR ADMIN DASHBOARD v NOTE THE app.views.CLASS NAMES
     var stats = new app.views.AdminStats(data);
     var users = new app.views.AdminUsers(data);
     var flags = new app.views.AdminFlags(data);
@@ -42,17 +43,15 @@ app.routers.DefaultRouter = Backbone.Router.extend({
   },
 
   _getData: function(data){
-
     var user = {};
     if ($.auth.user && $.auth.user.signedIn) {
       user = $.auth.user;
     }
 
     data = data || {};
-    data = $.extend({}, {project: PROJECT, user: user, debug: DEBUG, route: this._getRouteData()}, data);
+    data = $.extend({}, {project: PROJECT, user: $.auth.user, debug: DEBUG, route: this._getRouteData()}, data);
 
     DEBUG && console.log('Route', data.route);
-
     return data;
   },
 

@@ -1,17 +1,13 @@
 class Admin::UsersController < ApplicationController
   include ActionController::MimeResponds
 
-  before_filter :authenticate_admin!
-
+  before_action :authenticate_admin!
   before_action :set_user, only: [:show, :update, :destroy]
 
   # GET /admin/users
   # GET /admin/users.json
   def index
     respond_to do |format|
-      format.html {
-        render :file => "public/#{ENV['PROJECT_ID']}/admin.html"
-      }
       format.json {
         @users = User.getAll
         @user_roles = UserRole.getAll

@@ -27,13 +27,17 @@ Rails.application.routes.draw do
     resources :transcripts, only: [:index]
     resources :flags, only: [:index]
   end
-  match 'admin' => 'admin/stats#index', :via => [:get], :as => :admin
+  match 'stats.json' => 'admin/stats#index', :via => [:get]
 
-  # moderator
-  namespace :moderator do
-    resources :flags, only: [:index]
-  end
-  match 'moderator' => 'admin/flags#index', :via => [:get], :as => :moderator
+  # load layouts
+  match 'admin' => 'default#admin', :via => [:get]
+  match 'admin/users' => 'default#admin', :via => [:get]
+  match 'moderator/flags' => 'default#admin', :via => [:get]
+  match 'transcripts/:id' => 'default#index', :via => [:get]
+  match 'admin/transcripts' => 'default#admin', :via => [:get]
+
+  # mediacontroller
+  match 'media/:id' => 'media#show', :via => [:get]
 
   root :to => 'default#index'
 end
