@@ -7,17 +7,6 @@ class User < ActiveRecord::Base
 
   belongs_to :user_role
 
-  def self.from_omniauth(auth)
-
-    puts auth
-
-    user = User.find_or_create_by(email: auth['info']['email']) do |user|
-      user.provider = auth['provider']
-      user.uid = auth['uid']
-      user.email = auth['info']['email']
-    end
-  end
-
   def incrementLinesEdited(amount=1)
     update(lines_edited: lines_edited + amount)
   end

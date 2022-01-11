@@ -14,7 +14,6 @@ app.views.AdminFlags = app.views.Base.extend({
   loadData: function(){
     var _this = this;
     $.getJSON("/admin/flags.json", function(data) {
-      console.log( 'hey fool! ', data )
       _this.renderFlags(data.flags);
     });
   },

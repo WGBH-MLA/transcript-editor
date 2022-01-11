@@ -229,7 +229,7 @@ This app currently supports logging in through Google or Facebook accounts (via 
 3. In your project's dashboard click *enable and manage Google APIs*.  You must enable at least *Contacts API* and *Google+ API*
 4. Click the *Credentials* tab of your project dashboard, *Create credentials* for an *OAuth client ID* and select *Web application*
 5. You should make at least two credentials for your Development and Production environments (you can also create one for a Test environment)
-6. For development, enter `http://localhost:3000` (or whatever your development URI is) for your *Authorized Javascript origins* and `http://localhost:3000/auth/google_oauth2/callback` for your *Authorized redirect URIs*
+6. For development, enter `http://localhost:3000` (or whatever your development URI is) for your *Authorized Javascript origins* and `http://localhost:3000/omniauth/google_oauth2/callback` for your *Authorized redirect URIs*
 7. For production, enter the same values, but replace `http://localhost:3000` with your production URI e.g. `https://myproject.com`
 8. Open up your `config/application.yml`
 9. For each development and production, copy the values listed for *Client ID* and *Client secret* into the appropriate key-value entry, e.g.
