@@ -8,6 +8,7 @@ class DefaultController < ApplicationController
 
   def admin
     puts "FULL HEADERS ADMIN"
+    puts request.headers
     render :file => Rails.root + "public/admin.html"
   end
 end
