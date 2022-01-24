@@ -22,7 +22,10 @@
     "lauren_eckels@wgbh.org",
     "ryenne_allen@wgbh.org",
     "john_salmans@wgbh.org",
-    "taya_cunningham@wgbh.org"
+    "taya_cunningham@wgbh.org",
+    "little@kmuw.org",
+    "zoller@kmuw.org",
+    "andersen@kmuw.org"
   ],
   "authProviders": [{ "name": "google", "label": "Google", "path": "/auth/google_oauth2" }],
   "consensus": {
