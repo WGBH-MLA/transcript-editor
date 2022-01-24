@@ -1,7 +1,7 @@
 window.API_URL = PROJECT.apiUrl || window.location.protocol + '//' + window.location.hostname;
 if (window.location.port && !PROJECT.apiUrl) window.API_URL += ':' + window.location.port
 
-window.DEBUG = false;
+window.DEBUG = true;
 
 window.app = {
   models: {},
