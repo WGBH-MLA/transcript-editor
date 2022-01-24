@@ -17,7 +17,12 @@
     "rynmarchese@gmail.com",
     "lesliek.bourgeois@gmail.com",
     "timothy_lepczyk@wgbh.org",
-    "henry_neels@wgbh.org"
+    "henry_neels@wgbh.org",
+    "nicholas_brake@wgbh.org",
+    "lauren_eckels@wgbh.org",
+    "ryenne_allen@wgbh.org",
+    "john_salmans@wgbh.org",
+    "taya_cunningham@wgbh.org"
   ],
   "authProviders": [{ "name": "google", "label": "Google", "path": "/auth/google_oauth2" }],
   "consensus": {
