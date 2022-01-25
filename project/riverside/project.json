@@ -12,7 +12,7 @@
     "firstadmin555@peabody-fake.com",
     "secondadmin666@peabody-fake.com",
     "kelley.vincent.m@gmail.com",
-    "roosa.sadie@gmail.com"
+    "henry_neels@wgbh.org"
   ],
   "authProviders": [{ "name": "google", "label": "Google", "path": "/auth/google_oauth2" }],
   "consensus": {
