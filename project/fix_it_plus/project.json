@@ -23,9 +23,10 @@
     "ryenne_allen@wgbh.org",
     "john_salmans@wgbh.org",
     "taya_cunningham@wgbh.org",
-    "little@kmuw.org",
-    "zoller@kmuw.org",
-    "andersen@kmuw.org"
+    "allielittlem@gmail.com",
+    "lauren.zoller@gmail.com",
+    "torin.andersen@gmail.com",
+    "englandfilms@gmail.com"
   ],
   "authProviders": [{ "name": "google", "label": "Google", "path": "/auth/google_oauth2" }],
   "consensus": {
