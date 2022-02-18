@@ -7,7 +7,7 @@ class AAPBRecord
   MOVING_IMAGE = 'Moving Image'.freeze
   SOUND = 'Sound'.freeze
   OTHER = 'other'.freeze
-  S3_BASE = 'http://americanarchive.org.s3.amazonaws.com'.freeze
+  S3_BASE = 'https://americanarchive.org.s3.amazonaws.com'.freeze
 
   def initialize(id)
     @uid = process_id(id)
