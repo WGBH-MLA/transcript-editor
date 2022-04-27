@@ -652,19 +652,19 @@ A collection of words, arranged in a particular order that conveys meaning. This
 A grouping of Transcripts by 'Station Name'
 
 #### Station Name
-String that appears in Fixit UI as 'Collection Name'
-Stored in `Collection#uid` field
-Used as value for "organization" annotation that links each record to its `Collection`
+String that appears in Fixit UI as 'Collection Name'  
+Stored in `Collection#uid` field  
+Used as value for "organization" annotation that links each record to its `Collection`  
 
 #### Project ID
 A string used throughout Fixit+ to differentiate configuration for different fixit instances (fix_it_plus, riverside)
 
 #### What A Record Wants, What A Record Needs
-Must have pbcore annotation of type organization
-  `<pbcoreAnnotation annotationType="organization">[containing Collection's uid value in Fixit+]</pbcoreAnnotation>`
-Must have transcript file stored in s3://americanarchive.org/transcripts/[guid]/[guid]-transcript.json
-Must be (re)ingested into production AAPB *after* transcript file was made, to create
-  `<pbcoreAnnotation annotationType="Transcript URL">[ts location in aapb s3]</pbcoreAnnotation>`
+Must have pbcore annotation of type organization  
+  `<pbcoreAnnotation annotationType="organization">[containing Collection's uid value in Fixit+]</pbcoreAnnotation>`  
+Must have transcript file stored in s3://americanarchive.org/transcripts/[guid]/[guid]-transcript.json  
+Must be (re)ingested into production AAPB *after* transcript file was made, to create  
+  `<pbcoreAnnotation annotationType="Transcript URL">[ts location in aapb s3]</pbcoreAnnotation>`  
 
 ### Creating A Collection/Station In Fixit+
 #### Prerequisites
@@ -679,7 +679,7 @@ Must be (re)ingested into production AAPB *after* transcript file was made, to c
 
 ### Ingesting Records Into Fixit+
 #### Prerequisites
-* Text file containing the guid for each record, separated by newlines
+* Text file containing the guid for each record, separated by newlines  
 * Previously-created `Collection` with correct Project ID, Vendor ID (always 0), and Station Name
 * All records must have `<pbcoreAnnotation annotationType="organization">Example Station Name Value</pbcoreAnnotation>` in AAPB
 * All records must have transcript file stored at the conventional AAPB S3 location s3://americanarchive.org/transcripts/EXAMPLEGUID/EXAMPLEGUID-transcript.json
@@ -691,9 +691,10 @@ Must be (re)ingested into production AAPB *after* transcript file was made, to c
 * Run the ingest rake task: `bundle exec rake aapb:ingest_guids['/home/ec2-user/exampleguidsfile.txt','example_project_id']`
 
 ### Moving Records From Fixit+ To AAPB
+
 #### Notes
-Releasing a transcript from Fixit+ to AAPB simply requires replacing the transcript file in AAPB S3.
-No reindexing is required, because all required annotations must have already been in place to bring the record into Fixit+.
+Releasing a transcript from Fixit+ to AAPB simply requires replacing the transcript file in AAPB S3.  
+No reindexing is required, because all required annotations must have already been in place to bring the record into Fixit+.  
 Currently, the scripts included in Fixit+ can only either:
   * Release all 100% complete transcripts in a Fixit instance
   * Release all transcripts in a Fixit instance
