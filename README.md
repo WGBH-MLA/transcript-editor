@@ -673,7 +673,7 @@ Must be (re)ingested into production AAPB *after* transcript file was placed in 
 * SSH into Fixit+ instance as ec2-user
 * Navigate to the Fixit+ app directory: `cd /var/www/transcript-editor/current`
 * Start a Rails Console: `RAILS_ENV=production bundle exec rails c`
-* -Create the Collection using the station information: `Collection.create(uid: "This is my station name", vendor_id: 0, project_id: "example_project_id")`
+* Create the Collection using the station information: `Collection.create(uid: "This is my station name", vendor_id: 0, project_id: "example_project_id")`
 
 ### Ingesting Records Into Fixit+
 #### Prerequisites
