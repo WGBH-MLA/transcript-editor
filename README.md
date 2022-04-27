@@ -668,40 +668,40 @@ Must be (re)ingested into production AAPB *after* transcript file was made, to c
 
 ### Creating A Collection/Station In Fixit+
 #### Prerequisites
--`:uid` field set to Station Name based on the station's 'Contributing Organization'
--`:vendor_id` field set to 0 (this is an internal reference to the transcript file format, but we only use VTT)
--`:project_uid` set to Project ID (i.e. `fix_it_plus` or `riverside`)
+* `:uid` field set to Station Name based on the station's 'Contributing Organization'
+* `:vendor_id` field set to 0 (this is an internal reference to the transcript file format, but we only use VTT)
+* `:project_uid` set to Project ID (i.e. `fix_it_plus` or `riverside`)
 #### Steps
--SSH into Fixit+ instance as ec2-user
--Navigate to the Fixit+ app directory: `cd /var/www/transcript-editor/current`
--Start a Rails Console: `RAILS_ENV=production bundle exec rails c`
--Create the Collection using the station information: `Collection.create(uid: "This is my station name", vendor_id: 0, project_id: "example_project_id")`
+* SSH into Fixit+ instance as ec2-user
+* Navigate to the Fixit+ app directory: `cd /var/www/transcript-editor/current`
+* Start a Rails Console: `RAILS_ENV=production bundle exec rails c`
+* Create the Collection using the station information: `Collection.create(uid: "This is my station name", vendor_id: 0, project_id: "example_project_id")`
 
 ### Ingesting Records Into Fixit+
 #### Prerequisites
--Text file containing the guid for each record, separated by newlines
--Previously-created `Collection` with correct Project ID, Vendor ID (always 0), and Station Name
--All records must have `<pbcoreAnnotation annotationType="organization">Example Station Name Value</pbcoreAnnotation>` in AAPB
--All records must have transcript file stored at the conventional AAPB S3 location s3://americanarchive.org/transcripts/EXAMPLEGUID/EXAMPLEGUID-transcript.json
--All records must have been ingested or reindexed into production AAPB *after* the transcript file was stored in S3. This creates the required "Transcript URL" annotation.
+* Text file containing the guid for each record, separated by newlines
+* Previously-created `Collection` with correct Project ID, Vendor ID (always 0), and Station Name
+* All records must have `<pbcoreAnnotation annotationType="organization">Example Station Name Value</pbcoreAnnotation>` in AAPB
+* All records must have transcript file stored at the conventional AAPB S3 location s3://americanarchive.org/transcripts/EXAMPLEGUID/EXAMPLEGUID-transcript.json
+* All records must have been ingested or reindexed into production AAPB *after* the transcript file was stored in S3. This creates the required "Transcript URL" annotation.
 #### Steps
--Use scp to copy the guids text file into ec2-user's home directory on the destination Fixit+ instance: `scp -i ~/.ssh/transcript-editor.pem exampleguidsfile.txt ec2-user@examplefixit.host.name:/home/ec2-user/exampleguidsfile.txt`
--SSH into the destination Fixit+ instance: `ssh -i ~/.ssh/transcript-editor.pem ec2-user@examplefixit.host.name`
--Navigate to the Fixit+ app directory: `cd /var/www/transcript-editor/current`
--Run the ingest rake task: `bundle exec rake aapb:ingest_guids['/home/ec2-user/exampleguidsfile.txt','example_project_id']`
+* Use scp to copy the guids text file into ec2-user's home directory on the destination Fixit+ instance: `scp -i ~/.ssh/transcript-editor.pem exampleguidsfile.txt ec2-user@examplefixit.host.name:/home/ec2-user/exampleguidsfile.txt`
+* SSH into the destination Fixit+ instance: `ssh -i ~/.ssh/transcript-editor.pem ec2-user@examplefixit.host.name`
+* Navigate to the Fixit+ app directory: `cd /var/www/transcript-editor/current`
+* Run the ingest rake task: `bundle exec rake aapb:ingest_guids['/home/ec2-user/exampleguidsfile.txt','example_project_id']`
 
 ### Moving Records From Fixit+ To AAPB
 #### Notes
 Releasing a transcript from Fixit+ to AAPB simply requires replacing the transcript file in AAPB S3.
 No reindexing is required, because all required annotations must have already been in place to bring the record into Fixit+.
 Currently, the scripts included in Fixit+ can only either:
-  -Release all 100% complete transcripts in a Fixit instance
-  -Release all transcripts in a Fixit instance
+  * Release all 100% complete transcripts in a Fixit instance
+  * Release all transcripts in a Fixit instance
 
 #### Steps (Release 100% Complete Transcripts)
--SSH into the destination Fixit+ instance: `ssh -i ~/.ssh/transcript-editor.pem ec2-user@examplefixit.host.name`
--Navigate to the Fixit+ app directory: `cd /var/www/transcript-editor/current`
--Run the release script: `RAILS_ENV=production bundle exec ruby scripts/workflow.rb --complete`
+* SSH into the destination Fixit+ instance: `ssh -i ~/.ssh/transcript-editor.pem ec2-user@examplefixit.host.name`
+* Navigate to the Fixit+ app directory: `cd /var/www/transcript-editor/current`
+* Run the release script: `RAILS_ENV=production bundle exec ruby scripts/workflow.rb --complete`
 
 ## License
 
