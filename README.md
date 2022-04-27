@@ -661,10 +661,10 @@ A string used throughout Fixit+ to differentiate configuration for different fix
 
 ####What A Record Wants, What A Record Needs
 Must have pbcore annotation of type organization
-  <pbcoreAnnotation annotationType="organization">[containing Collection's uid value in Fixit+]</pbcoreAnnotation>
+  `<pbcoreAnnotation annotationType="organization">[containing Collection's uid value in Fixit+]</pbcoreAnnotation>`
 Must have transcript file stored in s3://americanarchive.org/transcripts/[guid]/[guid]-transcript.json
 Must be (re)ingested into production AAPB *after* transcript file was made, to create
-  <pbcoreAnnotation annotationType="Transcript URL">[ts location in aapb s3]</pbcoreAnnotation>
+  `<pbcoreAnnotation annotationType="Transcript URL">[ts location in aapb s3]</pbcoreAnnotation>`
 
 ###Creating A Collection/Station In Fixit+
 ####Prerequisites
@@ -681,7 +681,7 @@ Must be (re)ingested into production AAPB *after* transcript file was made, to c
 ####Prerequisites
 -Text file containing the guid for each record, separated by newlines
 -Previously-created `Collection` with correct Project ID, Vendor ID (always 0), and Station Name
--All records must have <pbcoreAnnotation annotationType="organization">Example Station Name Value</pbcoreAnnotation> in AAPB
+-All records must have `<pbcoreAnnotation annotationType="organization">Example Station Name Value</pbcoreAnnotation>` in AAPB
 -All records must have transcript file stored at the conventional AAPB S3 location s3://americanarchive.org/transcripts/EXAMPLEGUID/EXAMPLEGUID-transcript.json
 -All records must have been ingested or reindexed into production AAPB *after* the transcript file was stored in S3. This creates the required "Transcript URL" annotation.
 ####Steps
