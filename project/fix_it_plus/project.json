@@ -27,7 +27,8 @@
     "lauren.zoller@gmail.com",
     "torin.andersen@gmail.com",
     "englandfilms@gmail.com",
-    "marian.sinars@gmail.com"
+    "marian.sinars@gmail.com",
+    "miranda_villesvik@wgbh.org"
   ],
   "authProviders": [{ "name": "google", "label": "Google", "path": "/auth/google_oauth2" }],
   "consensus": {
