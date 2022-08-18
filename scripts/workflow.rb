@@ -11,11 +11,11 @@ class TranscriptReleaser
 
   QUIPS = ['Wow, neat. We ', 'Great news - we ','You are not going to believe this! We ', 'Good golly! We ', 'Holy cow! We ']
 
-  def initialize(completed: false , all: false)
+  def initialize(completed: false , all: false, release_guids_path: false)
     raise "`completed` and `all` cannot be set to the same value. completed: #{completed} | all: #{all}" if completed == all
 
     @right_now = DateTime.now
-    @completed, @all = completed, all
+    @completed, @all, @release_guids_path = completed, all, release_guids_path
   end
 
   def release
@@ -27,6 +27,8 @@ class TranscriptReleaser
                           get_from_release_count_json
                         elsif @all
                           get_from_all_uids_json
+                        elsif @release_guids_path
+                          File.read(@release_guids_path).split("\n")
                         end
 
     puts "Now we're going to write those release guids (#{ release_needin_ids.count }) to a file..."
@@ -46,7 +48,8 @@ class TranscriptReleaser
     puts "Well, that was fun. Now we've got all the files we need."
 
     Dir.glob(__dir__ + "/transcript-json/*.json").each do |filename|
-      puts `./shellScriptToDuplicateAndPushNewFilesToS3.sh #{filename}`
+      puts "OTHER WISE I WOULD RUN HERE #{filename}"
+      #puts `./shellScriptToDuplicateAndPushNewFilesToS3.sh #{filename}`
       puts "Deleting file: #{filename}"
       File.delete(filename)
     end
@@ -97,6 +100,13 @@ OptionParser.new do |opts|
   end
   opts.on("-a", "--all", "Release ALL the transcripts to S3 with blatant disregard for completeness") do |a|
     options[:all] = a
+  end
+  opts.on("-i", "--id-file", "Release transcripts based on guids in a newline-delimited text file") do |a|
+    if File.exist?(ARGV[0])
+      options[:release_guids_path] = ARGV[0]
+    else
+      raise "No id file was found at #{ARGV[0]}"
+    end
   end
 end.parse!
 
