@@ -3,7 +3,7 @@ require 'date'
 require 'json'
 require 'optparse'
 
-TX_HOST = '127.0.0.1:80'
+TX_HOST = '127.0.0.1:3000'
 
 # run with `bundle exec ruby workflow.rb [--option]`
 
@@ -12,7 +12,6 @@ class TranscriptReleaser
   QUIPS = ['Wow, neat. We ', 'Great news - we ','You are not going to believe this! We ', 'Good golly! We ', 'Holy cow! We ']
 
   def initialize(completed: false , all: false, release_guids_path: false)
-    raise "`completed` and `all` cannot be set to the same value. completed: #{completed} | all: #{all}" if completed == all
 
     @right_now = DateTime.now
     @completed, @all, @release_guids_path = completed, all, release_guids_path
@@ -34,9 +33,12 @@ class TranscriptReleaser
     puts "Now we're going to write those release guids (#{ release_needin_ids.count }) to a file..."
     create_guid_file(release_needin_ids)
 
+    puts "Now clearing old transcript files out from local folder..."
+    `rm ./transcript-json/*`
+
     filename = nil
     release_needin_ids.each do |guid|
-      transcript_json = RestClient.get(TX_HOST + "/transcripts/aapb/#{ guid }.json")
+      transcript_json = get_transcript_json(guid)
       # filename = "transcript-#{ right_now }-#{guid}.json"
       filename = "#{guid.gsub('_','-')}-transcript.json"
       File.open(%(./transcript-json/#{filename}), 'w+') do |f|
@@ -54,12 +56,34 @@ class TranscriptReleaser
       File.delete(filename)
     end
 
-    set_released_flag_for_completed_transcripts(release_needin_ids) if @completed
+    set_released_flag_for_completed_transcripts(release_needin_ids) if (@completed || @release_guids_path)
 
     puts 'Ah... That is the stuff.'
   end
 
   private
+  
+  def id_styles(guid)
+    guidstem = guid.gsub(/cpb-aacip./, '')
+    # no slash version because this is only used for URLS
+    ['cpb-aacip-', 'cpb-aacip_'].map { |style| style + guidstem }
+  end
+
+  def get_transcript_json(guid)
+    id_styles(guid).each do |guid_style|
+      puts "Trying #{guid_style}"
+      begin
+        transcript_json = RestClient.get(TX_HOST + "/transcripts/aapb/#{ guid_style }.json")
+      rescue RestClient::NotFound
+        # no need to raise here
+      end
+      if transcript_json
+               
+        return transcript_json 
+      end
+    end
+
+  end
 
   def create_guid_file(guids)
     # write guids to file

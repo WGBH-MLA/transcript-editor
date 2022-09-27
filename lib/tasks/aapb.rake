@@ -40,6 +40,13 @@ namespace :aapb do
     Rake::Task["aapb:download_transcripts"].invoke("#{args[:ids_file_path]}","#{args[:project_key]}")
     Rake::Task["transcripts:convert"].invoke("#{Rails.root}/project/#{args[:project_key]}/transcripts/aapb","#{Rails.root}/project/#{args[:project_key]}/transcripts/webvtt","vtt")
     Rake::Task["webvtt:read"].invoke("#{args[:project_key]}")
+
+    puts "Deleting work jsons..."
+    `rm #{Rails.root}/project/#{args[:project_key]}/transcripts/aapb/*.json`
+    puts "Deleting work webvtts..."
+    `rm #{Rails.root}/project/#{args[:project_key]}/transcripts/webvtt/*.vtt`
+
+    puts "See ya!"
   end
 
   desc "Deletes transcripts from a file of AAPB GUIDS"

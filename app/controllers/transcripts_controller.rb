@@ -30,23 +30,31 @@ class TranscriptsController < ApplicationController
   def show
     respond_to do |format|
       format.html {
-        render :file => Rails.root + "public/index.html"
+        if @transcript
+          render :file => Rails.root + "public/index.html"
+        else
+          raise ActiveRecord::RecordNotFound
+        end
       }
       format.json {
-        @user_role = nil
-        @user_edits = []
-        @transcript_line_statuses = TranscriptLineStatus.allCached
-        @transcript_speakers = TranscriptSpeaker.getByTranscriptId(@transcript.id)
-        @flag_types = FlagType.byCategory("error")
-        @user_flags = []
+        if @transcript
+          @user_role = nil
+          @user_edits = []
+          @transcript_line_statuses = TranscriptLineStatus.allCached
+          @transcript_speakers = TranscriptSpeaker.getByTranscriptId(@transcript.id)
+          @flag_types = FlagType.byCategory("error")
+          @user_flags = []
 
-        if user_signed_in?
-          @user_edits = TranscriptEdit.getByTranscriptUser(@transcript.id, current_user.id)
-          @user_role = current_user.user_role
-          @user_flags = Flag.getByTranscriptUser(@transcript.id, current_user.id)
+          if user_signed_in?
+            @user_edits = TranscriptEdit.getByTranscriptUser(@transcript.id, current_user.id)
+            @user_role = current_user.user_role
+            @user_flags = Flag.getByTranscriptUser(@transcript.id, current_user.id)
+          else
+            @user_edits = TranscriptEdit.getByTranscriptSession(@transcript.id, session.id.to_s)
+            @user_flags = Flag.getByTranscriptSession(@transcript.id, session.id.to_s)
+          end
         else
-          @user_edits = TranscriptEdit.getByTranscriptSession(@transcript.id, session.id.to_s)
-          @user_flags = Flag.getByTranscriptSession(@transcript.id, session.id.to_s)
+          raise ActiveRecord::RecordNotFound
         end
       }
     end
@@ -55,8 +63,18 @@ class TranscriptsController < ApplicationController
   # Adds endpoint for AAPB formatted transcript
   def aapb
     respond_to do |format|
-      format.html { redirect_to action: 'aapb', id: @transcript.uid, format: 'json' }
-      format.json
+      format.html { 
+        if @transcript
+          redirect_to action: 'aapb', id: @transcript.uid, format: 'json'
+        else
+          raise ActiveRecord::RecordNotFound
+        end
+      }
+      format.json {
+        unless @transcript
+          raise ActiveRecord::RecordNotFound
+        end
+      }
     end
   end
 
