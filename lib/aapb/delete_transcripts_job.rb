@@ -17,25 +17,13 @@ module AAPB
 
     def delete_transcripts
       uids.each do |uid|
-        transcript = Transcript.find_by_uid(process_id(uid))
+        transcript = Transcript.find_by_uid(uid)
         if !transcript.nil?
           puts "Deleting transcript: #{uid}"
           transcript.delete
         else
           puts "Transcript not found: #{uid}"
         end
-      end
-    end
-
-    def process_id(id)
-      raise "Unexpected GUID format" unless id =~ /^cpb-aacip(\/|_)\d{2,3}-\w{8}/
-      case id
-      when /^cpb-aacip\/{1}/
-        return id.sub(/\//, '_')
-      when /^cpb-aacip_{1}/
-        return id
-      else
-        raise "Unable to parse AAPB ID"
       end
     end
   end
