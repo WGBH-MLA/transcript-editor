@@ -105,7 +105,7 @@ namespace :transcripts do
 
         transcript_params[:collection] = Collection.find_by_uid(ts_org_value)
 
-        raise "Transcript #{transcript_params[:uid]} did not find a matching Fixit Collection from provided organization value #{ts_org_value}"
+        raise "Transcript #{transcript_params[:uid]} did not find a matching Fixit Collection from provided organization value #{ts_org_value}" unless transcript_params[:collection]
       end
 
       # Make the filename the batch id
