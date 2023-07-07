@@ -141,7 +141,8 @@ class AAPBRecord
 
   def process_uid(input_uid)
     raise "Unexpected AAPB GUID format" unless input_uid =~ /^cpb-aacip(\/|_|-).*/
-    input_uid.delete(" ").include?("\/") ? input_uid.tr("\/", '_') : input_uid
+    input_uid = input_uid.delete(" ")
+    input_uid.include?("\/") ? input_uid.tr("\/", '_') : input_uid
   end
 
   def xpath(xpath)
