@@ -42,7 +42,6 @@
   <% } %>
 </table>
 
-
 <div class="paging">
   <div class="prev">
     <% if(page != 0){ %>
@@ -54,10 +53,15 @@
     <% } %>
   </div>
 
+  <div class="paging-numbers">
+    <%= (page) * 8 + 1 %> - <%= userData.total < (page+1)*8 ? userData.total : (page+1)*8 %>
+  </div>
+  
+
   <div class="next">
-    <% if(page+1 <= Math.floor(transcriptsCompletedData.total/16)){ %>
+    <% if(page+1 <= Math.floor(userData.total/16)){ %>
       <div class="enabled" data-page=<%= page+1 %>>Next</div>
-      <div class="enabled" data-page=<%= Math.floor(transcriptsCompletedData.total/16) %>>Last</div>
+      <div class="enabled" data-page=<%= Math.floor(userData.total/16) %>>Last</div>
     <% } else { %>
       <div class="disabled">Next</div>
       <div class="disabled">Last</div>
