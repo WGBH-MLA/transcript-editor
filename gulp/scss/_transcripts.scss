@@ -90,7 +90,7 @@
 input[type='radio'] {
 }
 
-button.playback-rate-button {
+button.playback-rate-button, button.autoplay-button {
   /*padding: 0.2em 0.4em;
   display: inline-block;
   font-size: 0.6em;*/
@@ -103,4 +103,3 @@ button.playback-rate-button.highlight {
   color: #ddd;
   background-color: #222;
 }
-

@@ -96,17 +96,12 @@ app.views.TranscriptEdit = app.views.Transcript.extend({
     autoplayButton.addEventListener("click", function(e){
       var autoplay = getCookie("fixit-autoplay")
       if(!autoplay || autoplay == "n"){
-        autoplayButton.value = "on"
+        autoplayButton.innerHTML = "on"
         setCookie("fixit-autoplay", "y")
       } else {
-        autoplayButton.value = "off"
+        autoplayButton.innerHTML = "off"
         setCookie("fixit-autoplay", "n")
       }
-      // console.log( 'hee hee!', _this )
-      // $.getJSON("/autoplay?user_id=", {}, function(data){
-
-      //   console.log( 'lol duh !!! ', data )
-      // })
     })
   },
 
@@ -200,15 +195,6 @@ app.views.TranscriptEdit = app.views.Transcript.extend({
   loadListeners: function(){
     var _this = this,
         controls = this.data.project.controls;
-
-    // remove existing listeners
-    // $('.control').off('click.transcript');
-    // $(window).off('keydown.transcript');
-    // PubSub.unsubscribe('transcript.line.select');
-    // PubSub.unsubscribe('transcript.line.submit');
-    // PubSub.unsubscribe('transcript.line.verify');
-    // PubSub.unsubscribe('transcript.edit.delete');
-    // this.$el.off('click.transcript', '.start-play');
 
     // add link listeners
     $('.control').on('click.transcript', function(e){
@@ -318,7 +304,6 @@ app.views.TranscriptEdit = app.views.Transcript.extend({
     this.queue_start = false;
     this.checkForStartTime();
 
-    // this.player.playbackRate = 5.0
     document.getElementById("video-player").appendChild(this.player)
 
     $(".playback-rate-button").click(function(e) {
@@ -326,9 +311,6 @@ app.views.TranscriptEdit = app.views.Transcript.extend({
       var button = document.getElementById(e.target.id)
       $(".playback-rate-button").removeClass("highlight")
       button.classList.add("highlight")
-      // console.log( 'help', document.getElementById(e.target.id).checked )
-
-      // document.getElementById("video").playbackRate = button.textContent
       document.getElementById("video").playbackRate = button.getAttribute("data-playback-rate")
     })
   },
@@ -357,7 +339,6 @@ app.views.TranscriptEdit = app.views.Transcript.extend({
     if (this.player.playing) this.playerState('playing');
     if (this.pause_at_time !== undefined && this.player.currentTime >= this.pause_at_time) {
       
-      // HERHERHERHEHREH
       var autoplay = getCookie("fixit-autoplay")
       if(!autoplay || autoplay == "n"){
         this.playerPause();

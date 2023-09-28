@@ -28,7 +28,7 @@ app.views.TranscriptToolbar = app.views.Base.extend({
     });
 
     // add one for playback rate control
-    this.data.control_width_percent = 1.0 / (this.data.controls.length + 1) * 100;
+    this.data.control_width_percent = 1.0 / (this.data.controls.length + 2) * 100;
   },
 
   loadListeners: function(){
