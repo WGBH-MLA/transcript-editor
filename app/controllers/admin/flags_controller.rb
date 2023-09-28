@@ -1,7 +1,7 @@
 class Admin::FlagsController < ApplicationController
   include ActionController::MimeResponds
 
-  # before_action :authenticate_moderator!
+  before_action :authenticate_moderator!
 
   # GET /admin/flags.json
   # GET /moderator

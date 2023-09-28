@@ -148,12 +148,10 @@ app.routers.DefaultRouter = Backbone.Router.extend({
       dis.addTimeframesClick()
       dis.addPagingClick()
     })
-
   },
 
   _updateReport: function(reportName, timeframe="all", page=0){
-    // userData => UserData
-    console.log( 'its supposed to be ', reportName )
+    // makes userData => UserData
     var reportPartialClass = reportName.charAt(0).toUpperCase() + reportName.slice(1)
 
       // get data from API, render partial, add  partial element

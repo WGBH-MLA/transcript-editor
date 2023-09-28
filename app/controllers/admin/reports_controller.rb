@@ -1,5 +1,5 @@
 class Admin::ReportsController < ApplicationController
-  # before_action :authenticate_admin!
+  before_action :authenticate_admin!
   before_action :get_date_params
 
   # GET /reports/edits.json
