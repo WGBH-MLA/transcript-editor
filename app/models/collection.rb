@@ -33,7 +33,7 @@ class Collection < ActiveRecord::Base
       collections: {}
     }
     collections.each do |collection|
-      incomplete_transcripts = collection.transcripts.where("percent_completed >= 99")
+      incomplete_transcripts = collection.transcripts.where("percent_completed <= 99")
 
       incomplete_count = incomplete_transcripts.count
       total_count = collection.transcripts.count

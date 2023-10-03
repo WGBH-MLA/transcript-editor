@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
     User.order(created_at: :desc).offset(page * 8).limit(8).each do |user|
       transcript_edit_window = TranscriptEdit.where(user_id: user.id).where('created_at >= ?', start_date).where('created_at <= ?', end_date)
       last_edit = transcript_edit_window.order(created_at: :desc).first
-      puts "NOW ITS #{user.name}"
+
       if last_edit
         users[user.id] = {
           name: user.name,
