@@ -40,7 +40,7 @@ class Collection < ActiveRecord::Base
 
       data[:collections][collection.id] = {
         title: collection.title,
-        percent_completed: %(#{ (incomplete_count / total_count * 100).round }% (#{incomplete_count}/#{total_count})),
+        percent_completed: %(#{ ((total_count-incomplete_count) / total_count * 100).round }% (#{incomplete_count}/#{total_count})),
         # only show the download link if there are incomplete ts
         show_guids_link: incomplete_count > 0
       }
