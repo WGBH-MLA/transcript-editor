@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   end
   match 'stats' => 'admin/stats#index', :via => [:get]
   match 'user_data' => 'admin/stats#user_data', :via => [:get]
+  match 'user_list' => 'admin/stats#user_list', :via => [:get]
   match 'transcripts_completed_data' => 'admin/stats#transcripts_completed_data', :via => [:get]
   match 'edit_activity_data' => 'admin/stats#edit_activity_data', :via => [:get]
   match 'collection_data' => 'admin/stats#collection_data', :via => [:get]

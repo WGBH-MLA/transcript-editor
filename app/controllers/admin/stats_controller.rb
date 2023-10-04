@@ -91,6 +91,11 @@ class Admin::StatsController < ApplicationController
     collection = Collection.find(params[:id])
     raise ActiveRecord::NotFound unless collection
     @data = collection.incompleteGuids
-    render 'admin/stats/collection_guids'
+    render 'admin/stats/txt_data'
+  end
+
+  def user_list
+    @data = User.userList
+    render 'admin/stats/txt_data'
   end
 end

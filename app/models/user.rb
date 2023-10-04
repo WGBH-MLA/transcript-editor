@@ -70,4 +70,10 @@ class User < ActiveRecord::Base
     data[:users] = users
     data
   end
+
+  def self.userList
+    data = "Name,Email\n"
+    data += User.all.map {|user| %("#{user.name}","#{user.email}") }.join("\n")
+    data
+  end
 end
