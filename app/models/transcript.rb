@@ -412,7 +412,10 @@ class Transcript < ActiveRecord::Base
 
       user_edit_counts = {}
    
-      ts_users = transcript.transcript_edits.select(:user_id).distinct.map {|user_id| User.find(user_id) }
+      ts_user_ids = transcript.transcript_edits.select(:user_id).distinct.map(&:user_id)
+      ts_user_ids.delete(0)
+
+      ts_users = User.find( ts_user_ids )
       ts_users.each do |user|
         user_edit_counts[user.id] = transcript.transcript_edits.where(user_id: user.id).count
 
