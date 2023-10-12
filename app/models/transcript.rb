@@ -431,7 +431,7 @@ class Transcript < ActiveRecord::Base
         title: transcript.title,
         completed_at: transcript_completed_at,
         most_edits_user_email: most_edits_user.email,
-        most_edits_user_count: ts_users[most_edits_user.id]
+        most_edits_user_count: user_edit_counts[most_edits_user.id]
       }
     end
 
