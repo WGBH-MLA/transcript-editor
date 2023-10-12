@@ -422,7 +422,7 @@ class Transcript < ActiveRecord::Base
         # dont give win to anon edits 
         next if user.id == 0
 
-        if !most_edits_user_id || user_edit_counts[user.id] > user_edit_counts[most_edits_user.id]
+        if !most_edits_user || user_edit_counts[user.id] > user_edit_counts[most_edits_user.id]
           most_edits_user = user
         end
       end
