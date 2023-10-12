@@ -78,6 +78,15 @@ class Admin::StatsController < ApplicationController
     end
   end
 
+  def user_graph_data
+    data = Transcript.userGraphData(Time.now - 36.months)
+    respond_to do |format|
+      format.json {
+        render json: {data: data}  
+      }
+    end
+  end
+
   def collection_data
     data = Collection.percentCompleted(@page)
     respond_to do |format|

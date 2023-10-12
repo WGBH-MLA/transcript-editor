@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   match 'collection_data' => 'admin/stats#collection_data', :via => [:get]
   match 'collection_guids' => 'admin/stats#collection_guids', :via => [:get]
   match 'graph_data' => 'admin/stats#graph_data', :via => [:get]
+  match 'user_graph_data' => 'admin/stats#user_graph_data', :via => [:get]
 
 
   # load layouts

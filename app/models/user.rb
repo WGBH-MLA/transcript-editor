@@ -76,4 +76,6 @@ class User < ActiveRecord::Base
     data += User.all.map {|user| %("#{user.name}","#{user.email}") }.join("\n")
     data
   end
+
+
 end

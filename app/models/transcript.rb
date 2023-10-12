@@ -489,4 +489,28 @@ class Transcript < ActiveRecord::Base
 
     data    
   end
+  def self.userGraphData(start_date=Time.new(2000,1,1), division="month")
+    data = {}
+    data[:data] = []
+    # data[:labels] = []
+
+    if division == "month"
+
+      while start_date < Time.now
+        # count of TEs for each month of timeframe
+        
+        data[:data] << TranscriptEdit.where('created_at >= ?', start_date).where('created_at <= ?', start_date + 1.month).select(:user_id).distinct.count * 100
+
+        # if start_date.month == 1
+          # data[:labels] << "#{Date::MONTHNAMES[start_date.month]} #{start_date.year}"
+        # else
+        #   data[:labels] << "#{Date::MONTHNAMES[start_date.month]}"
+        # end
+          
+        start_date = start_date + 1.month
+      end
+    end
+
+    data    
+  end  
 end
