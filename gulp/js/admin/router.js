@@ -65,28 +65,28 @@ app.routers.DefaultRouter = Backbone.Router.extend({
     this._updateReport("editActivityData")
     this._updateReport("collectionData")
 
-    var transcriptEditData = JSON.parse($.ajax({async: false, method: "GET", url: "/graph_data.json"}).responseText).data
-    // var userActivityData = JSON.parse($.ajax({async: false, method: "GET", url: "/user_graph_data.json"}).responseText).data
+    var transcriptActivityData = JSON.parse($.ajax({async: false, method: "GET", url: "/graph_data.json"}).responseText).data
+    var userActivityData = JSON.parse($.ajax({async: false, method: "GET", url: "/user_graph_data.json"}).responseText).data
 
-    const chart = new Chart("chart", {
+    const transcriptChart = new Chart("chart-transcript", {
       type: "line",
-      data: this.chartFormat("Total Edits Per Month", transcriptEditData),
+      data: this.chartFormat("Total Edits Per Month", transcriptActivityData, "#6fc3e3"),
       options: {
         responsive: true,
         // aspectRatio: 16/9,
         maintainAspectRatio: false
       }
     })
-    
-    // const chart2 = new Chart("chart2", {
-    //   type: "line",
-    //   data: this.chartFormat("Active Users Per Month", userActivityData),
-    //   options: {
-    //     responsive: true,
-    //     // aspectRatio: 16/9,
-    //     maintainAspectRatio: false
-    //   }
-    // })
+  
+    const userChart = new Chart("chart-user", {
+      type: "line",
+      data: this.chartFormat("Active Users Per Month", userActivityData, "#efa731"),
+      options: {
+        responsive: true,
+        // aspectRatio: 16/9,
+        maintainAspectRatio: false
+      }
+    })  
 
     // use *this* this as this in this v
     this.addTimeframesClick = this.addTimeframesClick.bind(this)
@@ -96,23 +96,16 @@ app.routers.DefaultRouter = Backbone.Router.extend({
     this.addPagingClick()
   },
 
-  chartFormat: function(name, chartData){
+  chartFormat: function(name, chartData, color){
     var data = {
       labels: chartData.labels,
       datasets: [
-        this.chartDataset(name, chartData.data, '#6fc3e3'),
-        // this.chartDataset("Transcript Edit Activity", editActivityData),
-        // this.chartDataset("Transcripts Completed", transcriptsCompletedData),
+        this.chartDataset(name, chartData.data, color)
       ]
     };
 
     return data
   },
-
-
-        // this.chartDataset("Active Users Per Month", chartData.userActivityData, '#ff0'),
-
-
 
   chartDataset: function(title, data, color) {
     return {
