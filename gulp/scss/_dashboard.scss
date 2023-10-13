@@ -176,9 +176,19 @@ div.paging div.next {
 }
 
 #chart-user, #chart-transcript {
+  background-color: #f9f9f9;
   margin-left: 5%;
 }
 
 .subtitle {
   font-size: 0.6em;
+}
+
+div.chart-tab {
+  position: relative;
+  z-index: 1000;
+}
+
+.hidden {
+  display: none;
 }

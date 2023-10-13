@@ -4,10 +4,6 @@ class ApplicationController < ActionController::API
   # Allow us to use JBuilder
   include ActionController::ImplicitRender
   before_action :touch_session
-  before_action :dev_user
-  def dev_user
-    @user = User.last
-  end
 
   # Ensure a session id is available for all!
   def touch_session
