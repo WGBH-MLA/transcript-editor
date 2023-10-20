@@ -93,6 +93,7 @@ class APIIngester
 
     }
 
+    # the force_reingest option prevents this line from overwriting data from an existing ts by erroring before this
     ts = Transcript.find_or_initialize_by(uid: uid)
     ts.update(params)
     # Transcript.create(params)
