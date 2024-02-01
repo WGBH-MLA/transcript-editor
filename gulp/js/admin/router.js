@@ -73,6 +73,9 @@ app.routers.DefaultRouter = Backbone.Router.extend({
           maintainAspectRatio: false
         }
       })
+
+      // delete spinner after we get some chart data
+      document.getElementById("graph-spinner").remove()
     })
 
     $.ajax({method: "GET", url: "/user_graph_data.json"}).done(function(response){
@@ -87,11 +90,6 @@ app.routers.DefaultRouter = Backbone.Router.extend({
         }
       })
     })
-    
-
-
-  
-
 
     // use *this* this as this in this v
     this.addTimeframesClick = this.addTimeframesClick.bind(this)

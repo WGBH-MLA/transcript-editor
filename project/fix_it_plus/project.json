@@ -44,7 +44,8 @@
     "james_auclair@wgbh.org",
     "alliesuzmoran@gmail.com",
     "kmc377@gmail.com",
-    "englandtae@gmail.com"
+    "englandtae@gmail.com",
+    "meghan_sorensen@wgbh.org"
   ],
   "authProviders": [{ "name": "google", "label": "Google", "path": "/auth/google_oauth2" }],
   "consensus": {
