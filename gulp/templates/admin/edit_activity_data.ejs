@@ -54,7 +54,6 @@
   <div class="paging-numbers">
     <%= (page) * 8 + 1 %> - <%= userData.total < (page+1)*8 ? userData.total : (page+1)*8 %>
   </div>
-  
 
   <div class="next">
     <% if(page+1 <= Math.floor(userData.total/16)){ %>

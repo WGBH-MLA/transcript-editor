@@ -100,22 +100,15 @@ app.routers.DefaultRouter = Backbone.Router.extend({
   },
 
   addTimeframesClick: function(){
-    var dis = this
-    $("div.timeframe").click(function(e){
 
-      console.log( 'is this running' )
+    var dis = this
+    $("div.timeframe").off().click(function(e){
       
       var selectedTimeframe = $(this).attr("data-timeframe")
       // which report are we re-running
+
       var selectedReport = $(this).parent().parent().attr("id")
       dis._updateReport(selectedReport, selectedTimeframe)
-
-      // old elements disappear, so need to reattach click event
-      $("#" + selectedReport + " div.timeframe").removeClass("active")
-      $("#" + e.target.id).addClass("active")
-
-      dis.addTimeframesClick()
-      dis.addPagingClick()
     })
 
   },
@@ -130,12 +123,11 @@ app.routers.DefaultRouter = Backbone.Router.extend({
       $("div.chart-container").addClass("hidden")
       $("#" + e.target.id.replace("-tab", "") + "-container").removeClass("hidden")
     })
-
   },
 
   addPagingClick: function(){
     var dis = this
-    $("div.paging div div.enabled").click(function(e){
+    $("div.paging div div.enabled").off().click(function(e){
       
       var selectedPage = parseInt($(this).attr("data-page"))
       // which report are we re-running
@@ -155,7 +147,7 @@ app.routers.DefaultRouter = Backbone.Router.extend({
   },
 
   _updateReport: async function(reportName, timeframe="all", page=0){
-    timeframe = "?timeframe=" + timeframe
+    var urlTimeframe = "?timeframe=" + timeframe
     var pageQuery = "&page=" + page
 
     var endpoint
@@ -169,7 +161,7 @@ app.routers.DefaultRouter = Backbone.Router.extend({
       endpoint = "/collection_data.json"
     }
 
-    fetch(endpoint + timeframe + pageQuery, {method: "GET"}).then( (response) => response.json()).then((response) => {
+    fetch(endpoint + urlTimeframe + pageQuery, {method: "GET"}).then( (response) => response.json()).then((response) => {
       var reportData = response.data
 
       var data = {}
@@ -181,6 +173,13 @@ app.routers.DefaultRouter = Backbone.Router.extend({
       console.log( `now Im getting ${reportPartialClass}` )
       var reportPartial = new app.views[reportPartialClass](data)
       document.getElementById(reportName).innerHTML = reportPartial.$el[0].innerHTML
+
+      $("#" + reportName + " div.timeframe").removeClass("active")
+      $("#" + reportName + "-" + timeframe).addClass("active")
+
+      // readd click listeners
+      this.addTimeframesClick()
+      this.addPagingClick()
     }).catch( (error) => {
       console.log( 'Error fetching dash data ', error )
 
@@ -227,5 +226,4 @@ app.routers.DefaultRouter = Backbone.Router.extend({
       params : params
     };
   }
-
 });
