@@ -169,23 +169,6 @@ app.routers.DefaultRouter = Backbone.Router.extend({
       endpoint = "/collection_data.json"
     }
 
-    // $.ajax({method: "GET", url: endpoint + timeframe + pageQuery}).done(function(response){
-
-    //   var reportData = response.data
-
-    //   var data = {}
-    //   data[reportName] = reportData
-    //   data["page"] = page
-  
-    //   // makes userData => UserData
-    //   var reportPartialClass = reportName.charAt(0).toUpperCase() + reportName.slice(1)
-    //   console.log( `now Im getting ${reportPartialClass}` )
-    //   var reportPartial = new app.views[reportPartialClass](data)
-    //   document.getElementById(reportName).innerHTML = reportPartial.$el[0].innerHTML
-    // }).fail(function(e) {
-    //   alert( `ouch! ${e}` )
-    // })
-
     fetch(endpoint + timeframe + pageQuery, {method: "GET"}).then( (response) => response.json()).then((response) => {
       var reportData = response.data
 
@@ -198,15 +181,10 @@ app.routers.DefaultRouter = Backbone.Router.extend({
       console.log( `now Im getting ${reportPartialClass}` )
       var reportPartial = new app.views[reportPartialClass](data)
       document.getElementById(reportName).innerHTML = reportPartial.$el[0].innerHTML
+    }).catch( (error) => {
+      console.log( 'Error fetching dash data ', error )
+
     })
-
-
-
-
-
-
-
-
   },
 
   _getData: function(data){
