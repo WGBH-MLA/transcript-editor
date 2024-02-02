@@ -102,6 +102,8 @@ app.routers.DefaultRouter = Backbone.Router.extend({
   addTimeframesClick: function(){
     var dis = this
     $("div.timeframe").click(function(e){
+
+      console.log( 'is this running' )
       
       var selectedTimeframe = $(this).attr("data-timeframe")
       // which report are we re-running
@@ -167,8 +169,24 @@ app.routers.DefaultRouter = Backbone.Router.extend({
       endpoint = "/collection_data.json"
     }
 
-    $.ajax({method: "GET", url: endpoint + timeframe + pageQuery}).done(function(response){
+    // $.ajax({method: "GET", url: endpoint + timeframe + pageQuery}).done(function(response){
 
+    //   var reportData = response.data
+
+    //   var data = {}
+    //   data[reportName] = reportData
+    //   data["page"] = page
+  
+    //   // makes userData => UserData
+    //   var reportPartialClass = reportName.charAt(0).toUpperCase() + reportName.slice(1)
+    //   console.log( `now Im getting ${reportPartialClass}` )
+    //   var reportPartial = new app.views[reportPartialClass](data)
+    //   document.getElementById(reportName).innerHTML = reportPartial.$el[0].innerHTML
+    // }).fail(function(e) {
+    //   alert( `ouch! ${e}` )
+    // })
+
+    fetch(endpoint + timeframe + pageQuery, {method: "GET"}).then( (response) => response.json()).then((response) => {
       var reportData = response.data
 
       var data = {}
@@ -181,6 +199,14 @@ app.routers.DefaultRouter = Backbone.Router.extend({
       var reportPartial = new app.views[reportPartialClass](data)
       document.getElementById(reportName).innerHTML = reportPartial.$el[0].innerHTML
     })
+
+
+
+
+
+
+
+
   },
 
   _getData: function(data){
