@@ -51,7 +51,7 @@ class TranscriptReleaser
 
     Dir.glob(__dir__ + "/transcriptJson/*.json").each do |filename|
       # puts "OTHER WISE I WOULD RUN HERE #{filename}"
-      puts `./shellScriptToDuplicateAndPushNewFilesToS3.sh #{filename}`
+      puts `./fixitplusFilesToS3_aapb_and_backup.sh #{filename}`
       puts "Deleting file: #{filename}"
       File.delete(filename)
     end
