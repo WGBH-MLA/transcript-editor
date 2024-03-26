@@ -1,5 +1,7 @@
 # FIXIT+ Transcript Editor
 
+![Yellow And Black Logo For FIXIT+](https://s3.amazonaws.com/americanarchive.org/org-logos/FIX_IT_plus_sm.png "FIXIT+ Logo") 
+
 This is an open-source, self-hosted, web-based tool for correcting transcripts that were automatically generated using speech-to-text software. It was originally developed by [NYPL Labs](http://www.nypl.org/collections/labs) in partnership with [The Moth](http://themoth.org/) and [Pop Up Archive](https://popuparchive.com/) with generous support from the [Knight Foundation](http://www.knightfoundation.org/grants/201551666/).
 
 Since 2018, GBH Archives has adopted and extended this project to provide a crowdsourced transcript correction platform for GBH and for the public media community at large.
