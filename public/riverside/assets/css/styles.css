@@ -13,14 +13,17 @@
   margin: -68px -10px 0;
 }
 .home\.md.page .banner {
-  background: url(/peabody/assets/img/riverside-sprite.jpg) repeat-x 0 0;
-  padding: 0 0 60px 0;
+  background: url(/riverside/assets/img/riverside-sprite.png) repeat-x 0 0;
+  padding: 0 0 40px 0;
   margin-bottom: 20px;
 }
 .home\.md.page .container {
   max-width: 800px;
   margin: 5px auto;
   position: relative;
+}
+.home\.md.page p.content-warning {
+  font-size: 1em;
 }
 .home\.md.page h1 {
   margin-bottom: 0;
@@ -30,9 +33,26 @@
   margin-bottom: 0;
   letter-spacing: 1px;
 }
+.completed-small-box {
+  padding: 4%;
+  padding-bottom: 4%;
+  display: block;
+  text-align: center;
+}
 .completed-check-container {
-  padding-left: 6px;
-  padding-top: 6px;
+  background-color: #c3f6af;
+  color: #427527;
+  padding-left: 0.4em;
+  border-radius: 4px;
+  font-size: 0.8em;
+  font-weight: bold;
+  padding-bottom: 0.4em;
+  display: inline-block;
+}
+.completed-check-tag-text {
+  margin-top: -1.4em;
+  margin-left: 2em;
+  margin-right: 1.6em;
 }
 .completed-check {
   background-image: url('/assets/check.png');
@@ -41,6 +61,8 @@
 .check-small {
   height: 20px;
   width: 20px;
+  margin-top: 6px;
+  text-align: left;
 }
 .check-big {
   height: 40px;
