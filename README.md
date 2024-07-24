@@ -711,4 +711,4 @@ See [LICENSE](LICENSE).
 ## Attribution
 
 Though it’s not required, if you would like to credit us as the source we recommend using the following statement and links:
->Powered by the [Open Transcript Editor](https://github.com/NYPL/transcript-editor/) created by [The New York Public Library](nypl.org) with generous support from the [Knight Prototype Fund](http://www.knightfoundation.org/grants/201551666/). Additional development by [GBH Media Library and Archives](https://www.wgbh.org/foundation/archives) with generous support from the [Institute of Museums and Library Services](http://www.imls.gov/grants/awarded/lg-252299-ols-22).
+>Powered by the [Open Transcript Editor](https://github.com/NYPL/transcript-editor/) created by [The New York Public Library](nypl.org) with generous support from the [Knight Prototype Fund](http://www.knightfoundation.org/grants/201551666/). Additional development by [GBH Media Library and Archives](https://www.wgbh.org/foundation/archives) with generous support from the [Institute of Museum and Library Services](http://www.imls.gov/grants/awarded/lg-252299-ols-22).
