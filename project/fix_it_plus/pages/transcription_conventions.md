@@ -36,5 +36,10 @@
       <td>If someone stops speaking in the middle of a word, transcribe the completed word</td>
       <td>“Tes- Testing”, “Absolu- Absolutely”</td>
     </tr>
+    <tr>
+      <td>Removing all text from a line</td>
+      <td>The transcript may have lines during which there is no audible speech. Remove any existing text from the line, and replace it with a note enclosed in square brackets</td>
+      <td>"[silence]" or "[no speech]" or "[inaudible]"</td>
+    </tr>
   </tbody>
 </table>
